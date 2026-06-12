@@ -80,7 +80,7 @@ export function JankenGame() {
             key={hand.id}
             type="button"
             onClick={() => play(hand.id)}
-            className="flex flex-col items-center rounded-xl border border-coffee-200 bg-white px-5 py-4 transition hover:border-coffee-400 hover:bg-coffee-50 active:scale-95"
+            className="touch-target flex flex-col items-center rounded-xl border border-coffee-200 bg-white px-6 py-5 transition hover:border-coffee-400 hover:bg-coffee-50 active:scale-95 sm:px-8 sm:py-6"
           >
             <span className="text-3xl">{hand.emoji}</span>
             <span className="mt-1 text-sm font-medium text-coffee-700">{hand.label}</span>

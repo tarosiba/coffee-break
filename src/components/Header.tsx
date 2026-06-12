@@ -14,10 +14,10 @@ const tabs: { id: Tab; label: string; icon: string }[] = [
 export function Header({ activeTab, onTabChange }: HeaderProps) {
   return (
     <header className="sticky top-0 z-10 border-b border-coffee-200/60 bg-cream/90 backdrop-blur-md">
-      <div className="mx-auto flex max-w-3xl items-center justify-between px-4 py-3">
+      <div className="mx-auto flex max-w-4xl items-center justify-between gap-2 px-4 py-3">
         <div className="flex items-center gap-2">
-          <span className="text-2xl" aria-hidden>☕</span>
-          <h1 className="text-lg font-bold tracking-tight text-coffee-800">Coffee Break</h1>
+          <span className="text-2xl sm:text-3xl" aria-hidden>☕</span>
+          <h1 className="text-lg font-bold tracking-tight text-coffee-800 sm:text-xl">Coffee Break</h1>
         </div>
         <nav className="flex gap-1 rounded-full bg-coffee-100/80 p-1">
           {tabs.map((tab) => (
@@ -25,14 +25,14 @@ export function Header({ activeTab, onTabChange }: HeaderProps) {
               key={tab.id}
               type="button"
               onClick={() => onTabChange(tab.id)}
-              className={`rounded-full px-3 py-1.5 text-sm font-medium transition-all ${
+              className={`touch-target rounded-full px-3 py-2 text-sm font-medium transition-all sm:px-4 ${
                 activeTab === tab.id
                   ? 'bg-coffee-600 text-cream shadow-sm'
                   : 'text-coffee-600 hover:bg-coffee-200/60'
               }`}
             >
               <span className="mr-1" aria-hidden>{tab.icon}</span>
-              {tab.label}
+              <span className="hidden sm:inline">{tab.label}</span>
             </button>
           ))}
         </nav>

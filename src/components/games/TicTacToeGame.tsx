@@ -83,7 +83,7 @@ export function TicTacToeGame() {
             type="button"
             onClick={() => handleClick(i)}
             disabled={!!cell || !!winner}
-            className="flex h-16 w-16 items-center justify-center rounded-xl border border-coffee-200 bg-white text-2xl font-bold text-coffee-700 transition hover:bg-coffee-50 disabled:cursor-not-allowed disabled:opacity-60"
+            className="touch-target flex h-20 w-20 items-center justify-center rounded-xl border border-coffee-200 bg-white text-3xl font-bold text-coffee-700 transition hover:bg-coffee-50 active:scale-95 disabled:cursor-not-allowed disabled:opacity-60 sm:h-24 sm:w-24"
           >
             {cell}
           </button>

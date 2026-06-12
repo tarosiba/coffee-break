@@ -9,9 +9,9 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<Tab>('home')
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen min-h-dvh">
       <Header activeTab={activeTab} onTabChange={setActiveTab} />
-      <main className="mx-auto max-w-3xl px-4 pb-8">
+      <main className="mx-auto max-w-4xl px-4 pb-8">
         {activeTab === 'home' && (
           <Home onNavigate={(tab) => setActiveTab(tab)} />
         )}
