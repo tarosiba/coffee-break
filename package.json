@@ -8,6 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
+    "preview:pages": "GITHUB_PAGES=true npm run build && GITHUB_PAGES=true vite preview",
     "generate-icons": "node scripts/generate-icons.mjs",
     "prebuild": "node scripts/generate-icons.mjs"
   },
