@@ -15,6 +15,7 @@ export type GameId =
   | 'memory'
   | 'gomoku'
   | 'life-board'
+  | 'shogi'
 
 export interface ChatMessage {
   id: string

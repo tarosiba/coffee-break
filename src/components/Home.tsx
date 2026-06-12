@@ -43,7 +43,7 @@ export function Home({ onNavigate }: HomeProps) {
             ミニゲーム
           </h3>
           <p className="text-sm text-coffee-500">
-            神経衰弱、五目並べ、人生ゲーム、じゃんけんなど、すぐ遊べるゲーム集。
+            将棋、神経衰弱、五目並べ、人生ゲームなど、すぐ遊べるゲーム集。
           </p>
         </button>
 

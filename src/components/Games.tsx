@@ -6,8 +6,10 @@ import { TicTacToeGame } from './games/TicTacToeGame'
 import { MemoryGame } from './games/MemoryGame'
 import { GomokuGame } from './games/GomokuGame'
 import { LifeBoardGame } from './games/LifeBoardGame'
+import { ShogiGame } from './games/ShogiGame'
 
 const games: { id: GameId; title: string; description: string; icon: string; category: string }[] = [
+  { id: 'shogi', title: '将棋', description: 'CPUと対局（持ち駒・成りあり）', icon: '☖', category: 'ボード' },
   { id: 'memory', title: '神経衰弱', description: 'トランプのペアを探そう', icon: '🂠', category: 'トランプ' },
   { id: 'gomoku', title: '五目並べ', description: '15×15の盤で対戦', icon: '⚫', category: 'ボード' },
   { id: 'life-board', title: '人生ゲーム', description: 'サイコロですすむボードゲーム', icon: '🎲', category: 'ボード' },
@@ -23,6 +25,7 @@ const gameComponents: Record<GameId, ReactNode> = {
   memory: <MemoryGame />,
   gomoku: <GomokuGame />,
   'life-board': <LifeBoardGame />,
+  shogi: <ShogiGame />,
 }
 
 export function Games() {
