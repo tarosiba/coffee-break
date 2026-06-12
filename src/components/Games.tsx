@@ -6,6 +6,7 @@ import { TicTacToeGame } from './games/TicTacToeGame'
 import { MemoryGame } from './games/MemoryGame'
 import { GomokuGame } from './games/GomokuGame'
 import { LifeBoardGame } from './games/LifeBoardGame'
+import { TerrainShowcase } from './terrain/TerrainShowcase'
 
 const games: { id: GameId; title: string; description: string; icon: string; category: string }[] = [
   { id: 'memory', title: '神経衰弱', description: 'トランプのペアを探そう', icon: '🂠', category: 'トランプ' },
@@ -14,6 +15,7 @@ const games: { id: GameId; title: string; description: string; icon: string; cat
   { id: 'janken', title: 'じゃんけん', description: 'CPUと対戦', icon: '✊', category: 'カジュアル' },
   { id: 'number-guess', title: '数当て', description: '1〜100を当てよう', icon: '🔢', category: 'カジュアル' },
   { id: 'tic-tac-toe', title: '三目並べ', description: 'CPUと対戦', icon: '⭕', category: 'ボード' },
+  { id: 'terrain-showcase', title: 'タイルチップ見本', description: '都市地形タイルのデザイン見本', icon: '🏙️', category: 'ツール' },
 ]
 
 const gameComponents: Record<GameId, ReactNode> = {
@@ -23,6 +25,7 @@ const gameComponents: Record<GameId, ReactNode> = {
   memory: <MemoryGame />,
   gomoku: <GomokuGame />,
   'life-board': <LifeBoardGame />,
+  'terrain-showcase': <TerrainShowcase />,
 }
 
 export function Games() {

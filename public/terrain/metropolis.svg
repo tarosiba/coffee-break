@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="grass-bg" x1="0" y1="0" x2="64" y2="64">
+      <stop offset="0%" stop-color="#7fa86d"/>
+      <stop offset="100%" stop-color="#5d7a4f"/>
+    </linearGradient>
+    <filter id="tile-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="1" stdDeviation="1" flood-color="#2a1b0f" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+  <rect width="64" height="64" rx="6" fill="url(#grass-bg)"/>
+  <rect x="1.5" y="1.5" width="61" height="61" rx="5" stroke="#2a1b0f" stroke-opacity="0.15" stroke-width="1" fill="none"/>
+  <rect x="6" y="6" width="52" height="52" rx="3" fill="#6ba3b8" opacity="0.35"/>
+  <rect x="10" y="10" width="44" height="44" rx="2" fill="#7fa86d"/>
+  <rect x="12" y="14" width="6" height="8" fill="#8b5e34"/>
+  <path d="M11 14l3-3 3 3z" fill="#6f4a2a"/>
+  <rect x="46" y="14" width="6" height="8" fill="#8b5e34"/>
+  <path d="M45 14l3-3 3 3z" fill="#6f4a2a"/>
+  <rect x="12" y="42" width="6" height="8" fill="#8b5e34"/>
+  <path d="M11 42l3-3 3 3z" fill="#4a3018"/>
+  <rect x="46" y="42" width="6" height="8" fill="#8b5e34"/>
+  <path d="M45 42l3-3 3 3z" fill="#4a3018"/>
+  <rect x="22" y="22" width="20" height="16" fill="#fff8f0" filter="url(#tile-shadow)"/>
+  <path d="M21 22l10-6 10 6z" fill="#4a3018"/>
+  <rect x="30" y="28" width="4" height="10" fill="#5c5c5c"/>
+  <rect x="28" y="14" width="8" height="10" fill="#8a8a8a" filter="url(#tile-shadow)"/>
+  <path d="M27 14l4-5 4 5z" fill="#d4a84b"/>
+  <circle cx="32" cy="11" r="1.5" fill="#d4a84b"/>
+  <rect x="14" y="30" width="5" height="14" fill="#8a8a8a"/>
+  <path d="M13 30l2.5-8 2.5 8z" fill="#fff8f0"/>
+  <rect x="45" y="30" width="5" height="14" fill="#8a8a8a"/>
+  <path d="M44 30l2.5-8 2.5 8z" fill="#fff8f0"/>
+  <path d="M30 38h4v10h-4z" fill="#c9a97a"/>
+  <path d="M24 42h16v2H24z" fill="#c9a97a"/>
+  <rect x="18" y="46" width="28" height="4" fill="#5c5c5c" opacity="0.4"/>
+  <rect x="26" y="46" width="4" height="4" fill="#d4a84b" opacity="0.8"/>
+  <rect x="34" y="46" width="4" height="4" fill="#d4a84b" opacity="0.8"/>
+  <rect x="2" y="2" width="60" height="60" rx="5" stroke="#fff8f0" stroke-opacity="0.35" stroke-width="0.75" fill="none"/>
+</svg>
