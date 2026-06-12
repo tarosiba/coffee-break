@@ -1,7 +1,7 @@
 import { InstallPrompt } from './InstallPrompt'
 
 interface HomeProps {
-  onNavigate: (tab: 'games' | 'chat') => void
+  onNavigate: (tab: 'calendar' | 'games' | 'chat') => void
 }
 
 export function Home({ onNavigate }: HomeProps) {
@@ -11,7 +11,7 @@ export function Home({ onNavigate }: HomeProps) {
         <div className="mb-4 text-6xl sm:text-7xl" aria-hidden>☕</div>
         <h2 className="mb-2 text-3xl font-bold text-coffee-800 sm:text-4xl">ひと息つこう</h2>
         <p className="mx-auto max-w-md text-coffee-600">
-          仕事の合間に、コーヒーを片手にミニゲームで遊んだり、気軽に雑談したり。
+          予定をカレンダーに保存したり、ミニゲームで遊んだり、気軽に雑談したり。
           ホーム画面に追加すれば、アイコンからすぐ始められます。
         </p>
       </section>
@@ -19,6 +19,20 @@ export function Home({ onNavigate }: HomeProps) {
       <InstallPrompt />
 
       <section className="grid gap-4 sm:grid-cols-2">
+        <button
+          type="button"
+          onClick={() => onNavigate('calendar')}
+          className="touch-target group rounded-2xl border border-coffee-200 bg-white/70 p-6 text-left shadow-sm transition active:scale-[0.98] hover:border-coffee-300 hover:shadow-md"
+        >
+          <span className="mb-3 block text-4xl" aria-hidden>📅</span>
+          <h3 className="mb-1 text-lg font-semibold text-coffee-800 group-hover:text-coffee-600">
+            カレンダー
+          </h3>
+          <p className="text-sm text-coffee-500">
+            日付を選んで予定を保存。シンプルなカレンダーでスケジュールを管理できます。
+          </p>
+        </button>
+
         <button
           type="button"
           onClick={() => onNavigate('games')}

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Header } from './components/Header'
 import { Home } from './components/Home'
 import { Games } from './components/Games'
+import { Calendar } from './components/Calendar'
 import { Chat } from './components/Chat'
 import type { Tab } from './types'
 
@@ -15,6 +16,7 @@ export default function App() {
         {activeTab === 'home' && (
           <Home onNavigate={(tab) => setActiveTab(tab)} />
         )}
+        {activeTab === 'calendar' && <Calendar />}
         {activeTab === 'games' && <Games />}
         {activeTab === 'chat' && <Chat />}
       </main>
