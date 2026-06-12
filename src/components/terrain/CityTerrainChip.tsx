@@ -11,9 +11,9 @@ interface CityTerrainChipProps {
 }
 
 const sizeClasses = {
-  sm: 'w-12 h-12',
-  md: 'w-16 h-16',
-  lg: 'w-24 h-24',
+  sm: 'w-11',
+  md: 'w-14',
+  lg: 'w-[5.5rem]',
 }
 
 export function CityTerrainChip({
@@ -36,14 +36,12 @@ export function CityTerrainChip({
       <div
         className={[
           sizeClasses[size],
-          'overflow-hidden rounded-lg border-2 shadow-sm transition',
-          selected
-            ? 'border-coffee-500 ring-2 ring-coffee-300 ring-offset-1'
-            : 'border-coffee-200',
-          interactive ? 'hover:border-coffee-400 hover:shadow-md active:scale-95' : '',
+          'transition',
+          selected ? 'drop-shadow-[0_0_4px_rgba(111,74,42,0.6)]' : '',
+          interactive ? 'hover:scale-105 active:scale-95' : '',
         ].join(' ')}
       >
-        <CityTileArt id={id} className="h-full w-full [&>svg]:h-full [&>svg]:w-full" />
+        <CityTileArt id={id} className="h-auto w-full [&>svg]:h-auto [&>svg]:w-full" />
       </div>
       {showLabel && (
         <span className="text-xs font-medium text-coffee-700">{terrain.label}</span>
