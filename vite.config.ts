@@ -16,7 +16,7 @@ export default defineConfig({
       manifest: {
         name: 'Coffee Break',
         short_name: 'CoffeeBreak',
-        description: 'ちょっと一息つけるゲーム＆雑談アプリ',
+        description: '予定管理・ゲーム・雑談ができるコーヒーブレイクアプリ',
         theme_color: '#6f4a2a',
         background_color: '#fff8f0',
         display: 'standalone',

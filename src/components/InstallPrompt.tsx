@@ -41,7 +41,7 @@ export function InstallPrompt() {
     <div className="rounded-2xl border border-coffee-300 bg-coffee-100/80 p-4">
       <p className="mb-3 text-sm text-coffee-700">
         <span className="mr-1" aria-hidden>📲</span>
-        ホーム画面に追加すると、アイコンからすぐゲームを始められます
+        ホーム画面に追加すると、アイコンからすぐカレンダーやゲームを始められます
       </p>
       <div className="flex flex-wrap gap-2">
         <button
