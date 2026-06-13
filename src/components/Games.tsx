@@ -7,8 +7,10 @@ import { MemoryGame } from './games/MemoryGame'
 import { GomokuGame } from './games/GomokuGame'
 import { LifeBoardGame } from './games/LifeBoardGame'
 import { ShogiGame } from './games/ShogiGame'
+import { GalaxyShooterGame } from './games/GalaxyShooterGame'
 
 const games: { id: GameId; title: string; description: string; icon: string; category: string }[] = [
+  { id: 'galaxy-shooter', title: 'スターシューター', description: 'ギャラクシアン風シューティング', icon: '🚀', category: 'シューティング' },
   { id: 'shogi', title: '将棋', description: 'CPUと対局（持ち駒・成りあり）', icon: '☖', category: 'ボード' },
   { id: 'memory', title: '神経衰弱', description: 'トランプのペアを探そう', icon: '🂠', category: 'トランプ' },
   { id: 'gomoku', title: '五目並べ', description: '15×15の盤で対戦', icon: '⚫', category: 'ボード' },
@@ -26,6 +28,7 @@ const gameComponents: Record<GameId, ReactNode> = {
   gomoku: <GomokuGame />,
   'life-board': <LifeBoardGame />,
   shogi: <ShogiGame />,
+  'galaxy-shooter': <GalaxyShooterGame />,
 }
 
 export function Games() {
@@ -36,7 +39,7 @@ export function Games() {
     <div className="space-y-6 py-4">
       <div>
         <h2 className="text-2xl font-bold text-coffee-800">ミニゲーム</h2>
-        <p className="text-sm text-coffee-500">トランプ・ボードゲーム・カジュアルゲーム</p>
+        <p className="text-sm text-coffee-500">トランプ・ボード・シューティング・カジュアルゲーム</p>
       </div>
 
       {!activeGame ? (

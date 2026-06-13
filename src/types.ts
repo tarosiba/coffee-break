@@ -16,6 +16,7 @@ export type GameId =
   | 'gomoku'
   | 'life-board'
   | 'shogi'
+  | 'galaxy-shooter'
 
 export interface ChatMessage {
   id: string
