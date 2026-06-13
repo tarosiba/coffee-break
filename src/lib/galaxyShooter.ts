@@ -38,7 +38,11 @@ export interface GameState {
   formationY: number
   tick: number
   nextId: number
+  lastFireTick: number
 }
+
+const FIRE_INTERVAL = 4
+const MAX_PLAYER_BULLETS = 5
 
 const ENEMY_SCORE: Record<EnemyType, number> = {
   flag: 150,
@@ -109,6 +113,7 @@ export function createGameState(): GameState {
     formationY: 0,
     tick: 0,
     nextId,
+    lastFireTick: -FIRE_INTERVAL,
   }
 }
 
@@ -118,13 +123,15 @@ function aliveEnemies(state: GameState) {
 
 function spawnBullet(state: GameState, fromPlayer: boolean): GameState {
   if (fromPlayer) {
-    const cooldown = state.bullets.some((b) => b.fromPlayer && b.y > HEIGHT - 80)
-    if (cooldown) return state
+    const playerBullets = state.bullets.filter((b) => b.fromPlayer)
+    if (playerBullets.length >= MAX_PLAYER_BULLETS) return state
+    if (state.tick - state.lastFireTick < FIRE_INTERVAL) return state
     return {
       ...state,
+      lastFireTick: state.tick,
       bullets: [
         ...state.bullets,
-        { id: state.nextId, x: state.playerX, y: HEIGHT - 50, vy: -6, fromPlayer: true },
+        { id: state.nextId, x: state.playerX, y: HEIGHT - 50, vy: -7, fromPlayer: true },
       ],
       nextId: state.nextId + 1,
     }

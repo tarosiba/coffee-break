@@ -146,14 +146,17 @@ export function GalaxyShooterGame() {
     keysRef.current = { ...keysRef.current, [key]: value }
   }
 
-  const handleCanvasTap = () => {
+  const handleCanvasPress = () => {
     const phase = stateRef.current.phase
     if (phase === 'title' || phase === 'gameover') {
       stateRef.current = startGame(stateRef.current)
     } else {
       setKey('fire', true)
-      setTimeout(() => setKey('fire', false), 80)
     }
+  }
+
+  const handleCanvasRelease = () => {
+    setKey('fire', false)
   }
 
   return (
@@ -168,7 +171,11 @@ export function GalaxyShooterGame() {
           width={WIDTH}
           height={HEIGHT}
           className="block max-w-full touch-none"
-          onClick={handleCanvasTap}
+          onMouseDown={handleCanvasPress}
+          onMouseUp={handleCanvasRelease}
+          onMouseLeave={handleCanvasRelease}
+          onTouchStart={handleCanvasPress}
+          onTouchEnd={handleCanvasRelease}
         />
       </div>
 
@@ -193,7 +200,7 @@ export function GalaxyShooterGame() {
           onMouseUp={() => setKey('fire', false)}
           onMouseLeave={() => setKey('fire', false)}
         >
-          発射
+          連射
         </button>
         <button
           type="button"
@@ -209,7 +216,7 @@ export function GalaxyShooterGame() {
       </div>
 
       <p className="text-center text-xs text-coffee-500">
-        左右ボタンで移動、発射ボタンまたは画面タップで弾を撃つ。敵の編隊と急降下攻撃を避けよう。
+        左右ボタンで移動。発射ボタンまたは画面を押し続けると連射できます。
       </p>
     </div>
   )
