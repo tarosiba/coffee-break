@@ -36,19 +36,43 @@ Microsoft Flight Simulator 4 風フライトゲームの**最小プロトタイ�
 godot-flight-prototype/
 ├── project.godot       # プロジェクト設定・入力マップ
 ├── scenes/
-│   └── main.tscn       # メインシーン（地面・滑走路・機体・カメラ・HUD）
+│   ├── main.tscn       # メインシーン（地面・滑走路・機体・カメラ）
+│   └── instrument_panel.tscn
 └── scripts/
-    ├── airplane.gd     # 飛行制御（CharacterBody3D）
+    ├── airplane.gd     # 飛行制御 + 計器データ送信
     ├── camera_follow.gd
-    └── hud.gd          # 速度・高度・スロットル表示
+    ├── hud.gd          # ヘルプ表示用 CanvasLayer
+    ├── instrument_panel.gd
+    └── instruments/
+        ├── analog_gauge.gd
+        └── artificial_horizon.gd
 ```
 
 ## 設計方針
 
 - **CharacterBody3D** ベースのアーケード飛行（本格物理シムではない）
 - FS4 の「すぐ飛べる」感覚を優先
-- 地上ではロール不可、離陸速度まではピッチ制限
-- 次フェーズ候補: レトロシェーダー、低ポリ地形、計器盤、空港オブジェクト
+- 画面下部に **計器盤**（速度・人工地平儀・高度）を表示
+- 次フェーズ候補: レトロシェーダー、低ポリ地形、空港オブジェクト
+
+## 計器盤
+
+画面下部中央に FS4 風の analog 計器を表示します。
+
+| 計器 | 内容 |
+|------|------|
+| **SPD** | 速度（km/h）— 針 + デジタル値 |
+| **ATT** | 人工地平儀 — ピッチ・ロール |
+| **ALT** | 高度（m）— 針 + デジタル値 |
+
+関連ファイル:
+
+```
+scripts/instruments/analog_gauge.gd
+scripts/instruments/artificial_horizon.gd
+scripts/instrument_panel.gd
+scenes/instrument_panel.tscn
+```
 
 ## パラメータ調整
 

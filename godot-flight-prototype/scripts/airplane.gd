@@ -2,7 +2,13 @@ extends CharacterBody3D
 ## Arcade-style airplane controller for the minimal flight prototype.
 ## FS4 feel: easy to fly, not a full physics sim.
 
-signal stats_changed(speed_kmh: float, altitude_m: float, throttle_pct: float)
+signal instruments_updated(
+	speed_kmh: float,
+	altitude_m: float,
+	throttle_pct: float,
+	pitch_deg: float,
+	roll_deg: float,
+)
 
 @export var min_speed: float = 25.0
 @export var max_speed: float = 90.0
@@ -22,7 +28,7 @@ var grounded: bool = true
 
 func _ready() -> void:
 	speed = 0.0
-	_emit_stats()
+	_emit_instruments()
 
 
 func _physics_process(delta: float) -> void:
@@ -30,7 +36,7 @@ func _physics_process(delta: float) -> void:
 	_handle_throttle(delta)
 	_handle_rotation(delta)
 	_move(delta)
-	_emit_stats()
+	_emit_instruments()
 
 
 func _handle_reset() -> void:
@@ -87,7 +93,13 @@ func _move(delta: float) -> void:
 			rotation.x = lerpf(rotation.x, 0.0, 4.0 * delta)
 
 
-func _emit_stats() -> void:
+func _emit_instruments() -> void:
 	var altitude := maxf(global_position.y - ground_height, 0.0)
 	var throttle_pct := inverse_lerp(0.0, max_speed, speed) * 100.0
-	stats_changed.emit(speed * 3.6, altitude, throttle_pct)
+	instruments_updated.emit(
+		speed * 3.6,
+		altitude,
+		throttle_pct,
+		rad_to_deg(rotation.x),
+		rad_to_deg(-rotation.z),
+	)

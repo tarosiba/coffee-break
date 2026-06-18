@@ -1,8 +1,9 @@
-[gd_scene load_steps=18 format=3 uid="uid://c8flightproto001"]
+[gd_scene load_steps=19 format=3 uid="uid://c8flightproto001"]
 
 [ext_resource type="Script" path="res://scripts/airplane.gd" id="1_airplane"]
 [ext_resource type="Script" path="res://scripts/camera_follow.gd" id="2_camera"]
 [ext_resource type="Script" path="res://scripts/hud.gd" id="3_hud"]
+[ext_resource type="PackedScene" uid="uid://d3instpanel001" path="res://scenes/instrument_panel.tscn" id="4_instruments"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sky"]
 sky_top_color = Color(0.18, 0.42, 0.82, 1)
@@ -113,32 +114,7 @@ target_path = NodePath("../Airplane")
 [node name="HUD" type="CanvasLayer" parent="."]
 script = ExtResource("3_hud")
 
-[node name="Panel" type="PanelContainer" parent="HUD"]
-offset_left = 16.0
-offset_top = 16.0
-offset_right = 260.0
-offset_bottom = 130.0
-
-[node name="Margin" type="MarginContainer" parent="HUD/Panel"]
-theme_override_constants/margin_left = 12
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 12
-theme_override_constants/margin_bottom = 10
-
-[node name="VBox" type="VBoxContainer" parent="HUD/Panel/Margin"]
-theme_override_constants/separation = 4
-
-[node name="Speed" type="Label" parent="HUD/Panel/Margin/VBox"]
-theme_override_font_sizes/font_size = 18
-text = "SPD     0 km/h"
-
-[node name="Altitude" type="Label" parent="HUD/Panel/Margin/VBox"]
-theme_override_font_sizes/font_size = 18
-text = "ALT     0 m"
-
-[node name="Throttle" type="Label" parent="HUD/Panel/Margin/VBox"]
-theme_override_font_sizes/font_size = 18
-text = "THR     0 %"
+[node name="InstrumentPanel" parent="HUD" instance=ExtResource("4_instruments")]
 
 [node name="HelpLabel" type="Label" parent="HUD"]
 anchors_preset = 2
