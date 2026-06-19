@@ -120,4 +120,7 @@ scenes/instrument_panel.tscn
 
 ## Agent 引き継ぎ
 
-次の開発セッション / Cloud Agent 向けの詳細メモは **[HANDOFF.md](./HANDOFF.md)** を参照してください（進捗・既知問題・Next Steps・ピタゴラスイッチ動画スレッド含む）。
+次の開発セッション / Cloud Agent 向けの詳細メモは **[HANDOFF.md](./HANDOFF.md)** を参照してください。
+
+- **レトロフライトシム継続が最優先**（ユーザー確認済み・「いい感じ」）
+- 進捗・既知問題・Phase 別 Next Steps・ピタゴラ動画（副次）を記載
