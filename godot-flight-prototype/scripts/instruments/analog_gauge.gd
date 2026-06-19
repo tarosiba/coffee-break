@@ -42,20 +42,20 @@ func _draw() -> void:
 
 
 func _draw_ticks(center: Vector2, radius: float) -> void:
-	var major_count := int((max_value - min_value) / major_step)
+	var major_count: int = maxi(int((max_value - min_value) / major_step), 1)
 	for i in range(major_count + 1):
-		var t := float(i) / float(major_count)
-		var tick_value := lerpf(min_value, max_value, t)
-		var angle := deg_to_rad(_value_to_angle(tick_value))
+		var t: float = float(i) / float(major_count)
+		var tick_value: float = lerpf(min_value, max_value, t)
+		var angle: float = deg_to_rad(_value_to_angle(tick_value))
 		var dir := Vector2(cos(angle), sin(angle))
 		draw_line(center + dir * (radius - 14.0), center + dir * (radius - 2.0), _TICK, 2.0)
 
 		if i < major_count:
 			for j in range(1, minor_ticks):
-				var minor_t := t + (float(j) / float(minor_ticks)) / float(major_count)
+				var minor_t: float = t + (float(j) / float(minor_ticks)) / float(major_count)
 				if minor_t > 1.0:
 					continue
-				var minor_angle := deg_to_rad(lerpf(start_angle_deg, end_angle_deg, minor_t))
+				var minor_angle: float = deg_to_rad(lerpf(start_angle_deg, end_angle_deg, minor_t))
 				var minor_dir := Vector2(cos(minor_angle), sin(minor_angle))
 				draw_line(
 					center + minor_dir * (radius - 8.0),
@@ -65,11 +65,11 @@ func _draw_ticks(center: Vector2, radius: float) -> void:
 				)
 
 		var label_pos := center + dir * (radius - 24.0)
-		var label := str(int(round(tick_value)))
+		var tick_text: String = str(int(round(tick_value)))
 		draw_string(
 			ThemeDB.fallback_font,
 			label_pos - Vector2(8, -4),
-			label,
+			tick_text,
 			HORIZONTAL_ALIGNMENT_LEFT,
 			-1,
 			11,
@@ -78,7 +78,7 @@ func _draw_ticks(center: Vector2, radius: float) -> void:
 
 
 func _draw_needle(center: Vector2, length: float) -> void:
-	var angle := deg_to_rad(_value_to_angle(value))
+	var angle: float = deg_to_rad(_value_to_angle(value))
 	var tip := center + Vector2(cos(angle), sin(angle)) * length
 	draw_line(center, tip, _NEEDLE, 3.0)
 	draw_circle(center, 5.0, _NEEDLE.darkened(0.2))
@@ -106,5 +106,5 @@ func _draw_labels(center: Vector2, radius: float) -> void:
 
 
 func _value_to_angle(v: float) -> float:
-	var t := inverse_lerp(min_value, max_value, v)
+	var t: float = inverse_lerp(min_value, max_value, v)
 	return lerpf(start_angle_deg, end_angle_deg, t)

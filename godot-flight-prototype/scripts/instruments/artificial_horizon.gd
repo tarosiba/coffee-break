@@ -38,25 +38,25 @@ func _draw() -> void:
 
 
 func _draw_horizon_ball(center: Vector2, radius: float) -> void:
-	var pitch_offset := pitch_deg * 1.6
-	var roll_rad := deg_to_rad(roll_deg)
+	var pitch_offset: float = pitch_deg * 1.6
+	var roll_rad: float = deg_to_rad(roll_deg)
 
 	draw_set_transform(center, roll_rad, Vector2.ONE)
 
-	var span := radius * 2.4
-	var top := -span + pitch_offset
+	var span: float = radius * 2.4
+	var top: float = -span + pitch_offset
 	draw_rect(Rect2(-span, top, span * 2.0, span), _SKY)
 	draw_rect(Rect2(-span, pitch_offset, span * 2.0, span), _GROUND)
 	draw_line(Vector2(-span, pitch_offset), Vector2(span, pitch_offset), _HORIZON, 2.0)
 
-	for mark in [-20, -10, 10, 20]:
-		var y := pitch_offset - mark * 1.6
-		var half_width := 18.0 if abs(mark) == 10 else 28.0
+	for mark: float in [-20.0, -10.0, 10.0, 20.0]:
+		var y: float = pitch_offset - mark * 1.6
+		var half_width: float = 18.0 if absf(mark) == 10.0 else 28.0
 		draw_line(Vector2(-half_width, y), Vector2(half_width, y), _LADDER, 1.0)
 		draw_string(
 			ThemeDB.fallback_font,
 			Vector2(half_width + 4.0, y + 4.0),
-			str(abs(mark)),
+			str(int(absf(mark))),
 			HORIZONTAL_ALIGNMENT_LEFT,
 			-1,
 			10,
