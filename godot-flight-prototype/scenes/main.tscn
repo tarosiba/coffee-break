@@ -125,4 +125,4 @@ offset_top = -120.0
 offset_right = 700.0
 offset_bottom = -16.0
 theme_override_font_sizes/font_size = 14
-text = "W/S Pitch  A/D Roll  Q/E Yaw  Shift/Ctrl Throttle  R Reset"
+text = "W/S Pitch  A/D Roll  Q/E Yaw  Shift/Up Throttle  Ctrl/Down Cut  B/Space Brake  R Reset"

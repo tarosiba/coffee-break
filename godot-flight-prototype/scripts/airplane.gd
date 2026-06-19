@@ -10,9 +10,12 @@ signal instruments_updated(
 	roll_deg: float,
 )
 
-@export var min_speed: float = 25.0
-@export var max_speed: float = 90.0
-@export var acceleration: float = 18.0
+@export var min_speed: float = 0.0
+@export var max_speed: float = 50.0
+@export var acceleration: float = 12.0
+@export var brake_deceleration: float = 28.0
+@export var idle_drag: float = 4.0
+@export var ground_friction: float = 10.0
 @export var pitch_speed: float = 1.4
 @export var roll_speed: float = 2.2
 @export var yaw_speed: float = 0.9
@@ -48,10 +51,21 @@ func _handle_reset() -> void:
 
 
 func _handle_throttle(delta: float) -> void:
-	if Input.is_action_pressed("throttle_up"):
+	var throttling_up := Input.is_action_pressed("throttle_up")
+	var throttling_down := Input.is_action_pressed("throttle_down")
+	var braking := Input.is_action_pressed("brake")
+
+	if throttling_up:
 		speed = minf(speed + acceleration * delta, max_speed)
-	if Input.is_action_pressed("throttle_down"):
+
+	if braking:
+		var brake_rate := brake_deceleration * (2.0 if grounded else 1.0)
+		speed = maxf(speed - brake_rate * delta, 0.0)
+	elif throttling_down:
 		speed = maxf(speed - acceleration * delta, 0.0)
+	elif not throttling_up:
+		var drag := ground_friction if grounded else idle_drag
+		speed = maxf(speed - drag * delta, 0.0)
 
 
 func _handle_rotation(delta: float) -> void:
