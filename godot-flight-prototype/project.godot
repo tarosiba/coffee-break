@@ -75,4 +75,5 @@ reset={
 
 [rendering]
 
-anti_aliasing/quality/msaa_3d=1
+anti_aliasing/quality/msaa_3d=0
+textures/default_filters/use_nearest_mipmap_filter=true

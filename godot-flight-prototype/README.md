@@ -47,6 +47,8 @@ godot-flight-prototype/
 │   ├── main.tscn
 │   ├── airport.tscn
 │   ├── control_tower.tscn
+│   ├── crt_overlay.tscn
+│   ├── low_poly_terrain.tscn
 │   └── instrument_panel.tscn
 └── scripts/
     ├── airplane.gd
@@ -55,9 +57,13 @@ godot-flight-prototype/
     ├── instrument_panel.gd
     ├── airport/
     │   └── runway_markings.gd
+    ├── world/
+    │   └── low_poly_terrain.gd
     └── instruments/
         ├── analog_gauge.gd
         └── artificial_horizon.gd
+shaders/
+└── crt_retro.gdshader
 ```
 
 ## 設計方針
@@ -65,7 +71,18 @@ godot-flight-prototype/
 - **CharacterBody3D** ベースのアーケード飛行（本格物理シムではない）
 - FS4 の「すぐ飛べる」感覚を優先
 - 画面下部に **計器盤**（速度・人工地平儀・高度）を表示
-- 次フェーズ候補: レトロシェーダー、低ポリ地形
+- 次フェーズ候補: 着陸判定、コックピット視点、動く地上交通
+
+## レトロビジュアル
+
+| 要素 | 内容 |
+|------|------|
+| **CRT シェーダー** | `shaders/crt_retro.gdshader` — 320×200 相当のピクセル化、走査線、ビネット |
+| **CRT オーバーレイ** | `scenes/crt_overlay.tscn` — 3D の上・計器盤の下（layer 5 / HUD layer 10） |
+| **低ポリ地形** | `scenes/low_poly_terrain.tscn` — 頂点カラー、湖、遠景の塊山 |
+| **フォグ** | `main.tscn` の Environment — 80年代風の視界 |
+
+CRT の強さは `crt_overlay.tscn` の ShaderMaterial パラメータで調整できます。
 
 ## 空港
 

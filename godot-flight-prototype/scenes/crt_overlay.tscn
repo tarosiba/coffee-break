@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://crtoverlay001"]
+
+[ext_resource type="Shader" path="res://shaders/crt_retro.gdshader" id="1_shader"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_crt"]
+shader = ExtResource("1_shader")
+shader_parameter/virtual_resolution = Vector2(320, 200)
+shader_parameter/scanline_strength = 0.22
+shader_parameter/vignette_strength = 0.35
+shader_parameter/curvature = 0.025
+shader_parameter/aberration = 0.0025
+
+[node name="CRTRetroOverlay" type="CanvasLayer"]
+layer = 5
+
+[node name="BackBufferCopy" type="BackBufferCopy" parent="."]
+copy_mode = 2
+
+[node name="CRTPass" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+material = SubResource("ShaderMaterial_crt")
