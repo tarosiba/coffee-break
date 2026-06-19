@@ -117,3 +117,7 @@ scenes/instrument_panel.tscn
 ## ライセンス
 
 このプロトタイプは coffee-break リポジトリ内のサンプルプロジェクトです。
+
+## Agent 引き継ぎ
+
+次の開発セッション / Cloud Agent 向けの詳細メモは **[HANDOFF.md](./HANDOFF.md)** を参照してください（進捗・既知問題・Next Steps・ピタゴラスイッチ動画スレッド含む）。
