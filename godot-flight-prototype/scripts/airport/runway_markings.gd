@@ -42,8 +42,8 @@ func _add_strip(
 
 
 func _build_centerline(material: StandardMaterial3D) -> void:
-	var half_length := runway_length * 0.5
-	var z := -half_length + dash_length * 0.5
+	var half_length: float = runway_length * 0.5
+	var z: float = -half_length + dash_length * 0.5
 	while z < half_length - dash_length:
 		_add_strip(
 			material,
@@ -54,34 +54,35 @@ func _build_centerline(material: StandardMaterial3D) -> void:
 
 
 func _build_thresholds(material: StandardMaterial3D) -> void:
-	var half_length := runway_length * 0.5
-	var bar_width := runway_width / 10.0
-	var bar_depth := 1.2
+	var half_length: float = runway_length * 0.5
+	var bar_width: float = runway_width / 10.0
+	var bar_depth: float = 1.2
 
-	for end_z in [-half_length + 4.0, half_length - 4.0]:
+	for end_z: float in [-half_length + 4.0, half_length - 4.0]:
 		for i in range(5):
-			var x_offset := (float(i) - 2.0) * (runway_width / 5.5)
+			var x_offset: float = (float(i) - 2.0) * (runway_width / 5.5)
 			_add_strip(
 				material,
 				Vector3(bar_width, marking_height, bar_depth),
 				Vector3(x_offset, marking_height * 0.5, end_z),
 			)
 
-		# Threshold bar across full width.
+		var threshold_z: float = end_z + 3.0 if end_z < 0.0 else end_z - 3.0
 		_add_strip(
 			material,
 			Vector3(runway_width - 1.0, marking_height, 0.8),
-			Vector3(0.0, marking_height * 0.5, end_z + 3.0 if end_z < 0.0 else end_z - 3.0),
+			Vector3(0.0, marking_height * 0.5, threshold_z),
 		)
 
 
 func _build_aiming_points(material: StandardMaterial3D) -> void:
-	var half_length := runway_length * 0.5
-	for end_z in [-half_length + 18.0, half_length - 18.0]:
+	var half_length: float = runway_length * 0.5
+	for end_z: float in [-half_length + 18.0, half_length - 18.0]:
 		for row in range(2):
 			for col in range(3):
-				var z := end_z + (row * 6.0 if end_z < 0.0 else -row * 6.0)
-				var x := (float(col) - 1.0) * 3.2
+				var row_offset: float = row * 6.0 if end_z < 0.0 else -row * 6.0
+				var z: float = end_z + row_offset
+				var x: float = (float(col) - 1.0) * 3.2
 				_add_strip(
 					material,
 					Vector3(2.4, marking_height, 2.4),
@@ -90,9 +91,8 @@ func _build_aiming_points(material: StandardMaterial3D) -> void:
 
 
 func _build_edge_lines(material: StandardMaterial3D) -> void:
-	var half_length := runway_length * 0.5
-	var edge_x := runway_width * 0.5 - 0.6
-	for x in [-edge_x, edge_x]:
+	var edge_x: float = runway_width * 0.5 - 0.6
+	for x: float in [-edge_x, edge_x]:
 		_add_strip(
 			material,
 			Vector3(0.35, marking_height, runway_length - 20.0),
@@ -101,7 +101,7 @@ func _build_edge_lines(material: StandardMaterial3D) -> void:
 
 
 func _build_designators() -> void:
-	var half_length := runway_length * 0.5
+	var half_length: float = runway_length * 0.5
 	_add_designator("09", Vector3(0.0, 0.6, -half_length + 14.0), 0.0)
 	_add_designator("27", Vector3(0.0, 0.6, half_length - 14.0), 180.0)
 
