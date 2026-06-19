@@ -42,15 +42,19 @@ Microsoft Flight Simulator 4 風フライトゲームの**最小プロトタイ�
 
 ```
 godot-flight-prototype/
-├── project.godot       # プロジェクト設定・入力マップ
+├── project.godot
 ├── scenes/
-│   ├── main.tscn       # メインシーン（地面・滑走路・機体・カメラ）
+│   ├── main.tscn
+│   ├── airport.tscn
+│   ├── control_tower.tscn
 │   └── instrument_panel.tscn
 └── scripts/
-    ├── airplane.gd     # 飛行制御 + 計器データ送信
+    ├── airplane.gd
     ├── camera_follow.gd
-    ├── hud.gd          # ヘルプ表示用 CanvasLayer
+    ├── hud.gd
     ├── instrument_panel.gd
+    ├── airport/
+    │   └── runway_markings.gd
     └── instruments/
         ├── analog_gauge.gd
         └── artificial_horizon.gd
@@ -61,7 +65,19 @@ godot-flight-prototype/
 - **CharacterBody3D** ベースのアーケード飛行（本格物理シムではない）
 - FS4 の「すぐ飛べる」感覚を優先
 - 画面下部に **計器盤**（速度・人工地平儀・高度）を表示
-- 次フェーズ候補: レトロシェーダー、低ポリ地形、空港オブジェクト
+- 次フェーズ候補: レトロシェーダー、低ポリ地形
+
+## 空港
+
+`scenes/airport.tscn` に滑走路と施設をまとめています。
+
+| 要素 | 内容 |
+|------|------|
+| **滑走路** | 18m × 400m、番号 **09 / 27** |
+| **マーキング** | 中心線・閾値・エイミングポイント・エッジライン（`runway_markings.gd` で自動生成） |
+| **管制塔** | 塔台・ガラス張り操縦室・ windsock |
+| **ターミナル** | 簡易旅客ターミナル風ビル |
+| **エプロン / タクシーウェイ** | 管制塔・ターミナル周辺の誘導路 |
 
 ## 計器盤
 

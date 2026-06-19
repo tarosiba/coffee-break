@@ -1,0 +1,69 @@
+[gd_scene load_steps=10 format=3 uid="uid://c7controltower01"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_concrete"]
+albedo_color = Color(0.58, 0.6, 0.64, 1)
+roughness = 0.92
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dark"]
+albedo_color = Color(0.38, 0.4, 0.44, 1)
+roughness = 0.88
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_glass"]
+albedo_color = Color(0.22, 0.38, 0.55, 1)
+roughness = 0.25
+metallic = 0.15
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_red"]
+albedo_color = Color(0.82, 0.18, 0.14, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_base"]
+size = Vector3(16, 5, 12)
+
+[sub_resource type="BoxMesh" id="BoxMesh_column"]
+size = Vector3(5, 20, 5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_cab"]
+size = Vector3(10, 4.5, 10)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pole"]
+size = Vector3(0.35, 8, 0.35)
+
+[sub_resource type="BoxMesh" id="BoxMesh_sock"]
+size = Vector3(3.5, 0.8, 0.8)
+
+[node name="ControlTower" type="Node3D"]
+
+[node name="Base" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+mesh = SubResource("BoxMesh_base")
+surface_material_override/0 = SubResource("StandardMaterial3D_concrete")
+
+[node name="Column" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15, -1)
+mesh = SubResource("BoxMesh_column")
+surface_material_override/0 = SubResource("StandardMaterial3D_dark")
+
+[node name="Cab" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 27.25, -1)
+mesh = SubResource("BoxMesh_cab")
+surface_material_override/0 = SubResource("StandardMaterial3D_glass")
+
+[node name="CabRoof" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 30.1, -1)
+mesh = SubResource("BoxMesh_cab")
+surface_material_override/0 = SubResource("StandardMaterial3D_dark")
+
+[node name="Antenna" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 32.5, -1)
+mesh = SubResource("BoxMesh_column")
+surface_material_override/0 = SubResource("StandardMaterial3D_red")
+
+[node name="WindSockPole" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 4, 8)
+mesh = SubResource("BoxMesh_pole")
+surface_material_override/0 = SubResource("StandardMaterial3D_dark")
+
+[node name="WindSock" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.8, 8.2, 8)
+mesh = SubResource("BoxMesh_sock")
+surface_material_override/0 = SubResource("StandardMaterial3D_red")

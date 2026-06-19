@@ -1,9 +1,10 @@
-[gd_scene load_steps=19 format=3 uid="uid://c8flightproto001"]
+[gd_scene load_steps=20 format=3 uid="uid://c8flightproto001"]
 
 [ext_resource type="Script" path="res://scripts/airplane.gd" id="1_airplane"]
 [ext_resource type="Script" path="res://scripts/camera_follow.gd" id="2_camera"]
 [ext_resource type="Script" path="res://scripts/hud.gd" id="3_hud"]
 [ext_resource type="PackedScene" uid="uid://d3instpanel001" path="res://scenes/instrument_panel.tscn" id="4_instruments"]
+[ext_resource type="PackedScene" uid="uid://b9airportscene1" path="res://scenes/airport.tscn" id="5_airport"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sky"]
 sky_top_color = Color(0.18, 0.42, 0.82, 1)
@@ -29,12 +30,6 @@ size = Vector3(4000, 2, 4000)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_grass"]
 albedo_color = Color(0.26, 0.52, 0.2, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_runway"]
-size = Vector3(18, 0.2, 400)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_runway"]
-albedo_color = Color(0.35, 0.35, 0.38, 1)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_plane"]
 radius = 0.55
@@ -76,10 +71,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 mesh = SubResource("BoxMesh_ground")
 surface_material_override/0 = SubResource("StandardMaterial3D_grass")
 
-[node name="Runway" type="MeshInstance3D" parent="Ground"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
-mesh = SubResource("BoxMesh_runway")
-surface_material_override/0 = SubResource("StandardMaterial3D_runway")
+[node name="Airport" parent="." instance=ExtResource("5_airport")]
 
 [node name="Airplane" type="CharacterBody3D" parent="." groups=["airplane"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 80)
