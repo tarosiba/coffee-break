@@ -362,8 +362,8 @@ export function createInitialState(): GameState {
   }
   board[1][1] = { kind: 'rook', owner: 'gote' }
   board[1][7] = { kind: 'bishop', owner: 'gote' }
-  board[7][7] = { kind: 'rook', owner: 'sente' }
-  board[7][1] = { kind: 'bishop', owner: 'sente' }
+  board[7][1] = { kind: 'rook', owner: 'sente' }
+  board[7][7] = { kind: 'bishop', owner: 'sente' }
 
   return {
     board,
@@ -373,28 +373,156 @@ export function createInitialState(): GameState {
   }
 }
 
-function moveScore(state: GameState, move: Move): number {
-  let score = Math.random() * 10
-  if (move.type === 'move') {
-    const target = state.board[move.to[0]][move.to[1]]
-    if (target) score += PIECE_VALUE[target.kind]
-    if (move.promote) score += 80
-  } else {
-    score += PIECE_VALUE[move.piece] * 0.3
-    if (move.piece === 'pawn') score += 20
+function isKingInCheck(state: GameState, owner: Player): boolean {
+  const king = findKing(state.board, owner)
+  if (!king) return true
+  const enemy = owner === 'sente' ? 'gote' : 'sente'
+  return isAttacked(state.board, king[0], king[1], enemy)
+}
+
+function evaluateState(state: GameState): number {
+  let score = 0
+
+  for (let r = 0; r < SIZE; r++) {
+    for (let c = 0; c < SIZE; c++) {
+      const piece = state.board[r][c]
+      if (!piece) continue
+      const value = PIECE_VALUE[piece.kind]
+      const positional =
+        piece.owner === 'sente'
+          ? (8 - r) * 2 + (4 - Math.abs(c - 4))
+          : r * 2 + (4 - Math.abs(c - 4))
+      score += piece.owner === 'gote' ? value + positional : -(value + positional)
+    }
   }
-  const next = applyMove(state, move)
-  const king = findKing(next.board, 'sente')
-  if (king && isAttacked(next.board, king[0], king[1], 'gote')) score += 50
+
+  for (const piece of DROP_PIECES) {
+    const goteCount = state.hands.gote[piece] ?? 0
+    const senteCount = state.hands.sente[piece] ?? 0
+    score += goteCount * (PIECE_VALUE[piece] * 0.9)
+    score -= senteCount * (PIECE_VALUE[piece] * 0.9)
+  }
+
+  if (isKingInCheck(state, 'sente')) score += 160
+  if (isKingInCheck(state, 'gote')) score -= 160
+
   return score
 }
 
+function moveOrderingScore(state: GameState, move: Move): number {
+  let score = 0
+  if (move.type === 'move') {
+    const target = state.board[move.to[0]][move.to[1]]
+    if (target) score += PIECE_VALUE[target.kind] * 2
+    if (move.promote) score += 70
+  } else {
+    score += PIECE_VALUE[move.piece] * 0.4
+  }
+  score += (4 - Math.abs(move.to[1] - 4)) * 3
+  return score
+}
+
+function terminalScore(state: GameState, depth: number): number | null {
+  if (!findKing(state.board, 'sente')) return 999999 - (3 - depth)
+  if (!findKing(state.board, 'gote')) return -999999 + (3 - depth)
+
+  const legal = getLegalMoves(state)
+  if (legal.length > 0) return null
+
+  if (isKingInCheck(state, state.turn)) {
+    return state.turn === 'sente' ? 999999 - depth : -999999 + depth
+  }
+  return 0
+}
+
+function searchBestMove(state: GameState, depth: number, alpha: number, beta: number): number {
+  const terminal = terminalScore(state, depth)
+  if (terminal !== null) return terminal
+  if (depth === 0) return evaluateState(state)
+
+  const legal = getLegalMoves(state)
+  legal.sort((a, b) => moveOrderingScore(state, b) - moveOrderingScore(state, a))
+  const candidates = legal.slice(0, 28)
+
+  if (state.turn === 'gote') {
+    let best = -Infinity
+    for (const move of candidates) {
+      const score = searchBestMove(applyMove(state, move), depth - 1, alpha, beta)
+      best = Math.max(best, score)
+      alpha = Math.max(alpha, best)
+      if (beta <= alpha) break
+    }
+    return best
+  }
+
+  let best = Infinity
+  for (const move of candidates) {
+    const score = searchBestMove(applyMove(state, move), depth - 1, alpha, beta)
+    best = Math.min(best, score)
+    beta = Math.min(beta, best)
+    if (beta <= alpha) break
+  }
+  return best
+}
+
+function chooseCpuMove(state: GameState, depth: number): Move | null {
+  const legal = getLegalMoves(state)
+  if (legal.length === 0) return null
+
+  legal.sort((a, b) => moveOrderingScore(state, b) - moveOrderingScore(state, a))
+
+  let bestMove = legal[0]
+  let bestScore = -Infinity
+
+  for (const move of legal.slice(0, 24)) {
+    const score = searchBestMove(applyMove(state, move), depth - 1, -Infinity, Infinity)
+    if (score > bestScore) {
+      bestScore = score
+      bestMove = move
+    }
+  }
+
+  return bestMove
+}
+
 export function getCpuMove(state: GameState): Move | null {
-  const moves = getLegalMoves(state)
-  if (moves.length === 0) return null
-  moves.sort((a, b) => moveScore(state, b) - moveScore(state, a))
-  const top = moves.slice(0, Math.min(4, moves.length))
-  return top[Math.floor(Math.random() * top.length)]
+  const legal = getLegalMoves(state)
+  if (legal.length === 0) return null
+
+  const captures = legal.filter((move) => move.type === 'move' && state.board[move.to[0]][move.to[1]])
+  if (captures.length > 0) {
+    captures.sort((a, b) => moveOrderingScore(state, b) - moveOrderingScore(state, a))
+    let bestCapture = captures[0]
+    let bestScore = -Infinity
+    for (const move of captures.slice(0, 8)) {
+      const score = searchBestMove(applyMove(state, move), 2, -Infinity, Infinity)
+      if (score > bestScore) {
+        bestScore = score
+        bestCapture = move
+      }
+    }
+    return bestCapture
+  }
+
+  const checks = legal.filter((move) => {
+    const next = applyMove(state, move)
+    return isKingInCheck(next, 'sente')
+  })
+  if (checks.length > 0) {
+    checks.sort((a, b) => moveOrderingScore(state, b) - moveOrderingScore(state, a))
+    let bestCheck = checks[0]
+    let bestScore = -Infinity
+    for (const move of checks.slice(0, 6)) {
+      const score = searchBestMove(applyMove(state, move), 2, -Infinity, Infinity)
+      if (score > bestScore) {
+        bestScore = score
+        bestCheck = move
+      }
+    }
+    return bestCheck
+  }
+
+  return chooseCpuMove(state, 3)
 }
 
 export function needsPromotionChoice(state: GameState, from: [number, number], to: [number, number]) {
