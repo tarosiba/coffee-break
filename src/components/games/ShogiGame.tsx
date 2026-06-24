@@ -4,6 +4,7 @@ import {
   SIZE,
   applyMove,
   createInitialState,
+  difficultyLabel,
   getCpuMove,
   getLegalMoves,
   needsPromotionChoice,
@@ -11,6 +12,7 @@ import {
   type GameState,
   type Move,
   type Player,
+  type ShogiDifficulty,
 } from '../../lib/shogi'
 
 type Selection =
@@ -24,19 +26,23 @@ function HandView({
   selected,
   onSelect,
   disabled,
+  opponentLabel,
 }: {
   hand: Partial<Record<BaseKind, number>>
   owner: Player
   selected: BaseKind | null
   onSelect: (piece: BaseKind) => void
   disabled: boolean
+  opponentLabel: string
 }) {
   const pieces = Object.entries(hand).filter(([, n]) => (n ?? 0) > 0) as [BaseKind, number][]
   if (pieces.length === 0) return null
 
   return (
     <div className={`flex flex-wrap items-center gap-2 ${owner === 'gote' ? 'justify-end' : ''}`}>
-      <span className="text-xs text-coffee-500">{owner === 'sente' ? 'あなたの持ち駒' : 'CPUの持ち駒'}</span>
+      <span className="text-xs text-coffee-500">
+        {owner === 'sente' ? 'おじさんの持ち駒' : `${opponentLabel}の持ち駒`}
+      </span>
       {pieces.map(([kind, count]) => (
         <button
           key={kind}
@@ -58,10 +64,14 @@ function HandView({
 }
 
 export function ShogiGame() {
+  const [difficulty, setDifficulty] = useState<ShogiDifficulty>('intermediate')
   const [state, setState] = useState<GameState>(createInitialState)
   const [selection, setSelection] = useState<Selection>(null)
   const [pendingMove, setPendingMove] = useState<{ from: [number, number]; to: [number, number] } | null>(null)
   const [thinking, setThinking] = useState(false)
+
+  const level = difficultyLabel(difficulty)
+  const opponentLabel = `CPU（${level}）`
 
   const legalMoves = useMemo(() => getLegalMoves(state), [state])
   const targetSquares = useMemo(() => {
@@ -87,10 +97,10 @@ export function ShogiGame() {
     )
   }, [legalMoves, selection, state.turn, state.winner])
 
-  const playCpu = useCallback((next: GameState) => {
+  const playCpu = useCallback((next: GameState, level: ShogiDifficulty) => {
     setThinking(true)
     setTimeout(() => {
-      const cpuMove = getCpuMove(next)
+      const cpuMove = getCpuMove(next, level)
       if (cpuMove) {
         setState(applyMove(next, cpuMove))
       } else {
@@ -106,7 +116,14 @@ export function ShogiGame() {
     setState(next)
     setSelection(null)
     setPendingMove(null)
-    if (!next.winner && next.turn === 'gote') playCpu(next)
+    if (!next.winner && next.turn === 'gote') playCpu(next, difficulty)
+  }
+
+  const resetGame = () => {
+    setState(createInitialState())
+    setSelection(null)
+    setPendingMove(null)
+    setThinking(false)
   }
 
   const handleSquare = (row: number, col: number) => {
@@ -150,16 +167,44 @@ export function ShogiGame() {
 
   const status = state.winner
     ? state.winner === 'sente'
-      ? 'あなたの勝ち！ 🎉'
-      : 'CPU（中級）の勝ち…'
+      ? 'おじさんの勝ち！ 🎉'
+      : `${opponentLabel}の勝ち…`
     : thinking
-      ? 'CPU（中級）が考え中…'
+      ? `${opponentLabel}が考え中…`
       : state.turn === 'sente'
-        ? 'あなたの番（先手） / 後手: CPU（中級）'
-        : 'CPU（中級）の番'
+        ? `おじさんの番（先手） / 後手: ${opponentLabel}`
+        : `${opponentLabel}の番`
 
   return (
     <div className="space-y-4">
+      <div className="rounded-xl border border-coffee-200 bg-white/70 p-3">
+        <p className="mb-2 text-center text-sm font-medium text-coffee-700">難易度を選んでください</p>
+        <div className="flex justify-center gap-2">
+          {(['beginner', 'intermediate'] as const).map((level) => (
+            <button
+              key={level}
+              type="button"
+              onClick={() => {
+                setDifficulty(level)
+                resetGame()
+              }}
+              className={`touch-target rounded-xl px-4 py-2 text-sm font-medium transition ${
+                difficulty === level
+                  ? 'bg-coffee-600 text-cream'
+                  : 'border border-coffee-300 bg-white text-coffee-700 hover:border-coffee-400'
+              }`}
+            >
+              {level === 'beginner' ? '初級' : '中級'}
+            </button>
+          ))}
+        </div>
+        <p className="mt-2 text-center text-xs text-coffee-500">
+          {difficulty === 'beginner'
+            ? '初級 — 気軽に遊べる相手（ランダム寄り）'
+            : '中級 — 数手先を読む相手（ミニマックス探索）'}
+        </p>
+      </div>
+
       <p className="text-center font-medium text-coffee-700">{status}</p>
 
       <HandView
@@ -168,6 +213,7 @@ export function ShogiGame() {
         selected={null}
         onSelect={() => {}}
         disabled
+        opponentLabel={opponentLabel}
       />
 
       <div className="overflow-x-auto rounded-xl border-2 border-coffee-500 bg-amber-700/20 p-1">
@@ -227,6 +273,7 @@ export function ShogiGame() {
           setPendingMove(null)
         }}
         disabled={!!state.winner || state.turn !== 'sente' || thinking}
+        opponentLabel={opponentLabel}
       />
 
       {pendingMove && (
@@ -266,7 +313,7 @@ export function ShogiGame() {
       )}
 
       <p className="text-center text-xs text-coffee-500">
-        将棋（中級AI）— 駒をタップして移動先を選ぶ。持ち駒をタップして打つこともできます。
+        将棋 — おじさん（先手） vs CPU（{level}）。駒をタップして移動、持ち駒をタップして打てます。
       </p>
 
       {(state.winner || legalMoves.length === 0) && state.turn === 'sente' && !state.winner && (
@@ -276,12 +323,7 @@ export function ShogiGame() {
       <div className="text-center">
         <button
           type="button"
-          onClick={() => {
-            setState(createInitialState())
-            setSelection(null)
-            setPendingMove(null)
-            setThinking(false)
-          }}
+          onClick={resetGame}
           className="touch-target text-sm text-coffee-500 underline"
         >
           新しい対局
