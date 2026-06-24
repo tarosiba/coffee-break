@@ -9,6 +9,7 @@ const tabs: { id: Tab; label: string; icon: string }[] = [
   { id: 'home', label: 'ホーム', icon: '☕' },
   { id: 'calendar', label: 'カレンダー', icon: '📅' },
   { id: 'games', label: 'ゲーム', icon: '🎮' },
+  { id: 'creative', label: 'お絵描き', icon: '🖌' },
   { id: 'chat', label: '雑談', icon: '💬' },
 ]
 

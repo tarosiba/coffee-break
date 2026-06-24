@@ -4,6 +4,7 @@ import { Home } from './components/Home'
 import { Games } from './components/Games'
 import { Calendar } from './components/Calendar'
 import { Chat } from './components/Chat'
+import { Creative } from './components/Creative'
 import type { Tab } from './types'
 
 export default function App() {
@@ -18,6 +19,7 @@ export default function App() {
         )}
         {activeTab === 'calendar' && <Calendar />}
         {activeTab === 'games' && <Games />}
+        {activeTab === 'creative' && <Creative />}
         {activeTab === 'chat' && <Chat />}
       </main>
     </div>
