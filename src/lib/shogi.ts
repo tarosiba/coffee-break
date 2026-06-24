@@ -362,8 +362,8 @@ export function createInitialState(): GameState {
     board[6][c] = { kind: 'pawn', owner: 'sente' }
     board[8][c] = { kind: back[c], owner: 'sente' }
   }
-  board[1][7] = { kind: 'rook', owner: 'gote' }
-  board[1][1] = { kind: 'bishop', owner: 'gote' }
+  board[1][1] = { kind: 'rook', owner: 'gote' }
+  board[1][7] = { kind: 'bishop', owner: 'gote' }
   board[7][7] = { kind: 'rook', owner: 'sente' }
   board[7][1] = { kind: 'bishop', owner: 'sente' }
 
