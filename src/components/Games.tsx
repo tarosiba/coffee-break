@@ -14,7 +14,7 @@ const games: { id: GameId; title: string; description: string; icon: string; cat
   { id: 'galaxy-shooter', title: 'スターシューター', description: 'ギャラクシアン風シューティング', icon: '🚀', category: 'シューティング' },
   { id: 'shogi', title: '将棋', description: '初級・中級CPUと対局（持ち駒・成りあり）', icon: '☖', category: 'ボード' },
   { id: 'memory', title: '神経衰弱', description: 'トランプのペアを探そう', icon: '🂠', category: 'トランプ' },
-  { id: 'othello', title: 'オセロ', description: 'CPUと対戦（8×8）', icon: '⚪', category: 'ボード' },
+  { id: 'othello', title: 'オセロ', description: '初級・中級CPUと対戦（8×8）', icon: '⚪', category: 'ボード' },
   { id: 'gomoku', title: '五目並べ', description: '15×15の盤で対戦', icon: '⚫', category: 'ボード' },
   { id: 'life-board', title: '人生ゲーム', description: 'サイコロですすむボードゲーム', icon: '🎲', category: 'ボード' },
   { id: 'janken', title: 'じゃんけん', description: 'CPUと対戦', icon: '✊', category: 'カジュアル' },

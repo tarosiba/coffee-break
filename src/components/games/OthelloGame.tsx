@@ -4,11 +4,13 @@ import {
   applyMove,
   countDiscs,
   createBoard,
+  difficultyLabel,
   getCpuMove,
   getGameResult,
   getValidMoves,
   resolveTurnAfterPass,
   type Board,
+  type OthelloDifficulty,
   type Player,
 } from '../../lib/othello'
 
@@ -17,10 +19,14 @@ function moveKey(row: number, col: number): string {
 }
 
 export function OthelloGame() {
+  const [difficulty, setDifficulty] = useState<OthelloDifficulty>('intermediate')
   const [board, setBoard] = useState<Board>(createBoard)
   const [turn, setTurn] = useState<Player>('black')
   const [lastMove, setLastMove] = useState<[number, number] | null>(null)
   const [thinking, setThinking] = useState(false)
+
+  const level = difficultyLabel(difficulty)
+  const cpuLabel = `CPU（${level}）`
 
   const scores = countDiscs(board)
   const playerMoves = useMemo(() => getValidMoves(board, 'black'), [board])
@@ -38,10 +44,10 @@ export function OthelloGame() {
     setThinking(false)
   }
 
-  const finishCpuTurn = (nextBoard: Board) => {
+  const finishCpuTurn = (nextBoard: Board, level: OthelloDifficulty) => {
     setThinking(true)
     window.setTimeout(() => {
-      const cpuMove = getCpuMove(nextBoard)
+      const cpuMove = getCpuMove(nextBoard, level)
       if (!cpuMove) {
         setBoard(nextBoard)
         setTurn(resolveTurnAfterPass(nextBoard, 'white'))
@@ -67,7 +73,7 @@ export function OthelloGame() {
         nextTurn === 'white' &&
         getValidMoves(afterCpu, 'white').length > 0
       ) {
-        finishCpuTurn(afterCpu)
+        finishCpuTurn(afterCpu, level)
       }
     }, 450)
   }
@@ -78,7 +84,7 @@ export function OthelloGame() {
     const nextTurn = resolveTurnAfterPass(board, 'black')
     setTurn(nextTurn)
     if (nextTurn === 'white' && getValidMoves(board, 'white').length > 0) {
-      finishCpuTurn(board)
+      finishCpuTurn(board, difficulty)
     }
   }
 
@@ -95,7 +101,7 @@ export function OthelloGame() {
     const nextTurn = resolveTurnAfterPass(next, 'white')
     setTurn(nextTurn)
     if (nextTurn === 'white' && getValidMoves(next, 'white').length > 0) {
-      finishCpuTurn(next)
+      finishCpuTurn(next, difficulty)
     }
   }
 
@@ -105,24 +111,52 @@ export function OthelloGame() {
     result === 'black-win'
       ? 'あなたの勝ち！ 🎉'
       : result === 'white-win'
-        ? 'CPUの勝ち…'
+        ? `${cpuLabel}の勝ち…`
         : result === 'draw'
           ? '引き分け'
           : thinking
-            ? 'CPUが考え中…'
+            ? `${cpuLabel}が考え中…`
             : mustPass
               ? '置ける場所がありません（パスしてください）'
               : turn === 'black'
-                ? 'あなたの番（● 黒）'
-                : 'CPUの番（○ 白）'
+                ? `あなたの番（● 黒） / 相手: ${cpuLabel}`
+                : `${cpuLabel}の番`
 
   return (
     <div className="space-y-4">
+      <div className="rounded-xl border border-coffee-200 bg-white/70 p-3">
+        <p className="mb-2 text-center text-sm font-medium text-coffee-700">難易度を選んでください</p>
+        <div className="flex justify-center gap-2">
+          {(['beginner', 'intermediate'] as const).map((levelOption) => (
+            <button
+              key={levelOption}
+              type="button"
+              onClick={() => {
+                setDifficulty(levelOption)
+                reset()
+              }}
+              className={`touch-target rounded-xl px-4 py-2 text-sm font-medium transition ${
+                difficulty === levelOption
+                  ? 'bg-coffee-600 text-cream'
+                  : 'border border-coffee-300 bg-white text-coffee-700 hover:border-coffee-400'
+              }`}
+            >
+              {levelOption === 'beginner' ? '初級' : '中級'}
+            </button>
+          ))}
+        </div>
+        <p className="mt-2 text-center text-xs text-coffee-500">
+          {difficulty === 'beginner'
+            ? '初級 — 手加減あり。気軽に遊べる相手です'
+            : '中級 — 角や形を読む相手（本気寄り）'}
+        </p>
+      </div>
+
       <p className="text-center font-medium text-coffee-700">{status}</p>
 
       <div className="flex justify-center gap-6 text-sm text-coffee-600">
         <span>● あなた: {scores.black}</span>
-        <span>○ CPU: {scores.white}</span>
+        <span>○ {cpuLabel}: {scores.white}</span>
       </div>
 
       <div className="overflow-x-auto rounded-xl border border-coffee-300 bg-emerald-800/90 p-2">
