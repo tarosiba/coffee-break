@@ -1,22 +1,76 @@
 import { useEffect, useRef, useState } from 'react'
 import type { ChatMessage } from '../types'
 
+const BOT_NAME = 'カーソル君'
+const BOT_AVATAR = '🤖☕'
+
 const BOT_REPLIES = [
-  'いいですね！☕ コーヒーブレイク最高です。',
-  'わかります〜。ちょっと一息つきましょう。',
-  '今日もお疲れさまです！',
-  'ゲームの方も遊んでみてくださいね 🎮',
-  '雑談、大歓迎です！',
-  'そうそう、休憩は大事ですよね。',
-  'いい天気ですね（たぶん）',
-  'コーヒー、何杯目ですか？ 😄',
+  'やあ！コーヒータイム最高だね ☕',
+  '休憩大事！一緒にひと息つこう〜',
+  '今日もおつかれさま！いい仕事してるよ。',
+  'ゲームタブも遊んでみて！将棋とかあるよ 🎮',
+  'なんでも話しかけてね。コーヒー飲みながらおしゃべりしよう。',
+  '無理しなくていいからね。コーヒー飲んでリフレッシュ！',
+  'コーヒー何杯目？ 僕は…電気だけどね 😄',
+  'カフェイン補給、完了？',
+  'そうそう、休憩は生産性の秘訣だよ。',
+  'いい天気だね（たぶん）。外の空気も吸おうかな。',
+  'コード書いてる？ 難しいときは休憩が一番だよ。',
+  'お絵描きタブでスケッチするのもおすすめ 🖌',
+]
+
+const KEYWORD_REPLIES: { pattern: RegExp; replies: string[] }[] = [
+  {
+    pattern: /こんにちは|こんばんは|おはよう|やあ|やっほ/,
+    replies: [
+      'やあ！コーヒータイムへようこそ ☕ なんでも話しかけてね！',
+      'こんにちは！カーソル君だよ。一緒にコーヒーブレイクしよう！',
+    ],
+  },
+  {
+    pattern: /コーヒー|カフェ|ラテ|エスプレッソ|カプチーノ/,
+    replies: [
+      'コーヒーいいね！☕ 僕も（見守りながら）一緒に飲もう。',
+      'いい香りがしそう…！何杯目？',
+      'カフェイン補給は大事。でも飲みすぎ注意だよ 😄',
+    ],
+  },
+  {
+    pattern: /疲れ|つかれ|眠い|だるい|休憩/,
+    replies: [
+      'おつかれさま！ここは休憩スポットだから、ゆっくりしていってね。',
+      '無理しないで！コーヒー飲んで、ゲームでもしてリフレッシュしよう。',
+      '休憩はサボりじゃなくて、次の一歩の準備だよ ☕',
+    ],
+  },
+  {
+    pattern: /ゲーム|遊|将棋|神経衰弱|五目/,
+    replies: [
+      'ゲームタブにいろいろあるよ！将棋、スターシューター、神経衰弱とか 🎮',
+      '遊びたいならゲームタブへ！一緒に（見守りながら）遊ぼう。',
+    ],
+  },
+  {
+    pattern: /ありがと|感謝|サンキュ/,
+    replies: [
+      'こちらこそ！コーヒータイム、いつでも来てね ☕',
+      'どういたしまして！また話そうね。',
+    ],
+  },
+  {
+    pattern: /カーソル|cursor/,
+    replies: [
+      'カーソル君、呼んでくれてありがとう！コーヒータイムの相手、任せて ☕',
+      '僕のこと知ってるんだね！嬉しいな。コーヒー飲みながらおしゃべりしよう。',
+    ],
+  },
 ]
 
 const INITIAL_MESSAGES: ChatMessage[] = [
   {
     id: '1',
-    author: 'Coffee Bot',
-    text: 'Coffee Break へようこそ！気軽にメッセージを送ってください ☕',
+    author: BOT_NAME,
+    text: `${BOT_AVATAR} やあ！カーソル君だよ。コーヒータイムへようこそ！気軽にメッセージを送ってね ☕`,
     timestamp: new Date(),
     isBot: true,
   },
@@ -24,6 +78,15 @@ const INITIAL_MESSAGES: ChatMessage[] = [
 
 function generateId() {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`
+}
+
+function pickBotReply(userText: string): string {
+  for (const { pattern, replies } of KEYWORD_REPLIES) {
+    if (pattern.test(userText)) {
+      return replies[Math.floor(Math.random() * replies.length)]
+    }
+  }
+  return BOT_REPLIES[Math.floor(Math.random() * BOT_REPLIES.length)]
 }
 
 export function Chat() {
@@ -66,8 +129,8 @@ export function Chat() {
     setTimeout(() => {
       const reply: ChatMessage = {
         id: generateId(),
-        author: 'Coffee Bot',
-        text: BOT_REPLIES[Math.floor(Math.random() * BOT_REPLIES.length)],
+        author: BOT_NAME,
+        text: pickBotReply(text),
         timestamp: new Date(),
         isBot: true,
       }
@@ -78,9 +141,9 @@ export function Chat() {
   if (showNicknameSetup) {
     return (
       <div className="flex flex-col items-center justify-center gap-4 py-12">
-        <span className="text-4xl" aria-hidden>💬</span>
-        <h2 className="text-xl font-bold text-coffee-800">ニックネームを設定</h2>
-        <p className="text-sm text-coffee-500">雑談ルームで使う名前を入力してください</p>
+        <span className="text-4xl" aria-hidden>{BOT_AVATAR}</span>
+        <h2 className="text-xl font-bold text-coffee-800">カーソル君とコーヒータイム</h2>
+        <p className="text-sm text-coffee-500">ニックネームを設定して、コーヒーブレイクを始めましょう</p>
         <input
           type="text"
           value={nickname}
@@ -96,7 +159,7 @@ export function Chat() {
           disabled={!nickname.trim()}
           className="rounded-xl bg-coffee-600 px-6 py-2.5 font-medium text-cream transition hover:bg-coffee-700 disabled:opacity-50"
         >
-          はじめる
+          コーヒータイムをはじめる
         </button>
       </div>
     )
@@ -105,9 +168,9 @@ export function Chat() {
   return (
     <div className="flex h-[calc(100vh-8rem)] flex-col py-4">
       <div className="mb-4">
-        <h2 className="text-2xl font-bold text-coffee-800">雑談ルーム</h2>
+        <h2 className="text-2xl font-bold text-coffee-800">カーソル君とコーヒータイム</h2>
         <p className="text-sm text-coffee-500">
-          {nickname} として参加中 · Coffee Bot がお相手します
+          {nickname} として参加中 · {BOT_AVATAR} {BOT_NAME} がお相手します
         </p>
       </div>
 
@@ -118,6 +181,7 @@ export function Chat() {
             className={`flex flex-col ${msg.isBot ? 'items-start' : 'items-end'}`}
           >
             <span className="mb-0.5 text-xs text-coffee-400">
+              {msg.isBot ? `${BOT_AVATAR} ` : ''}
               {msg.author} · {msg.timestamp.toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' })}
             </span>
             <div
@@ -139,7 +203,7 @@ export function Chat() {
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="メッセージを入力..."
+          placeholder="カーソル君にメッセージを送る..."
           maxLength={500}
           className="flex-1 rounded-xl border border-coffee-200 bg-white px-4 py-2.5 text-coffee-800 outline-none focus:border-coffee-400"
         />
