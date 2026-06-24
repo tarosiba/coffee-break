@@ -151,12 +151,12 @@ export function ShogiGame() {
   const status = state.winner
     ? state.winner === 'sente'
       ? 'あなたの勝ち！ 🎉'
-      : 'CPUの勝ち…'
+      : 'CPU（中級）の勝ち…'
     : thinking
-      ? 'CPUが考え中…'
+      ? 'CPU（中級）が考え中…'
       : state.turn === 'sente'
-        ? 'あなたの番（先手）'
-        : 'CPUの番'
+        ? 'あなたの番（先手） / 後手: CPU（中級）'
+        : 'CPU（中級）の番'
 
   return (
     <div className="space-y-4">
@@ -266,7 +266,7 @@ export function ShogiGame() {
       )}
 
       <p className="text-center text-xs text-coffee-500">
-        駒をタップして移動先を選ぶ。持ち駒をタップして打つこともできます。
+        将棋（中級AI）— 駒をタップして移動先を選ぶ。持ち駒をタップして打つこともできます。
       </p>
 
       {(state.winner || legalMoves.length === 0) && state.turn === 'sente' && !state.winner && (
