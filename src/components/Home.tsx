@@ -66,12 +66,12 @@ export function Home({ onNavigate }: HomeProps) {
           onClick={() => onNavigate('chat')}
           className="touch-target group rounded-2xl border border-coffee-200 bg-white/70 p-6 text-left shadow-sm transition active:scale-[0.98] hover:border-coffee-300 hover:shadow-md"
         >
-          <span className="mb-3 block text-4xl" aria-hidden>💬</span>
+          <span className="mb-3 block text-4xl" aria-hidden>🤖☕</span>
           <h3 className="mb-1 text-lg font-semibold text-coffee-800 group-hover:text-coffee-600">
-            雑談ルーム
+            カーソル君とコーヒータイム
           </h3>
           <p className="text-sm text-coffee-500">
-            気軽にメッセージを送って、コーヒーブレイク仲間とおしゃべりしましょう。
+            カーソル君とコーヒーを飲みながら、気軽におしゃべりしましょう。
           </p>
         </button>
       </section>
