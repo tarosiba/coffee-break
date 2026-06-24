@@ -22,9 +22,15 @@ export function PhotoSketchApp() {
   const [error, setError] = useState<string | null>(null)
 
   const applyCurrentFilter = useCallback((source: HTMLCanvasElement, style: FilterStyle) => {
-    const result = applyFilterToCanvas(source, style)
-    setPreviewUrl(result.toDataURL('image/png'))
-    return result
+    try {
+      const result = applyFilterToCanvas(source, style)
+      setPreviewUrl(result.toDataURL('image/png'))
+      setError(null)
+      return result
+    } catch (e) {
+      setError(e instanceof Error ? e.message : '画像の変換に失敗しました')
+      return null
+    }
   }, [])
 
   const handleFile = async (file: File | null) => {
