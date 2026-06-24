@@ -23,6 +23,8 @@ export type Move =
   | { type: 'move'; from: [number, number]; to: [number, number]; promote: boolean }
   | { type: 'drop'; piece: BaseKind; to: [number, number] }
 
+export type ShogiDifficulty = 'beginner' | 'intermediate'
+
 export interface GameState {
   board: Board
   hands: Record<Player, Hand>
@@ -360,10 +362,10 @@ export function createInitialState(): GameState {
     board[6][c] = { kind: 'pawn', owner: 'sente' }
     board[8][c] = { kind: back[c], owner: 'sente' }
   }
-  board[1][1] = { kind: 'rook', owner: 'gote' }
-  board[1][7] = { kind: 'bishop', owner: 'gote' }
-  board[7][1] = { kind: 'rook', owner: 'sente' }
-  board[7][7] = { kind: 'bishop', owner: 'sente' }
+  board[1][7] = { kind: 'rook', owner: 'gote' }
+  board[1][1] = { kind: 'bishop', owner: 'gote' }
+  board[7][7] = { kind: 'rook', owner: 'sente' }
+  board[7][1] = { kind: 'bishop', owner: 'sente' }
 
   return {
     board,
@@ -485,7 +487,32 @@ function chooseCpuMove(state: GameState, depth: number): Move | null {
   return bestMove
 }
 
-export function getCpuMove(state: GameState): Move | null {
+function getBeginnerCpuMove(state: GameState): Move | null {
+  const moves = getLegalMoves(state)
+  if (moves.length === 0) return null
+
+  const scored = moves.map((move) => {
+    let score = Math.random() * 10
+    if (move.type === 'move') {
+      const target = state.board[move.to[0]][move.to[1]]
+      if (target) score += PIECE_VALUE[target.kind]
+      if (move.promote) score += 80
+    } else {
+      score += PIECE_VALUE[move.piece] * 0.3
+      if (move.piece === 'pawn') score += 20
+    }
+    const next = applyMove(state, move)
+    const king = findKing(next.board, 'sente')
+    if (king && isAttacked(next.board, king[0], king[1], 'gote')) score += 50
+    return { move, score }
+  })
+
+  scored.sort((a, b) => b.score - a.score)
+  const top = scored.slice(0, Math.min(4, scored.length))
+  return top[Math.floor(Math.random() * top.length)].move
+}
+
+function getIntermediateCpuMove(state: GameState): Move | null {
   const legal = getLegalMoves(state)
   if (legal.length === 0) return null
 
@@ -523,6 +550,15 @@ export function getCpuMove(state: GameState): Move | null {
   }
 
   return chooseCpuMove(state, 3)
+}
+
+export function getCpuMove(state: GameState, difficulty: ShogiDifficulty = 'intermediate'): Move | null {
+  if (difficulty === 'beginner') return getBeginnerCpuMove(state)
+  return getIntermediateCpuMove(state)
+}
+
+export function difficultyLabel(difficulty: ShogiDifficulty): string {
+  return difficulty === 'beginner' ? '初級' : '中級'
 }
 
 export function needsPromotionChoice(state: GameState, from: [number, number], to: [number, number]) {

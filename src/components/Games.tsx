@@ -11,7 +11,7 @@ import { GalaxyShooterGame } from './games/GalaxyShooterGame'
 
 const games: { id: GameId; title: string; description: string; icon: string; category: string }[] = [
   { id: 'galaxy-shooter', title: 'スターシューター', description: 'ギャラクシアン風シューティング', icon: '🚀', category: 'シューティング' },
-  { id: 'shogi', title: '将棋', description: '中級AIと対局（持ち駒・成りあり）', icon: '☖', category: 'ボード' },
+  { id: 'shogi', title: '将棋', description: '初級・中級CPUと対局（持ち駒・成りあり）', icon: '☖', category: 'ボード' },
   { id: 'memory', title: '神経衰弱', description: 'トランプのペアを探そう', icon: '🂠', category: 'トランプ' },
   { id: 'gomoku', title: '五目並べ', description: '15×15の盤で対戦', icon: '⚫', category: 'ボード' },
   { id: 'life-board', title: '人生ゲーム', description: 'サイコロですすむボードゲーム', icon: '🎲', category: 'ボード' },
