@@ -4,6 +4,7 @@ export type Disc = 'black' | 'white' | null
 export type Board = Disc[][]
 export type Player = 'black' | 'white'
 export type GameResult = 'playing' | 'black-win' | 'white-win' | 'draw'
+export type OthelloDifficulty = 'beginner' | 'intermediate'
 
 const DIRECTIONS: [number, number][] = [
   [-1, -1], [-1, 0], [-1, 1],
@@ -187,7 +188,7 @@ function search(board: Board, depth: number, alpha: number, beta: number, player
   return best
 }
 
-export function getCpuMove(board: Board): [number, number] | null {
+function getIntermediateCpuMove(board: Board): [number, number] | null {
   const moves = getValidMoves(board, 'white')
   if (moves.length === 0) return null
 
@@ -204,6 +205,47 @@ export function getCpuMove(board: Board): [number, number] | null {
   }
 
   return bestMove
+}
+
+function scoreBeginnerMove(board: Board, row: number, col: number): number {
+  const flips = getFlipsForMove(board, row, col, 'white').length
+  let score = Math.random() * 20
+
+  // 初級は取れる石の数だけを少し考える（深くは読まない）
+  score += flips * 1.5
+
+  // 角の近くの悪い手も選びやすくして手加減
+  const weight = POSITION_WEIGHTS[row][col]
+  if (weight <= -20) score += 6
+  if (weight >= 100) score += 4
+
+  return score
+}
+
+function getBeginnerCpuMove(board: Board): [number, number] | null {
+  const moves = getValidMoves(board, 'white')
+  if (moves.length === 0) return null
+
+  // 3割くらいは完全にランダム
+  if (Math.random() < 0.3) {
+    return moves[Math.floor(Math.random() * moves.length)]
+  }
+
+  const scored = moves
+    .map(([row, col]) => ({ move: [row, col] as [number, number], score: scoreBeginnerMove(board, row, col) }))
+    .sort((a, b) => b.score - a.score)
+
+  const top = scored.slice(0, Math.min(4, scored.length))
+  return top[Math.floor(Math.random() * top.length)].move
+}
+
+export function difficultyLabel(difficulty: OthelloDifficulty): string {
+  return difficulty === 'beginner' ? '初級' : '中級'
+}
+
+export function getCpuMove(board: Board, difficulty: OthelloDifficulty = 'intermediate'): [number, number] | null {
+  if (difficulty === 'beginner') return getBeginnerCpuMove(board)
+  return getIntermediateCpuMove(board)
 }
 
 export function resolveTurnAfterPass(board: Board, turn: Player): Player {
