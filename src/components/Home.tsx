@@ -1,7 +1,7 @@
 import { InstallPrompt } from './InstallPrompt'
 
 interface HomeProps {
-  onNavigate: (tab: 'calendar' | 'games' | 'chat') => void
+  onNavigate: (tab: 'calendar' | 'games' | 'creative' | 'chat') => void
 }
 
 export function Home({ onNavigate }: HomeProps) {
@@ -44,6 +44,20 @@ export function Home({ onNavigate }: HomeProps) {
           </h3>
           <p className="text-sm text-coffee-500">
             将棋、スターシューター、神経衰弱、五目並べなど、すぐ遊べるゲーム集。
+          </p>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => onNavigate('creative')}
+          className="touch-target group rounded-2xl border border-coffee-200 bg-white/70 p-6 text-left shadow-sm transition active:scale-[0.98] hover:border-coffee-300 hover:shadow-md"
+        >
+          <span className="mb-3 block text-4xl" aria-hidden>🖌</span>
+          <h3 className="mb-1 text-lg font-semibold text-coffee-800 group-hover:text-coffee-600">
+            クリエイティブ
+          </h3>
+          <p className="text-sm text-coffee-500">
+            お絵描きや、写真をモノクロ・スケッチ風イラストに変換できます。
           </p>
         </button>
 
