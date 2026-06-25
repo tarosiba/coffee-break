@@ -8,11 +8,34 @@ export const WALL_PADDING = 14
 
 const MAX_PUCK_SPEED = 13
 const MIN_PUCK_SPEED = 4.5
-const CPU_MAX_SPEED = 5.8
 const SCORE_PAUSE = 75
 const SUB_STEPS = 3
 
+export type AirHockeyDifficulty = 'beginner' | 'intermediate'
 export type Phase = 'title' | 'playing' | 'scored' | 'gameover'
+
+const DIFFICULTY_CONFIG = {
+  beginner: {
+    cpuMaxSpeed: 3.4,
+    predictionFrames: 2.5,
+    targetNoise: 38,
+    chaseHalfRatio: 0.48,
+    approachRatio: 0.58,
+    hesitateChance: 0.22,
+  },
+  intermediate: {
+    cpuMaxSpeed: 5.8,
+    predictionFrames: 5,
+    targetNoise: 0,
+    chaseHalfRatio: 0.5,
+    approachRatio: 0.62,
+    hesitateChance: 0,
+  },
+} as const
+
+export function difficultyLabel(difficulty: AirHockeyDifficulty): string {
+  return difficulty === 'beginner' ? '初級' : '中級'
+}
 
 export interface Paddle {
   x: number
@@ -112,28 +135,39 @@ function predictPuckX(
   return x
 }
 
-function updateCpu(state: AirHockeyState): void {
+function updateCpu(state: AirHockeyState, difficulty: AirHockeyDifficulty): void {
+  const config = DIFFICULTY_CONFIG[difficulty]
   const zoneMaxY = HEIGHT * 0.46
   const defendY = 72
   let targetX = WIDTH / 2
   let targetY = defendY
 
-  const puckInCpuHalf = state.puck.y < HEIGHT * 0.5
-  const puckApproaching = state.puck.vy < 0 && state.puck.y < HEIGHT * 0.62
+  const puckInCpuHalf = state.puck.y < HEIGHT * config.chaseHalfRatio
+  const puckApproaching = state.puck.vy < 0 && state.puck.y < HEIGHT * config.approachRatio
 
   if (puckInCpuHalf) {
-    targetX = state.puck.x + state.puck.vx * 5
+    targetX = state.puck.x + state.puck.vx * config.predictionFrames
     targetY = clamp(state.puck.y, WALL_PADDING + PADDLE_R + 4, zoneMaxY)
   } else if (puckApproaching) {
     targetX = predictPuckX(state.puck, defendY)
     targetY = clamp(state.puck.y * 0.35 + defendY * 0.65, defendY - 8, zoneMaxY)
   }
 
+  if (config.targetNoise > 0) {
+    targetX += (Math.random() - 0.5) * config.targetNoise
+    targetY += (Math.random() - 0.5) * config.targetNoise * 0.35
+  }
+
+  if (config.hesitateChance > 0 && Math.random() < config.hesitateChance) {
+    targetX = WIDTH / 2 + (Math.random() - 0.5) * 40
+    targetY = defendY + 12
+  }
+
   movePaddleToward(
     state.cpu,
     clamp(targetX, WALL_PADDING + PADDLE_R, WIDTH - WALL_PADDING - PADDLE_R),
     clamp(targetY, WALL_PADDING + PADDLE_R + 4, zoneMaxY),
-    CPU_MAX_SPEED,
+    config.cpuMaxSpeed,
   )
 }
 
@@ -257,7 +291,11 @@ export function startGame(): AirHockeyState {
   return next
 }
 
-export function updateGame(state: AirHockeyState, input: PointerInput): AirHockeyState {
+export function updateGame(
+  state: AirHockeyState,
+  input: PointerInput,
+  difficulty: AirHockeyDifficulty = 'intermediate',
+): AirHockeyState {
   const next: AirHockeyState = {
     ...state,
     puck: { ...state.puck },
@@ -287,7 +325,7 @@ export function updateGame(state: AirHockeyState, input: PointerInput): AirHocke
   }
 
   updatePlayer(next, input)
-  updateCpu(next)
+  updateCpu(next, difficulty)
 
   for (let i = 0; i < SUB_STEPS; i++) {
     stepPhysics(next)
