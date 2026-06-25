@@ -94,7 +94,7 @@ export function AirHockeyGame() {
       </div>
 
       <p className="text-center text-xs text-coffee-500">
-        エアホッケー — 画面をドラッグして下のパドルを動かし、パックを相手ゴールへ押し込もう。
+        エアホッケー — 素早くドラッグしてパックを打ち返そう。勢いよく当てると速く飛びます。
       </p>
     </div>
   )

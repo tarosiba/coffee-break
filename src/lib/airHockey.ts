@@ -6,19 +6,28 @@ export const GOAL_WIDTH = 110
 export const WIN_SCORE = 5
 export const WALL_PADDING = 14
 
-const MAX_PUCK_SPEED = 10
-const CPU_SPEED = 4.2
-const SCORE_PAUSE = 90
+const MAX_PUCK_SPEED = 13
+const MIN_PUCK_SPEED = 4.5
+const CPU_MAX_SPEED = 5.8
+const SCORE_PAUSE = 75
+const SUB_STEPS = 3
 
 export type Phase = 'title' | 'playing' | 'scored' | 'gameover'
+
+export interface Paddle {
+  x: number
+  y: number
+  vx: number
+  vy: number
+}
 
 export interface AirHockeyState {
   phase: Phase
   playerScore: number
   cpuScore: number
   puck: { x: number; y: number; vx: number; vy: number }
-  player: { x: number; y: number }
-  cpu: { x: number; y: number }
+  player: Paddle
+  cpu: Paddle
   pauseTicks: number
   lastScorer: 'player' | 'cpu' | null
   winner: 'player' | 'cpu' | null
@@ -41,14 +50,21 @@ function clampSpeed(vx: number, vy: number): { vx: number; vy: number } {
   return { vx: vx * scale, vy: vy * scale }
 }
 
+function ensureMinSpeed(vx: number, vy: number): { vx: number; vy: number } {
+  const speed = Math.hypot(vx, vy)
+  if (speed >= MIN_PUCK_SPEED || speed === 0) return { vx, vy }
+  const scale = MIN_PUCK_SPEED / speed
+  return { vx: vx * scale, vy: vy * scale }
+}
+
 export function createGameState(): AirHockeyState {
   return {
     phase: 'title',
     playerScore: 0,
     cpuScore: 0,
     puck: { x: WIDTH / 2, y: HEIGHT / 2, vx: 0, vy: 0 },
-    player: { x: WIDTH / 2, y: HEIGHT - 70 },
-    cpu: { x: WIDTH / 2, y: 70 },
+    player: { x: WIDTH / 2, y: HEIGHT - 70, vx: 0, vy: 0 },
+    cpu: { x: WIDTH / 2, y: 70, vx: 0, vy: 0 },
     pauseTicks: 0,
     lastScorer: null,
     winner: null,
@@ -58,13 +74,93 @@ export function createGameState(): AirHockeyState {
 function resetPuck(state: AirHockeyState, toward: 'player' | 'cpu'): void {
   state.puck.x = WIDTH / 2
   state.puck.y = HEIGHT / 2
-  state.puck.vx = (Math.random() - 0.5) * 2
-  state.puck.vy = toward === 'player' ? 3.5 : -3.5
+  state.puck.vx = (Math.random() - 0.5) * 2.5
+  state.puck.vy = toward === 'player' ? 5 : -5
+}
+
+function movePaddleToward(paddle: Paddle, targetX: number, targetY: number, maxSpeed: number): void {
+  const prevX = paddle.x
+  const prevY = paddle.y
+  const dx = targetX - paddle.x
+  const dy = targetY - paddle.y
+  const dist = Math.hypot(dx, dy)
+  if (dist > maxSpeed) {
+    paddle.x += (dx / dist) * maxSpeed
+    paddle.y += (dy / dist) * maxSpeed
+  } else {
+    paddle.x = targetX
+    paddle.y = targetY
+  }
+  paddle.vx = paddle.x - prevX
+  paddle.vy = paddle.y - prevY
+}
+
+function predictPuckX(
+  puck: AirHockeyState['puck'],
+  targetY: number,
+): number {
+  if (puck.vy >= -0.2) return puck.x
+  const frames = (puck.y - targetY) / -puck.vy
+  if (frames <= 0 || frames > 50) return puck.x
+  let x = puck.x + puck.vx * frames
+  const left = WALL_PADDING + PUCK_R
+  const right = WIDTH - WALL_PADDING - PUCK_R
+  while (x < left || x > right) {
+    if (x < left) x = left + (left - x)
+    if (x > right) x = right - (x - right)
+  }
+  return x
+}
+
+function updateCpu(state: AirHockeyState): void {
+  const zoneMaxY = HEIGHT * 0.46
+  const defendY = 72
+  let targetX = WIDTH / 2
+  let targetY = defendY
+
+  const puckInCpuHalf = state.puck.y < HEIGHT * 0.5
+  const puckApproaching = state.puck.vy < 0 && state.puck.y < HEIGHT * 0.62
+
+  if (puckInCpuHalf) {
+    targetX = state.puck.x + state.puck.vx * 5
+    targetY = clamp(state.puck.y, WALL_PADDING + PADDLE_R + 4, zoneMaxY)
+  } else if (puckApproaching) {
+    targetX = predictPuckX(state.puck, defendY)
+    targetY = clamp(state.puck.y * 0.35 + defendY * 0.65, defendY - 8, zoneMaxY)
+  }
+
+  movePaddleToward(
+    state.cpu,
+    clamp(targetX, WALL_PADDING + PADDLE_R, WIDTH - WALL_PADDING - PADDLE_R),
+    clamp(targetY, WALL_PADDING + PADDLE_R + 4, zoneMaxY),
+    CPU_MAX_SPEED,
+  )
+}
+
+function updatePlayer(state: AirHockeyState, input: PointerInput): void {
+  const prevX = state.player.x
+  const prevY = state.player.y
+
+  if (input.active) {
+    state.player.x = clamp(
+      input.x,
+      WALL_PADDING + PADDLE_R,
+      WIDTH - WALL_PADDING - PADDLE_R,
+    )
+    state.player.y = clamp(
+      input.y,
+      HEIGHT * 0.5,
+      HEIGHT - WALL_PADDING - PADDLE_R,
+    )
+  }
+
+  state.player.vx = state.player.x - prevX
+  state.player.vy = state.player.y - prevY
 }
 
 function resolvePaddleCollision(
   puck: AirHockeyState['puck'],
-  paddle: { x: number; y: number },
+  paddle: Paddle,
 ): void {
   const dx = puck.x - paddle.x
   const dy = puck.y - paddle.y
@@ -77,48 +173,55 @@ function resolvePaddleCollision(
   puck.x = paddle.x + nx * minDist
   puck.y = paddle.y + ny * minDist
 
-  const dot = puck.vx * nx + puck.vy * ny
-  if (dot > 0) {
-    puck.vx -= 2 * dot * nx
-    puck.vy -= 2 * dot * ny
+  const relVx = puck.vx - paddle.vx
+  const relVy = puck.vy - paddle.vy
+  const relDot = relVx * nx + relVy * ny
+  if (relDot > 0) {
+    puck.vx -= (1.85 * relDot) * nx
+    puck.vy -= (1.85 * relDot) * ny
   }
 
-  puck.vx += nx * 2.4
-  puck.vy += ny * 2.4
-  const next = clampSpeed(puck.vx, puck.vy)
+  puck.vx += paddle.vx * 1.15
+  puck.vy += paddle.vy * 1.15
+
+  const paddlePower = Math.hypot(paddle.vx, paddle.vy)
+  if (paddlePower > 0.5) {
+    puck.vx += nx * paddlePower * 0.55
+    puck.vy += ny * paddlePower * 0.55
+  }
+
+  let next = clampSpeed(puck.vx, puck.vy)
+  next = ensureMinSpeed(next.vx, next.vy)
   puck.vx = next.vx
   puck.vy = next.vy
 }
 
-function updateCpu(state: AirHockeyState): void {
-  let targetX = state.puck.x
-  if (state.puck.y > HEIGHT * 0.45) {
-    targetX = WIDTH / 2
+function bounceWalls(state: AirHockeyState): void {
+  const puck = state.puck
+  const left = WALL_PADDING + PUCK_R
+  const right = WIDTH - WALL_PADDING - PUCK_R
+  const top = WALL_PADDING + PUCK_R
+  const bottom = HEIGHT - WALL_PADDING - PUCK_R
+  const goalLeft = WIDTH / 2 - GOAL_WIDTH / 2
+  const goalRight = WIDTH / 2 + GOAL_WIDTH / 2
+  const inGoalX = puck.x > goalLeft && puck.x < goalRight
+
+  if (puck.x < left) {
+    puck.x = left
+    puck.vx = Math.abs(puck.vx) * 1.02
   }
-
-  const dx = targetX - state.cpu.x
-  const step = clamp(dx, -CPU_SPEED, CPU_SPEED)
-  state.cpu.x = clamp(
-    state.cpu.x + step,
-    WALL_PADDING + PADDLE_R,
-    WIDTH - WALL_PADDING - PADDLE_R,
-  )
-  state.cpu.y = 70
-}
-
-function updatePlayer(state: AirHockeyState, input: PointerInput): void {
-  if (!input.active) return
-
-  state.player.x = clamp(
-    input.x,
-    WALL_PADDING + PADDLE_R,
-    WIDTH - WALL_PADDING - PADDLE_R,
-  )
-  state.player.y = clamp(
-    input.y,
-    HEIGHT * 0.55,
-    HEIGHT - WALL_PADDING - PADDLE_R,
-  )
+  if (puck.x > right) {
+    puck.x = right
+    puck.vx = -Math.abs(puck.vx) * 1.02
+  }
+  if (puck.y < top && !inGoalX) {
+    puck.y = top
+    puck.vy = Math.abs(puck.vy) * 1.02
+  }
+  if (puck.y > bottom && !inGoalX) {
+    puck.y = bottom
+    puck.vy = -Math.abs(puck.vy) * 1.02
+  }
 }
 
 function checkGoal(state: AirHockeyState): boolean {
@@ -137,6 +240,14 @@ function checkGoal(state: AirHockeyState): boolean {
   }
 
   return false
+}
+
+function stepPhysics(state: AirHockeyState): void {
+  state.puck.x += state.puck.vx / SUB_STEPS
+  state.puck.y += state.puck.vy / SUB_STEPS
+  bounceWalls(state)
+  resolvePaddleCollision(state.puck, state.player)
+  resolvePaddleCollision(state.puck, state.cpu)
 }
 
 export function startGame(): AirHockeyState {
@@ -178,43 +289,16 @@ export function updateGame(state: AirHockeyState, input: PointerInput): AirHocke
   updatePlayer(next, input)
   updateCpu(next)
 
-  next.puck.x += next.puck.vx
-  next.puck.y += next.puck.vy
-
-  const left = WALL_PADDING + PUCK_R
-  const right = WIDTH - WALL_PADDING - PUCK_R
-  const top = WALL_PADDING + PUCK_R
-  const bottom = HEIGHT - WALL_PADDING - PUCK_R
-  const goalLeft = WIDTH / 2 - GOAL_WIDTH / 2
-  const goalRight = WIDTH / 2 + GOAL_WIDTH / 2
-
-  if (next.puck.x < left) {
-    next.puck.x = left
-    next.puck.vx = Math.abs(next.puck.vx) * 0.95
-  }
-  if (next.puck.x > right) {
-    next.puck.x = right
-    next.puck.vx = -Math.abs(next.puck.vx) * 0.95
+  for (let i = 0; i < SUB_STEPS; i++) {
+    stepPhysics(next)
   }
 
-  const inGoalX = next.puck.x > goalLeft && next.puck.x < goalRight
-  if (next.puck.y < top && !inGoalX) {
-    next.puck.y = top
-    next.puck.vy = Math.abs(next.puck.vy) * 0.95
-  }
-  if (next.puck.y > bottom && !inGoalX) {
-    next.puck.y = bottom
-    next.puck.vy = -Math.abs(next.puck.vy) * 0.95
-  }
-
-  resolvePaddleCollision(next.puck, next.player)
-  resolvePaddleCollision(next.puck, next.cpu)
-
-  next.puck.vx *= 0.999
-  next.puck.vy *= 0.999
-  const speed = clampSpeed(next.puck.vx, next.puck.vy)
-  next.puck.vx = speed.vx
-  next.puck.vy = speed.vy
+  next.puck.vx *= 0.9995
+  next.puck.vy *= 0.9995
+  const speed = ensureMinSpeed(next.puck.vx, next.puck.vy)
+  const capped = clampSpeed(speed.vx, speed.vy)
+  next.puck.vx = capped.vx
+  next.puck.vy = capped.vy
 
   if (checkGoal(next)) {
     next.phase = 'scored'
@@ -282,12 +366,13 @@ export function drawTable(ctx: CanvasRenderingContext2D, state: AirHockeyState):
     ctx.fillRect(0, 0, WIDTH, HEIGHT)
     ctx.fillStyle = '#fef3c7'
     ctx.font = 'bold 28px sans-serif'
-    ctx.fillText('エアホッケー', WIDTH / 2 - 78, HEIGHT / 2 - 24)
+    ctx.fillText('エアホッケー', WIDTH / 2 - 78, HEIGHT / 2 - 36)
     ctx.font = '14px sans-serif'
-    ctx.fillText('タップ / ドラッグで操作', WIDTH / 2 - 72, HEIGHT / 2 + 8)
-    ctx.fillText('先に5点取った方の勝ち', WIDTH / 2 - 78, HEIGHT / 2 + 32)
+    ctx.fillText('ドラッグでパドルを動かして', WIDTH / 2 - 84, HEIGHT / 2 - 4)
+    ctx.fillText('パックを打ち合おう', WIDTH / 2 - 56, HEIGHT / 2 + 20)
+    ctx.fillText('先に5点取った方の勝ち', WIDTH / 2 - 78, HEIGHT / 2 + 44)
     ctx.fillStyle = '#67e8f9'
-    ctx.fillText('▶ タップしてスタート', WIDTH / 2 - 72, HEIGHT / 2 + 72)
+    ctx.fillText('▶ タップしてスタート', WIDTH / 2 - 72, HEIGHT / 2 + 84)
     return
   }
 
