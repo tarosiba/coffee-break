@@ -19,6 +19,7 @@ export type GameId =
   | 'galaxy-shooter'
   | 'othello'
   | 'air-hockey'
+  | 'checkers'
 
 export interface ChatMessage {
   id: string
