@@ -8,9 +8,11 @@ import { GomokuGame } from './games/GomokuGame'
 import { ShogiGame } from './games/ShogiGame'
 import { LifeBoardGame } from './games/LifeBoardGame'
 import { OthelloGame } from './games/OthelloGame'
+import { AirHockeyGame } from './games/AirHockeyGame'
 import { GalaxyShooterGame } from './games/GalaxyShooterGame'
 
 const games: { id: GameId; title: string; description: string; icon: string; category: string }[] = [
+  { id: 'air-hockey', title: 'エアホッケー', description: 'パックを打って5点先取', icon: '🏒', category: 'スポーツ' },
   { id: 'galaxy-shooter', title: 'スターシューター', description: 'ギャラクシアン風シューティング', icon: '🚀', category: 'シューティング' },
   { id: 'shogi', title: '将棋', description: '初級・中級CPUと対局（持ち駒・成りあり）', icon: '☖', category: 'ボード' },
   { id: 'memory', title: '神経衰弱', description: 'トランプのペアを探そう', icon: '🂠', category: 'トランプ' },
@@ -32,6 +34,7 @@ const gameComponents: Record<GameId, ReactNode> = {
   othello: <OthelloGame />,
   'life-board': <LifeBoardGame />,
   'galaxy-shooter': <GalaxyShooterGame />,
+  'air-hockey': <AirHockeyGame />,
 }
 
 export function Games() {
@@ -42,7 +45,7 @@ export function Games() {
     <div className="space-y-6 py-4">
       <div>
         <h2 className="text-2xl font-bold text-coffee-800">ミニゲーム</h2>
-        <p className="text-sm text-coffee-500">トランプ・ボード・シューティング・カジュアルゲーム</p>
+        <p className="text-sm text-coffee-500">トランプ・ボード・スポーツ・シューティング・カジュアルゲーム</p>
       </div>
 
       {!activeGame ? (
