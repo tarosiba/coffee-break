@@ -9,6 +9,7 @@ import { ShogiGame } from './games/ShogiGame'
 import { LifeBoardGame } from './games/LifeBoardGame'
 import { OthelloGame } from './games/OthelloGame'
 import { AirHockeyGame } from './games/AirHockeyGame'
+import { CheckersGame } from './games/CheckersGame'
 import { GalaxyShooterGame } from './games/GalaxyShooterGame'
 
 const games: { id: GameId; title: string; description: string; icon: string; category: string }[] = [
@@ -17,6 +18,7 @@ const games: { id: GameId; title: string; description: string; icon: string; cat
   { id: 'shogi', title: '将棋', description: '初級・中級CPUと対局（持ち駒・成りあり）', icon: '☖', category: 'ボード' },
   { id: 'memory', title: '神経衰弱', description: 'トランプのペアを探そう', icon: '🂠', category: 'トランプ' },
   { id: 'othello', title: 'オセロ', description: '初級・中級CPUと対戦（8×8）', icon: '⚪', category: 'ボード' },
+  { id: 'checkers', title: 'チェッカー', description: '初級・中級CPUと対戦（斜めに駒取り）', icon: '🔴', category: 'ボード' },
   { id: 'gomoku', title: '五目並べ', description: '15×15の盤で対戦', icon: '⚫', category: 'ボード' },
   { id: 'life-board', title: '人生ゲーム', description: 'サイコロですすむボードゲーム', icon: '🎲', category: 'ボード' },
   { id: 'janken', title: 'じゃんけん', description: 'CPUと対戦', icon: '✊', category: 'カジュアル' },
@@ -32,6 +34,7 @@ const gameComponents: Record<GameId, ReactNode> = {
   memory: <MemoryGame />,
   gomoku: <GomokuGame />,
   othello: <OthelloGame />,
+  checkers: <CheckersGame />,
   'life-board': <LifeBoardGame />,
   'galaxy-shooter': <GalaxyShooterGame />,
   'air-hockey': <AirHockeyGame />,
