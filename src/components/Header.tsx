@@ -11,6 +11,7 @@ const tabs: { id: Tab; label: string; icon: string }[] = [
   { id: 'games', label: 'ゲーム', icon: '🎮' },
   { id: 'creative', label: 'お絵描き', icon: '🖌' },
   { id: 'chat', label: 'コーヒー', icon: '🤖☕' },
+  { id: 'clock', label: '時計', icon: '🕐' },
 ]
 
 export function Header({ activeTab, onTabChange }: HeaderProps) {

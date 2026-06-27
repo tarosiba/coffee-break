@@ -1,4 +1,4 @@
-export type Tab = 'home' | 'calendar' | 'games' | 'creative' | 'chat'
+export type Tab = 'home' | 'calendar' | 'games' | 'creative' | 'chat' | 'clock'
 
 export interface CalendarEvent {
   id: string
