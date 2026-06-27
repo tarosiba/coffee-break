@@ -10,9 +10,11 @@ import { LifeBoardGame } from './games/LifeBoardGame'
 import { OthelloGame } from './games/OthelloGame'
 import { AirHockeyGame } from './games/AirHockeyGame'
 import { CheckersGame } from './games/CheckersGame'
+import { SoccerGame } from './games/SoccerGame'
 import { GalaxyShooterGame } from './games/GalaxyShooterGame'
 
 const games: { id: GameId; title: string; description: string; icon: string; category: string }[] = [
+  { id: 'soccer', title: 'ピクセルサッカー', description: '4対4・パス/シュート（初級・中級）', icon: '⚽', category: 'スポーツ' },
   { id: 'air-hockey', title: 'エアホッケー', description: 'パックを打って5点先取', icon: '🏒', category: 'スポーツ' },
   { id: 'galaxy-shooter', title: 'スターシューター', description: 'ギャラクシアン風シューティング', icon: '🚀', category: 'シューティング' },
   { id: 'shogi', title: '将棋', description: '初級・中級CPUと対局（持ち駒・成りあり）', icon: '☖', category: 'ボード' },
@@ -38,6 +40,7 @@ const gameComponents: Record<GameId, ReactNode> = {
   'life-board': <LifeBoardGame />,
   'galaxy-shooter': <GalaxyShooterGame />,
   'air-hockey': <AirHockeyGame />,
+  soccer: <SoccerGame />,
 }
 
 export function Games() {
