@@ -39,3 +39,38 @@ export const MONTH_LABELS = [
   '1月', '2月', '3月', '4月', '5月', '6月',
   '7月', '8月', '9月', '10月', '11月', '12月',
 ] as const
+
+export function getTodayDateKey(): string {
+  const today = new Date()
+  return formatDateKey(today.getFullYear(), today.getMonth(), today.getDate())
+}
+
+export function getEventsForDate(dateKey: string): CalendarEvent[] {
+  return loadEvents()
+    .filter((event) => event.date === dateKey)
+    .sort((a, b) => (a.time ?? '').localeCompare(b.time ?? ''))
+}
+
+export function getTodayEvents(): CalendarEvent[] {
+  return getEventsForDate(getTodayDateKey())
+}
+
+export function formatEventSummary(event: CalendarEvent): string {
+  return event.time ? `${event.time} ${event.title}` : event.title
+}
+
+export function buildTodayReminderMessage(events: CalendarEvent[]): string {
+  if (events.length === 0) {
+    return '今日の予定はまだないみたい。ゆっくりコーヒータイムしよう ☕'
+  }
+
+  if (events.length === 1) {
+    const event = events[0]
+    const timePart = event.time ? `${event.time} に` : ''
+    return `今日は ${timePart}「${event.title}」があるよ。忘れないようにね！`
+  }
+
+  const summary = events.slice(0, 3).map(formatEventSummary).join('、')
+  const extra = events.length > 3 ? ` ほか${events.length - 3}件` : ''
+  return `今日は予定が${events.length}件あるよ。${summary}${extra}。頑張ろう！`
+}
