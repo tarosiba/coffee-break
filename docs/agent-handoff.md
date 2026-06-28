@@ -48,6 +48,7 @@ src/lib/othello.ts            # オセロ + AI
 src/lib/airHockey.ts          # エアホッケー物理
 src/types.ts                  # GameId など
 docs/conversation-summary.md  # 会話まとめ（詳細）
+docs/conversation-session-2026-06-27.md  # 2026-06-27 セッションまとめ
 docs/agent-handoff.md         # 本ドキュメント
 ```
 
