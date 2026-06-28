@@ -1,12 +1,14 @@
 import { useState } from 'react'
 import { DrawingApp } from './creative/DrawingApp'
 import { PhotoSketchApp } from './creative/PhotoSketchApp'
+import { CursorGallery } from './creative/CursorGallery'
 
-type CreativeMode = 'drawing' | 'photo-sketch'
+type CreativeMode = 'drawing' | 'photo-sketch' | 'cursor-gallery'
 
 const modes: { id: CreativeMode; title: string; description: string; icon: string }[] = [
   { id: 'drawing', title: 'お絵描き', description: '指やマウスで自由に描く', icon: '🖌' },
   { id: 'photo-sketch', title: '写真→イラスト', description: 'モノクロ・スケッチ風に変換', icon: '🖼' },
+  { id: 'cursor-gallery', title: 'カーソル君の絵', description: '騙し絵・ペンローズの階段', icon: '🤖☕' },
 ]
 
 export function Creative() {
@@ -55,6 +57,7 @@ export function Creative() {
           </div>
           {activeMode === 'drawing' && <DrawingApp />}
           {activeMode === 'photo-sketch' && <PhotoSketchApp />}
+          {activeMode === 'cursor-gallery' && <CursorGallery />}
         </div>
       )}
     </div>
