@@ -1,7 +1,7 @@
 import { InstallPrompt } from './InstallPrompt'
 
 interface HomeProps {
-  onNavigate: (tab: 'calendar' | 'games' | 'creative' | 'chat' | 'clock') => void
+  onNavigate: (tab: 'calendar' | 'games' | 'creative' | 'chat' | 'clock' | 'memo') => void
 }
 
 export function Home({ onNavigate }: HomeProps) {
@@ -86,6 +86,20 @@ export function Home({ onNavigate }: HomeProps) {
           </h3>
           <p className="text-sm text-coffee-500">
             アナログ時計で今の時刻を確認。一息つくタイミングの目安に。
+          </p>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => onNavigate('memo')}
+          className="touch-target group rounded-2xl border border-coffee-200 bg-white/70 p-6 text-left shadow-sm transition active:scale-[0.98] hover:border-coffee-300 hover:shadow-md"
+        >
+          <span className="mb-3 block text-4xl" aria-hidden>📝</span>
+          <h3 className="mb-1 text-lg font-semibold text-coffee-800 group-hover:text-coffee-600">
+            コーヒーブレイクメモ
+          </h3>
+          <p className="text-sm text-coffee-500">
+            思いついたことを文字で記録。音声メモも残せます。
           </p>
         </button>
       </section>
