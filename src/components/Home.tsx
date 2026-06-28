@@ -1,4 +1,5 @@
 import { InstallPrompt } from './InstallPrompt'
+import { TodayReminder } from './TodayReminder'
 
 interface HomeProps {
   onNavigate: (tab: 'calendar' | 'games' | 'creative' | 'chat' | 'clock' | 'memo') => void
@@ -15,6 +16,8 @@ export function Home({ onNavigate }: HomeProps) {
           ホーム画面に追加すれば、アイコンからすぐ始められます。
         </p>
       </section>
+
+      <TodayReminder onOpenCalendar={() => onNavigate('calendar')} />
 
       <InstallPrompt />
 
