@@ -8,7 +8,7 @@ type CreativeMode = 'drawing' | 'photo-sketch' | 'cursor-gallery'
 const modes: { id: CreativeMode; title: string; description: string; icon: string }[] = [
   { id: 'drawing', title: 'お絵描き', description: '指やマウスで自由に描く', icon: '🖌' },
   { id: 'photo-sketch', title: '写真→イラスト', description: 'モノクロ・スケッチ風に変換', icon: '🖼' },
-  { id: 'cursor-gallery', title: 'カーソル君の絵', description: '騙し絵・ペンローズの階段', icon: '🤖☕' },
+  { id: 'cursor-gallery', title: 'カーソル君の絵', description: '騙し絵・しば犬など', icon: '🤖☕' },
 ]
 
 export function Creative() {
