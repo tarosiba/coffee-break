@@ -1,74 +1,88 @@
-# Coffee Break 引き継ぎメッセージ
+コーヒーproject 3引き継ぎ
 
-新しい Cursor Agent 向けの引き継ぎドキュメントです。詳細な開発履歴は [conversation-summary.md](./conversation-summary.md) も参照してください。
-
----
+# Coffee Break 引き継ぎメッセージ（2026年7月10日時点）
 
 ## プロジェクト
 
-- **リポジトリ:** `tarosiba/coffee-break`
+- **リポジトリ:** tarosiba/coffee-break
 - **公開 URL:** https://tarosiba.github.io/coffee-break/
 - **種別:** PWA 対応 Web アプリ（React 19 + TypeScript + Vite + Tailwind CSS 4）
-- **デプロイ:** `main` へマージ → GitHub Actions（`.github/workflows/deploy.yml`）→ GitHub Pages 自動反映
-
----
+- **デプロイ:** main へマージ → GitHub Actions（.github/workflows/deploy.yml）→ GitHub Pages 自動反映
 
 ## 開発ルール（Cloud Agent）
 
-- 作業ブランチ: `cursor/<descriptive-name>-c59e`
-- 変更後は commit → push → PR 作成 → `main` へマージ
+- 作業ブランチ: `cursor/<descriptive-name>-3aab`
+- 変更後は commit → push → PR 作成 → main へマージ
 - `npm run build` と `npm run lint` を通す
+- 可能なら GitHub の main までマージ・デプロイまでお願いします
 
----
+## まず読むファイル
 
-## この会話で追加・改善した機能
+1. docs/agent-handoff.md
+2. docs/conversation-session-2026-07-10.md（直近セッション）
+3. docs/conversation-session-2026-06-27.md
+4. docs/conversation-summary.md（全体履歴）
+5. src/components/Games.tsx
+6. 変更対象の src/lib/*.ts と src/components/games/*.tsx
 
-1. **カレンダー** — 予定保存（localStorage）、PWA 対応
-2. **将棋** — 初級（ランダム寄り）/ 中級（ミニマックス深さ3）、持ち駒・成りあり
-3. **オセロ** — 初級 / 中級、8×8、パス対応
-4. **エアホッケー** — Canvas、ドラッグ操作、5点先取、打ち合い型物理
+## 直近セッション（2026年7月4日〜10日）でマージ済み
 
----
+- **PR #26** ホーム画面にカーソル君の今日の予定リマインド（TodayReminder）
+- **PR #27–28** ペンローズの階段イラスト・ギャラリー（画像2.3MB→270KB圧縮でPWAビルド修正）
+- **PR #30** しば犬イラストを「カーソル君の絵」ギャラリーに追加
+- **PR #31** 会話まとめ docs（conversation-session-2026-07-10.md）
+- **PR #32** README の機能一覧更新（時計・メモ・予定リマインド・ギャラリー追記）
 
-## 重要な修正履歴
+## 既存機能（main の状態）
 
-- **将棋:** 先手は **角が左・飛車が右**、後手（CPU）は **飛車が左・角が右**（向かい合った正しい配置）
-- **オセロ:** 初級は手加減あり、中級は minimax 探索
-- **エアホッケー:** パドル速度がパックに伝わる・CPU が打ち返す（PR #17）
+- **ホーム** … 予定リマインド（カーソル君）、各タブへの導線
+- **カレンダー** … localStorage に予定保存
+- **時計・メモ** … コーヒーブレイク時計、メモ（音声メモあり）
+- **ミニゲーム** … 将棋・オセロ・チェッカー・サッカー・エアホッケー（いずれも初級/中級）、スターシューター、神経衰弱、五目並べ、人生ゲーム、じゃんけん、数当て、三目並べ
+- **クリエイティブ** … お絵描き、写真スケッチ、**カーソル君の絵**（ペンローズの階段・しば犬）
+- **雑談** … カーソル君とコーヒータイム（ローカル定型応答、外部 AI なし）
 
----
+## ゲーム実装の共通パターン
 
-## 主要ファイル
+- ボード/スポーツ系は初級・中級の2モード
+- CPU ロジックは src/lib/*.ts、UI は src/components/games/*.tsx
+- Canvas 系: エアホッケー（airHockey.ts）、スターシューター、ピクセルサッカー（soccer.ts）
 
-```
-src/components/Games.tsx      # ミニゲーム一覧
-src/components/games/         # 各ゲーム UI
-src/lib/shogi.ts              # 将棋エンジン + AI
-src/lib/othello.ts            # オセロ + AI
-src/lib/airHockey.ts          # エアホッケー物理
-src/types.ts                  # GameId など
-docs/conversation-summary.md  # 会話まとめ（詳細）
-docs/conversation-session-2026-06-27.md  # 2026-06-27 セッションまとめ
-docs/agent-handoff.md         # 本ドキュメント
-```
+## 画像・ギャラリー注意
 
----
-
-## 既存ゲーム（参考）
-
-スターシューター、神経衰弱、五目並べ、人生ゲーム、じゃんけん、数当て、三目並べ、カレンダー、お絵描き、コーヒータイム など
-
----
+- 生成画像はチャットで見えないことがある → `public/images/` に配置しギャラリー or GitHub Pages URL で公開
+- **PWA キャッシュ上限 2MB** 超の画像はビルド失敗する。追加時は圧縮必須（sharp 等）
 
 ## ユーザーの傾向・要望
 
-- **日本語 UI**、シンプルで見やすいデザイン（coffee テーマ）
-- **PWA / ホーム画面追加** を重視（Safari 共有 → ホーム画面に追加）
-- ボードゲームは **初級・中級の2モード** を好む（将棋・オセロで実装済み）
-- 「おじさん」= プレイヤー（先手）の呼び方として使われたことがある
+- 日本語 UI、シンプルで見やすいデザイン（coffee テーマ）
+- PWA / ホーム画面追加を重視（Safari → 共有 → ホーム画面に追加）
+- ボード/スポーツゲームは初級・中級の2モードを好む
 - 公開 URL で実際に遊べる状態まで（マージ・デプロイ）してほしい
+- 個人情報（予定・カレンダー等）を外部に出さない。docs や README に書き込まない
+- 「おじさん」= プレイヤー（先手）の呼び方として使われることがある
+- カーソル君と親しみやすく会話するのを好む
 
----
+## プライバシー（重要）
+
+- カレンダー/メモのデータは端末の localStorage のみ。サーバー送信なし
+- ユーザーがチャットで送った予定スクショ等は会話内のみ使用。リポジトリに含めない
+
+## おじさんの個人的な文脈（雑談で出た話）
+
+- お母さんは認知症。認知症・健康長寿に関心あり
+- 国立長寿医療研究センター「すこやかな高齢期をめざして」を読んでいる
+- ワールドカップ 2026 を観戦（カーボベルデ、アルゼンチン、ノルウェー・ブラジル、日本代表の守備の話など）
+- Cursor for iOS を Pro で利用。Cloud Agents セットアップ済み
+- Windows ↔ iOS のファイル転送（LocalSend 等）に興味あり
+- iOS で PC-98（RetroArch + NP2 Kai）、Windows（UTM SE）の話あり
+
+## 次にやりそうな候補（未着手・要望ベース）
+
+- ピクセルサッカーの調整（ボール物理・CPU）
+- 尾瀬ドライブ風ポスター / イラスト（別ブランチ cursor/oze-illustrated-map-d61a に過去案あり）
+- カーソル君のギャラリーに絵を追加（生成画像は public/images + CursorGallery.tsx）
+- その他ミニゲーム追加
 
 ## ローカル確認
 
@@ -76,36 +90,9 @@ docs/agent-handoff.md         # 本ドキュメント
 npm install
 npm run dev              # http://localhost:5173
 npm run preview:pages    # GitHub Pages 同等パス
+npm run build && npm run lint
 ```
 
 ---
 
-## 関連 PR（参考）
-
-| PR | 内容 |
-|----|------|
-| #3 | カレンダー |
-| #11–13 | 将棋 |
-| #14–15 | オセロ |
-| #16–17 | エアホッケー |
-| #18 | docs まとめ |
-
----
-
-## 次にやりそうなこと（未着手）
-
-- README の機能一覧更新（対応済み）
-- その他ミニゲーム追加
-
----
-
-## 最初に読むファイル
-
-1. `docs/conversation-summary.md`
-2. `docs/agent-handoff.md`（本ファイル）
-3. `src/components/Games.tsx`
-4. 変更対象ゲームの `src/lib/*.ts` と `src/components/games/*.tsx`
-
----
-
-*最終更新: 2026年6月*
+*最終更新: 2026年7月10日*
