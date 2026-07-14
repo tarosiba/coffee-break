@@ -325,9 +325,14 @@ function isoProject(
   originX: number,
   originY: number,
 ): { x: number; y: number } {
-  const sx = (gx - gy) * cell * 0.55
-  const sy = (gx + gy) * cell * 0.28 - gz * cell * 0.55
+  // 2:1 アイソメトリック（上から斜めに見下ろすドールハウス視点）
+  const sx = (gx - gy) * cell * 0.5
+  const sy = (gx + gy) * cell * 0.25 - gz * cell * 0.5
   return { x: originX + sx, y: originY + sy }
+}
+
+function isoDepth(gx: number, gy: number, gz = 0): number {
+  return gx + gy - gz * 0.01
 }
 
 function drawIsoQuad(
@@ -357,102 +362,180 @@ function shadeColor(hex: string, amount: number): string {
   return `rgb(${r},${g},${b})`
 }
 
+type IsoDrawable = { depth: number; draw: () => void }
+
+function isoCorners(
+  points: { gx: number; gy: number; gz: number }[],
+  cell: number,
+  ox: number,
+  oy: number,
+): { x: number; y: number }[] {
+  return points.map((p) => isoProject(p.gx, p.gy, p.gz, cell, ox, oy))
+}
+
+function getPlanBounds(plan: FloorPlan): { minX: number; minY: number; maxX: number; maxY: number } {
+  if (plan.rooms.length === 0) {
+    return { minX: 1, minY: 1, maxX: GRID_COLS - 1, maxY: GRID_ROWS - 1 }
+  }
+  let minX = Infinity
+  let minY = Infinity
+  let maxX = -Infinity
+  let maxY = -Infinity
+  for (const r of plan.rooms) {
+    minX = Math.min(minX, r.x)
+    minY = Math.min(minY, r.y)
+    maxX = Math.max(maxX, r.x + r.w)
+    maxY = Math.max(maxY, r.y + r.h)
+  }
+  return { minX: minX - 0.5, minY: minY - 0.5, maxX: maxX + 0.5, maxY: maxY + 0.5 }
+}
+
+function pushBox(
+  items: IsoDrawable[],
+  x: number,
+  y: number,
+  w: number,
+  h: number,
+  height: number,
+  color: string,
+  cell: number,
+  ox: number,
+  oy: number,
+  ctx: CanvasRenderingContext2D,
+): void {
+  const faces: { corners: { gx: number; gy: number; gz: number }[]; shade: number }[] = [
+    {
+      corners: [
+        { gx: x, gy: y, gz: height },
+        { gx: x + w, gy: y, gz: height },
+        { gx: x + w, gy: y + h, gz: height },
+        { gx: x, gy: y + h, gz: height },
+      ],
+      shade: 20,
+    },
+    {
+      corners: [
+        { gx: x, gy: y + h, gz: 0 },
+        { gx: x + w, gy: y + h, gz: 0 },
+        { gx: x + w, gy: y + h, gz: height },
+        { gx: x, gy: y + h, gz: height },
+      ],
+      shade: -30,
+    },
+    {
+      corners: [
+        { gx: x + w, gy: y, gz: 0 },
+        { gx: x + w, gy: y + h, gz: 0 },
+        { gx: x + w, gy: y + h, gz: height },
+        { gx: x + w, gy: y, gz: height },
+      ],
+      shade: -45,
+    },
+    {
+      corners: [
+        { gx: x, gy: y, gz: 0 },
+        { gx: x, gy: y + h, gz: 0 },
+        { gx: x, gy: y + h, gz: height },
+        { gx: x, gy: y, gz: height },
+      ],
+      shade: -15,
+    },
+    {
+      corners: [
+        { gx: x, gy: y, gz: 0 },
+        { gx: x + w, gy: y, gz: 0 },
+        { gx: x + w, gy: y, gz: height },
+        { gx: x, gy: y, gz: height },
+      ],
+      shade: -5,
+    },
+  ]
+
+  for (const face of faces) {
+    const depth = Math.max(...face.corners.map((c) => isoDepth(c.gx, c.gy, c.gz)))
+    const screen = isoCorners(face.corners, cell, ox, oy)
+    const fill = shadeColor(color, face.shade)
+    items.push({
+      depth,
+      draw: () => drawIsoQuad(ctx, screen, fill, '#3d2817'),
+    })
+  }
+}
+
 export function drawFloorPlan3D(ctx: CanvasRenderingContext2D, plan: FloorPlan): void {
   const { width, height } = ctx.canvas
-  const cell = Math.min(width, height) / (GRID_COLS + GRID_ROWS) * 1.1
-  const originX = width * 0.5
-  const originY = height * 0.22
+  const bounds = getPlanBounds(plan)
+  const spanX = bounds.maxX - bounds.minX
+  const spanY = bounds.maxY - bounds.minY
+  const cell = Math.min(width / (spanX + spanY + 2), height / ((spanX + spanY) * 0.25 + WALL_HEIGHT + 4))
+
+  const centerGx = (bounds.minX + bounds.maxX) / 2
+  const centerGy = (bounds.minY + bounds.maxY) / 2
+  const centerScreen = isoProject(centerGx, centerGy, 0, cell, 0, 0)
+  const originX = width / 2 - centerScreen.x
+  const originY = height * 0.55 - centerScreen.y
 
   ctx.fillStyle = '#dff0d8'
   ctx.fillRect(0, 0, width, height)
 
-  const ground = [
-    isoProject(0, 0, 0, cell, originX, originY),
-    isoProject(GRID_COLS, 0, 0, cell, originX, originY),
-    isoProject(GRID_COLS, GRID_ROWS, 0, cell, originX, originY),
-    isoProject(0, GRID_ROWS, 0, cell, originX, originY),
-  ]
-  drawIsoQuad(ctx, ground, '#c8e0b8', '#8ab878')
+  const items: IsoDrawable[] = []
 
-  type DrawItem = { depth: number; draw: () => void }
-  const items: DrawItem[] = []
+  const ground = [
+    { gx: bounds.minX, gy: bounds.minY, gz: 0 },
+    { gx: bounds.maxX, gy: bounds.minY, gz: 0 },
+    { gx: bounds.maxX, gy: bounds.maxY, gz: 0 },
+    { gx: bounds.minX, gy: bounds.maxY, gz: 0 },
+  ]
+  const groundDepth = Math.min(...ground.map((c) => isoDepth(c.gx, c.gy)))
+  items.push({
+    depth: groundDepth - 1,
+    draw: () =>
+      drawIsoQuad(ctx, isoCorners(ground, cell, originX, originY), '#c8e0b8', '#8ab878'),
+  })
 
   for (const room of plan.rooms) {
-    const depth = room.x + room.y + room.w + room.h
+    const { x, y, w, h, floorColor, wallColor } = room
+    const wh = WALL_HEIGHT
+
+    const floorCorners = [
+      { gx: x, gy: y, gz: 0 },
+      { gx: x + w, gy: y, gz: 0 },
+      { gx: x + w, gy: y + h, gz: 0 },
+      { gx: x, gy: y + h, gz: 0 },
+    ]
     items.push({
-      depth,
-      draw: () => {
-        const fl = room.floorColor
-        const wl = room.wallColor
-        const wh = WALL_HEIGHT
-
-        const floor = [
-          isoProject(room.x, room.y, 0, cell, originX, originY),
-          isoProject(room.x + room.w, room.y, 0, cell, originX, originY),
-          isoProject(room.x + room.w, room.y + room.h, 0, cell, originX, originY),
-          isoProject(room.x, room.y + room.h, 0, cell, originX, originY),
-        ]
-        drawIsoQuad(ctx, floor, fl, '#6f4a2a')
-
-        const wallLeft = [
-          isoProject(room.x, room.y + room.h, 0, cell, originX, originY),
-          isoProject(room.x, room.y, 0, cell, originX, originY),
-          isoProject(room.x, room.y, wh, cell, originX, originY),
-          isoProject(room.x, room.y + room.h, wh, cell, originX, originY),
-        ]
-        drawIsoQuad(ctx, wallLeft, shadeColor(wl, -20), '#6f4a2a')
-
-        const wallRight = [
-          isoProject(room.x, room.y, 0, cell, originX, originY),
-          isoProject(room.x + room.w, room.y, 0, cell, originX, originY),
-          isoProject(room.x + room.w, room.y, wh, cell, originX, originY),
-          isoProject(room.x, room.y, wh, cell, originX, originY),
-        ]
-        drawIsoQuad(ctx, wallRight, shadeColor(wl, -35), '#6f4a2a')
-
-        const wallBack = [
-          isoProject(room.x, room.y, 0, cell, originX, originY),
-          isoProject(room.x + room.w, room.y, 0, cell, originX, originY),
-          isoProject(room.x + room.w, room.y, wh, cell, originX, originY),
-          isoProject(room.x, room.y, wh, cell, originX, originY),
-        ]
-        drawIsoQuad(ctx, wallBack, wl, '#6f4a2a')
-      },
+      depth: isoDepth(x + w / 2, y + h / 2),
+      draw: () =>
+        drawIsoQuad(ctx, isoCorners(floorCorners, cell, originX, originY), floorColor, '#6f4a2a'),
     })
+
+    const walls: { x1: number; y1: number; x2: number; y2: number; shade: number }[] = [
+      { x1: x, y1: y, x2: x + w, y2: y, shade: -10 },
+      { x1: x, y1: y + h, x2: x + w, y2: y + h, shade: -35 },
+      { x1: x, y1: y, x2: x, y2: y + h, shade: -20 },
+      { x1: x + w, y1: y, x2: x + w, y2: y + h, shade: -45 },
+    ]
+
+    for (const wall of walls) {
+      const corners = [
+        { gx: wall.x1, gy: wall.y1, gz: 0 },
+        { gx: wall.x2, gy: wall.y2, gz: 0 },
+        { gx: wall.x2, gy: wall.y2, gz: wh },
+        { gx: wall.x1, gy: wall.y1, gz: wh },
+      ]
+      const depth = Math.max(...corners.map((c) => isoDepth(c.gx, c.gy, c.gz)))
+      const screen = isoCorners(corners, cell, originX, originY)
+      const fill = shadeColor(wallColor, wall.shade)
+      items.push({
+        depth,
+        draw: () => drawIsoQuad(ctx, screen, fill, '#6f4a2a'),
+      })
+    }
   }
 
   for (const item of plan.furniture) {
     const preset = FURNITURE_PRESETS[item.kind]
-    const depth = item.x + item.y + item.w + item.h
-    items.push({
-      depth,
-      draw: () => {
-        const fh = preset.height
-        const top = [
-          isoProject(item.x, item.y, fh, cell, originX, originY),
-          isoProject(item.x + item.w, item.y, fh, cell, originX, originY),
-          isoProject(item.x + item.w, item.y + item.h, fh, cell, originX, originY),
-          isoProject(item.x, item.y + item.h, fh, cell, originX, originY),
-        ]
-        drawIsoQuad(ctx, top, shadeColor(preset.color, 15), '#3d2817')
-
-        const sideL = [
-          isoProject(item.x, item.y + item.h, 0, cell, originX, originY),
-          isoProject(item.x, item.y, 0, cell, originX, originY),
-          isoProject(item.x, item.y, fh, cell, originX, originY),
-          isoProject(item.x, item.y + item.h, fh, cell, originX, originY),
-        ]
-        drawIsoQuad(ctx, sideL, shadeColor(preset.color, -25), '#3d2817')
-
-        const sideR = [
-          isoProject(item.x + item.w, item.y + item.h, 0, cell, originX, originY),
-          isoProject(item.x, item.y + item.h, 0, cell, originX, originY),
-          isoProject(item.x, item.y + item.h, fh, cell, originX, originY),
-          isoProject(item.x + item.w, item.y + item.h, fh, cell, originX, originY),
-        ]
-        drawIsoQuad(ctx, sideR, shadeColor(preset.color, -40), '#3d2817')
-      },
-    })
+    pushBox(items, item.x, item.y, item.w, item.h, preset.height, preset.color, cell, originX, originY, ctx)
   }
 
   items.sort((a, b) => a.depth - b.depth)
@@ -461,5 +544,5 @@ export function drawFloorPlan3D(ctx: CanvasRenderingContext2D, plan: FloorPlan):
   ctx.fillStyle = '#6f4a2a'
   ctx.font = 'bold 14px sans-serif'
   ctx.textAlign = 'center'
-  ctx.fillText('3Dプレビュー（アイソメトリック）', width / 2, height - 16)
+  ctx.fillText('3Dプレビュー（上から見下ろすドールハウス視点）', width / 2, height - 16)
 }

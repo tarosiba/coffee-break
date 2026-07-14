@@ -264,6 +264,12 @@ export function HomeDesignerApp() {
         />
       </div>
 
+      {viewMode === '3d' && (
+        <p className="text-xs text-coffee-500">
+          屋根を外して上から見下ろすドールハウス視点です。マイホームデザイナーのような本格3Dとは角度や立体感が異なります。
+        </p>
+      )}
+
       {viewMode === '2d' && (
         <>
           <div className="flex flex-wrap justify-center gap-1 rounded-xl bg-coffee-50 p-2">
