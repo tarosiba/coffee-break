@@ -12,8 +12,10 @@ import { AirHockeyGame } from './games/AirHockeyGame'
 import { CheckersGame } from './games/CheckersGame'
 import { SoccerGame } from './games/SoccerGame'
 import { GalaxyShooterGame } from './games/GalaxyShooterGame'
+import { Maze3dGame } from './games/Maze3dGame'
 
 const games: { id: GameId; title: string; description: string; icon: string; category: string }[] = [
+  { id: 'maze-3d', title: '3D迷路', description: 'Win95スクリーンセーバー風・ゴールを目指す', icon: '🧱', category: 'アドベンチャー' },
   { id: 'soccer', title: 'ピクセルサッカー', description: '4対4・パス/シュート（初級・中級）', icon: '⚽', category: 'スポーツ' },
   { id: 'air-hockey', title: 'エアホッケー', description: 'パックを打って5点先取', icon: '🏒', category: 'スポーツ' },
   { id: 'galaxy-shooter', title: 'スターシューター', description: 'ギャラクシアン風シューティング', icon: '🚀', category: 'シューティング' },
@@ -41,6 +43,7 @@ const gameComponents: Record<GameId, ReactNode> = {
   'galaxy-shooter': <GalaxyShooterGame />,
   'air-hockey': <AirHockeyGame />,
   soccer: <SoccerGame />,
+  'maze-3d': <Maze3dGame />,
 }
 
 export function Games() {
@@ -51,7 +54,7 @@ export function Games() {
     <div className="space-y-6 py-4">
       <div>
         <h2 className="text-2xl font-bold text-coffee-800">ミニゲーム</h2>
-        <p className="text-sm text-coffee-500">トランプ・ボード・スポーツ・シューティング・カジュアルゲーム</p>
+        <p className="text-sm text-coffee-500">トランプ・ボード・スポーツ・シューティング・アドベンチャー・カジュアル</p>
       </div>
 
       {!activeGame ? (
