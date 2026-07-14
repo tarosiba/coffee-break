@@ -7,6 +7,7 @@ import {
   type MazeSize,
   type PlayerInput,
   type TextureTheme,
+  turnMaze90,
   updateMazeGame,
   WIDTH,
 } from '../../lib/maze3d'
@@ -32,8 +33,6 @@ export function Maze3dGame() {
   const inputRef = useRef<PlayerInput>({
     forward: false,
     backward: false,
-    turnLeft: false,
-    turnRight: false,
   })
   const lastTimeRef = useRef(0)
 
@@ -48,6 +47,15 @@ export function Maze3dGame() {
     setSteps(0)
     setPhase('playing')
   }, [size, theme])
+
+  const handleTurn90 = useCallback((left: boolean) => {
+    if (!stateRef.current || stateRef.current.won) return
+    stateRef.current = turnMaze90(stateRef.current, left)
+  }, [])
+
+  const setInput = useCallback((key: keyof PlayerInput, value: boolean) => {
+    inputRef.current[key] = value
+  }, [])
 
   useEffect(() => {
     if (phase !== 'playing') return
@@ -122,13 +130,13 @@ export function Maze3dGame() {
         case 'ArrowLeft':
         case 'a':
         case 'A':
-          inputRef.current.turnLeft = down
+          if (down && !e.repeat) handleTurn90(true)
           e.preventDefault()
           break
         case 'ArrowRight':
         case 'd':
         case 'D':
-          inputRef.current.turnRight = down
+          if (down && !e.repeat) handleTurn90(false)
           e.preventDefault()
           break
       }
@@ -143,11 +151,7 @@ export function Maze3dGame() {
       window.removeEventListener('keydown', down)
       window.removeEventListener('keyup', up)
     }
-  }, [phase])
-
-  const setInput = (key: keyof PlayerInput, value: boolean) => {
-    inputRef.current[key] = value
-  }
+  }, [phase, handleTurn90])
 
   if (phase === 'menu') {
     return (
@@ -245,28 +249,18 @@ export function Maze3dGame() {
           onRelease={() => setInput('forward', false)}
         />
         <div />
-        <ControlButton
-          label="←"
-          ariaLabel="左回転"
-          onPress={() => setInput('turnLeft', true)}
-          onRelease={() => setInput('turnLeft', false)}
-        />
+        <TapButton label="↺90°" ariaLabel="左に90度曲がる" onTap={() => handleTurn90(true)} />
         <ControlButton
           label="↓"
           ariaLabel="後退"
           onPress={() => setInput('backward', true)}
           onRelease={() => setInput('backward', false)}
         />
-        <ControlButton
-          label="→"
-          ariaLabel="右回転"
-          onPress={() => setInput('turnRight', true)}
-          onRelease={() => setInput('turnRight', false)}
-        />
+        <TapButton label="90°↻" ariaLabel="右に90度曲がる" onTap={() => handleTurn90(false)} />
       </div>
 
       <p className="text-center text-xs text-coffee-500">
-        キーボード: WASD または 矢印キー / タッチ: ボタン長押し
+        前後: 長押し / 曲がる: 90度ボタンをタップ（キーボードは矢印左右）
       </p>
 
       <button
@@ -277,6 +271,30 @@ export function Maze3dGame() {
         メニューに戻る
       </button>
     </div>
+  )
+}
+
+function TapButton({
+  label,
+  ariaLabel,
+  onTap,
+}: {
+  label: string
+  ariaLabel: string
+  onTap: () => void
+}) {
+  return (
+    <button
+      type="button"
+      aria-label={ariaLabel}
+      className="touch-target select-none rounded-xl border-2 border-coffee-400 bg-coffee-100 py-3 text-sm font-bold text-coffee-800 active:bg-coffee-300"
+      onPointerDown={(e) => {
+        e.preventDefault()
+        onTap()
+      }}
+    >
+      {label}
+    </button>
   )
 }
 
