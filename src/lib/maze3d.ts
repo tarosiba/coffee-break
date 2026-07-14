@@ -1,7 +1,6 @@
 export const WIDTH = 480
 export const HEIGHT = 320
 export const MOVE_SPEED = 2.8
-export const ROT_SPEED = 2.2
 
 export type MazeSize = 'small' | 'medium' | 'large'
 export type TextureTheme = 'classic' | 'cosmic' | 'garden'
@@ -39,8 +38,44 @@ export interface MazeGameState {
 export type PlayerInput = {
   forward: boolean
   backward: boolean
-  turnLeft: boolean
-  turnRight: boolean
+}
+
+const HALF_PI = Math.PI / 2
+const CARDINAL_DIRS: [number, number][] = [
+  [1, 0],
+  [0, 1],
+  [-1, 0],
+  [0, -1],
+]
+
+function snapToCardinal(dirX: number, dirY: number): { dirX: number; dirY: number; planeX: number; planeY: number } {
+  let bestX = 1
+  let bestY = 0
+  let bestDot = -2
+  for (const [dx, dy] of CARDINAL_DIRS) {
+    const dot = dirX * dx + dirY * dy
+    if (dot > bestDot) {
+      bestDot = dot
+      bestX = dx
+      bestY = dy
+    }
+  }
+  return { dirX: bestX, dirY: bestY, planeX: -bestY * 0.66, planeY: bestX * 0.66 }
+}
+
+export function turnMaze90(state: MazeGameState, left: boolean): MazeGameState {
+  if (state.won) return state
+  const angle = left ? HALF_PI : -HALF_PI
+  const next = { ...state }
+  const oldDirX = next.dirX
+  next.dirX = next.dirX * Math.cos(angle) - next.dirY * Math.sin(angle)
+  next.dirY = oldDirX * Math.sin(angle) + next.dirY * Math.cos(angle)
+  const snapped = snapToCardinal(next.dirX, next.dirY)
+  next.dirX = snapped.dirX
+  next.dirY = snapped.dirY
+  next.planeX = snapped.planeX
+  next.planeY = snapped.planeY
+  return next
 }
 
 function shuffle<T>(arr: T[]): T[] {
@@ -118,25 +153,6 @@ export function updateMazeGame(state: MazeGameState, input: PlayerInput, dt: num
 
   const next = { ...state }
   const move = MOVE_SPEED * dt
-  const rot = ROT_SPEED * dt
-
-  if (input.turnLeft) {
-    const oldDirX = next.dirX
-    next.dirX = next.dirX * Math.cos(rot) - next.dirY * Math.sin(rot)
-    next.dirY = oldDirX * Math.sin(rot) + next.dirY * Math.cos(rot)
-    const oldPlaneX = next.planeX
-    next.planeX = next.planeX * Math.cos(rot) - next.planeY * Math.sin(rot)
-    next.planeY = oldPlaneX * Math.sin(rot) + next.planeY * Math.cos(rot)
-  }
-
-  if (input.turnRight) {
-    const oldDirX = next.dirX
-    next.dirX = next.dirX * Math.cos(-rot) - next.dirY * Math.sin(-rot)
-    next.dirY = oldDirX * Math.sin(-rot) + next.dirY * Math.cos(-rot)
-    const oldPlaneX = next.planeX
-    next.planeX = next.planeX * Math.cos(-rot) - next.planeY * Math.sin(-rot)
-    next.planeY = oldPlaneX * Math.sin(-rot) + next.planeY * Math.cos(-rot)
-  }
 
   let moved = false
 
