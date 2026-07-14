@@ -2,12 +2,14 @@ import { useState } from 'react'
 import { DrawingApp } from './creative/DrawingApp'
 import { PhotoSketchApp } from './creative/PhotoSketchApp'
 import { CursorGallery } from './creative/CursorGallery'
+import { HomeDesignerApp } from './creative/HomeDesignerApp'
 
-type CreativeMode = 'drawing' | 'photo-sketch' | 'cursor-gallery'
+type CreativeMode = 'drawing' | 'photo-sketch' | 'cursor-gallery' | 'home-designer'
 
 const modes: { id: CreativeMode; title: string; description: string; icon: string }[] = [
   { id: 'drawing', title: 'お絵描き', description: '指やマウスで自由に描く', icon: '🖌' },
   { id: 'photo-sketch', title: '写真→イラスト', description: 'モノクロ・スケッチ風に変換', icon: '🖼' },
+  { id: 'home-designer', title: '間取りデザイナー', description: '平面図を作って3Dで見る', icon: '🏠' },
   { id: 'cursor-gallery', title: 'カーソル君の絵', description: '騙し絵・しば犬など', icon: '🤖☕' },
 ]
 
@@ -19,7 +21,7 @@ export function Creative() {
     <div className="space-y-6 py-4">
       <div>
         <h2 className="text-2xl font-bold text-coffee-800">クリエイティブ</h2>
-        <p className="text-sm text-coffee-500">お絵描きと写真のイラスト風変換</p>
+        <p className="text-sm text-coffee-500">お絵描き・間取りデザイン・写真のイラスト風変換</p>
       </div>
 
       {!activeMode ? (
@@ -57,6 +59,7 @@ export function Creative() {
           </div>
           {activeMode === 'drawing' && <DrawingApp />}
           {activeMode === 'photo-sketch' && <PhotoSketchApp />}
+          {activeMode === 'home-designer' && <HomeDesignerApp />}
           {activeMode === 'cursor-gallery' && <CursorGallery />}
         </div>
       )}
