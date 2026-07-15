@@ -15,7 +15,7 @@ import { GalaxyShooterGame } from './games/GalaxyShooterGame'
 import { Maze3dGame } from './games/Maze3dGame'
 
 const games: { id: GameId; title: string; description: string; icon: string; category: string }[] = [
-  { id: 'maze-3d', title: '3D迷路', description: 'Win95スクリーンセーバー風・ゴールを目指す', icon: '🧱', category: 'アドベンチャー' },
+  { id: 'maze-3d', title: '3D迷路', description: 'Win95風・ダンジョンRPGモードあり', icon: '🧱', category: 'アドベンチャー' },
   { id: 'soccer', title: 'ピクセルサッカー', description: '4対4・パス/シュート（初級・中級）', icon: '⚽', category: 'スポーツ' },
   { id: 'air-hockey', title: 'エアホッケー', description: 'パックを打って5点先取', icon: '🏒', category: 'スポーツ' },
   { id: 'galaxy-shooter', title: 'スターシューター', description: 'ギャラクシアン風シューティング', icon: '🚀', category: 'シューティング' },

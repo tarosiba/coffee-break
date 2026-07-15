@@ -4,6 +4,7 @@ import {
   drawMaze3D,
   HEIGHT,
   type MazeGameState,
+  type MazeMode,
   type MazeSize,
   type PlayerInput,
   type TextureTheme,
@@ -12,7 +13,12 @@ import {
   WIDTH,
 } from '../../lib/maze3d'
 
-type Phase = 'menu' | 'playing' | 'won'
+type Phase = 'menu' | 'playing' | 'won' | 'gameover'
+
+const MODES: { id: MazeMode; label: string; desc: string }[] = [
+  { id: 'classic', label: 'ふつう', desc: 'ゴールを目指すだけ' },
+  { id: 'dungeon', label: 'ダンジョンRPG', desc: '宝箱とスケルトンが出現' },
+]
 
 const SIZES: { id: MazeSize; label: string }[] = [
   { id: 'small', label: '小' },
@@ -39,17 +45,22 @@ export function Maze3dGame() {
   const [phase, setPhase] = useState<Phase>('menu')
   const [size, setSize] = useState<MazeSize>('medium')
   const [theme, setTheme] = useState<TextureTheme>('classic')
+  const [mode, setMode] = useState<MazeMode>('dungeon')
   const [steps, setSteps] = useState(0)
+  const [treasures, setTreasures] = useState(0)
+  const [hp, setHp] = useState(3)
 
   const startGame = useCallback(() => {
-    const state = createMazeGame(size, theme)
+    const state = createMazeGame(size, theme, mode)
     stateRef.current = state
     setSteps(0)
+    setTreasures(0)
+    setHp(state.maxHp)
     setPhase('playing')
-  }, [size, theme])
+  }, [size, theme, mode])
 
   const handleTurn90 = useCallback((left: boolean) => {
-    if (!stateRef.current || stateRef.current.won) return
+    if (!stateRef.current || stateRef.current.won || stateRef.current.gameOver) return
     stateRef.current = turnMaze90(stateRef.current, left)
   }, [])
 
@@ -71,11 +82,15 @@ export function Maze3dGame() {
       const dt = lastTimeRef.current ? Math.min((time - lastTimeRef.current) / 1000, 0.05) : 0.016
       lastTimeRef.current = time
 
-      if (stateRef.current && !stateRef.current.won) {
+      if (stateRef.current && !stateRef.current.won && !stateRef.current.gameOver) {
         stateRef.current = updateMazeGame(stateRef.current, inputRef.current, dt)
         setSteps(stateRef.current.steps)
+        setTreasures(stateRef.current.treasures)
+        setHp(stateRef.current.hp)
         if (stateRef.current.won) {
           setPhase('won')
+        } else if (stateRef.current.gameOver) {
+          setPhase('gameover')
         }
       }
 
@@ -157,8 +172,27 @@ export function Maze3dGame() {
     return (
       <div className="space-y-4">
         <p className="text-sm text-coffee-600">
-          Windows の「3D 迷路」スクリーンセーバー風。タッチやキーで迷路を進み、ゴールを目指しましょう。
+          Windows の「3D 迷路」スクリーンセーバー風。ダンジョンRPGモードでは宝箱とスケルトンが出現します。
         </p>
+
+        <div>
+          <p className="mb-2 text-sm font-medium text-coffee-700">モード</p>
+          <div className="grid gap-2 sm:grid-cols-2">
+            {MODES.map((m) => (
+              <button
+                key={m.id}
+                type="button"
+                onClick={() => setMode(m.id)}
+                className={`touch-target rounded-xl border p-3 text-left ${
+                  mode === m.id ? 'border-coffee-600 bg-coffee-50 ring-2 ring-coffee-400' : 'border-coffee-200 bg-white'
+                }`}
+              >
+                <span className="block font-medium text-coffee-800">{m.label}</span>
+                <span className="text-xs text-coffee-500">{m.desc}</span>
+              </button>
+            ))}
+          </div>
+        </div>
 
         <div>
           <p className="mb-2 text-sm font-medium text-coffee-700">迷路の大きさ</p>
@@ -210,8 +244,13 @@ export function Maze3dGame() {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between text-sm text-coffee-600">
+      <div className="flex flex-wrap items-center justify-between gap-2 text-sm text-coffee-600">
         <span>歩数: {steps}</span>
+        {mode === 'dungeon' && (
+          <span>
+            HP {'❤️'.repeat(hp)}{'🖤'.repeat(3 - hp)} / 📦 {treasures}
+          </span>
+        )}
         <span className="text-xs">左上にミニマップ</span>
       </div>
 
@@ -229,7 +268,29 @@ export function Maze3dGame() {
           role="alert"
         >
           <p className="mb-1 text-2xl">🎉 ゴール！</p>
-          <p className="mb-3 text-sm text-coffee-600">歩数 {steps} 歩で脱出しました</p>
+          <p className="mb-3 text-sm text-coffee-600">
+            歩数 {steps} 歩で脱出
+            {mode === 'dungeon' && `・宝箱 ${treasures} 個・残りHP ${hp}`}
+          </p>
+          <button
+            type="button"
+            onClick={() => setPhase('menu')}
+            className="touch-target rounded-lg bg-coffee-600 px-6 py-2 text-sm font-medium text-cream"
+          >
+            もう一度
+          </button>
+        </div>
+      )}
+
+      {phase === 'gameover' && (
+        <div
+          className="rounded-xl border border-red-300 bg-red-50 p-4 text-center"
+          role="alert"
+        >
+          <p className="mb-1 text-2xl">💀 ゲームオーバー</p>
+          <p className="mb-3 text-sm text-coffee-600">
+            スケルトンにやられてしまった… 宝箱 {treasures} 個・歩数 {steps}
+          </p>
           <button
             type="button"
             onClick={() => setPhase('menu')}
