@@ -16,6 +16,11 @@ const GALLERY_ITEMS = [
     alt: 'スタジアムで走るアルゼンチン代表風サッカー選手のイラスト',
     caption: 'サッカー選手イラスト（髪を少し増やした版）⚽',
   },
+  {
+    src: `${BASE}images/adventure-no-signs.jpg`,
+    alt: '壁を突き破るサッカー選手と大冒険のイラスト（看板なし）',
+    caption: '大冒険イラスト（看板なし版）🏃⚽🐕',
+  },
 ] as const
 
 export function CursorGallery() {
