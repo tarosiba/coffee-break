@@ -1,6 +1,6 @@
 コーヒーproject 3引き継ぎ
 
-# Coffee Break 引き継ぎメッセージ（2026年7月10日時点）
+# Coffee Break 引き継ぎメッセージ（2026年7月16日時点）
 
 ## プロジェクト
 
@@ -11,42 +11,55 @@
 
 ## 開発ルール（Cloud Agent）
 
-- 作業ブランチ: `cursor/<descriptive-name>-3aab`
+- 作業ブランチ: `cursor/<descriptive-name>-d7b4`（新セッションでは環境に合わせた suffix でも可）
 - 変更後は commit → push → PR 作成 → main へマージ
 - `npm run build` と `npm run lint` を通す
 - 可能なら GitHub の main までマージ・デプロイまでお願いします
 
 ## まず読むファイル
 
-1. docs/agent-handoff.md
-2. docs/conversation-session-2026-07-10.md（直近セッション）
-3. docs/conversation-session-2026-06-27.md
+1. docs/agent-handoff.md（本ファイル）
+2. docs/conversation-session-2026-07-16.md（直近セッション）
+3. docs/conversation-session-2026-07-10.md
 4. docs/conversation-summary.md（全体履歴）
-5. src/components/Games.tsx
-6. 変更対象の src/lib/*.ts と src/components/games/*.tsx
+5. src/components/Games.tsx / src/components/Creative.tsx
+6. 変更対象の src/lib/*.ts と src/components/games/*.tsx または creative/*.tsx
 
-## 直近セッション（2026年7月4日〜10日）でマージ済み
+## 直近セッション（2026年7月10日〜16日）でマージ済み
 
-- **PR #26** ホーム画面にカーソル君の今日の予定リマインド（TodayReminder）
-- **PR #27–28** ペンローズの階段イラスト・ギャラリー（画像2.3MB→270KB圧縮でPWAビルド修正）
-- **PR #30** しば犬イラストを「カーソル君の絵」ギャラリーに追加
-- **PR #31** 会話まとめ docs（conversation-session-2026-07-10.md）
-- **PR #32** README の機能一覧更新（時計・メモ・予定リマインド・ギャラリー追記）
+- **PR #32** README の機能一覧更新
+- **PR #33** 引き継ぎドキュメント「コーヒーproject 3引き継ぎ」に更新
+- **PR #34–35** 間取りデザイナー（2D平面図→家具・壁紙・床→3Dドールハウス視点）
+- **PR #36–38** 3D迷路（Win95風レイキャスティング、90度曲がり、ダンジョンRPGモード）
+- **PR #39–40** ギャラリーにサッカー選手・大冒険イラスト追加
+- **PR #41** 会話まとめ docs（conversation-session-2026-07-16.md）
 
 ## 既存機能（main の状態）
 
 - **ホーム** … 予定リマインド（カーソル君）、各タブへの導線
 - **カレンダー** … localStorage に予定保存
 - **時計・メモ** … コーヒーブレイク時計、メモ（音声メモあり）
-- **ミニゲーム** … 将棋・オセロ・チェッカー・サッカー・エアホッケー（いずれも初級/中級）、スターシューター、神経衰弱、五目並べ、人生ゲーム、じゃんけん、数当て、三目並べ
-- **クリエイティブ** … お絵描き、写真スケッチ、**カーソル君の絵**（ペンローズの階段・しば犬）
+- **ミニゲーム** … 将棋・オセロ・チェッカー・サッカー・エアホッケー（初級/中級）、**3D迷路**（ふつう/ダンジョンRPG）、スターシューター、神経衰弱、五目並べ、人生ゲーム、じゃんけん、数当て、三目並べ
+- **クリエイティブ** … お絵描き、写真スケッチ、**間取りデザイナー**、**カーソル君の絵**（ペンローズの階段・しば犬・サッカー選手・大冒険）
 - **雑談** … カーソル君とコーヒータイム（ローカル定型応答、外部 AI なし）
+
+## 主要ファイル（新機能）
+
+```
+src/lib/homeDesigner.ts              # 間取りデザイナー
+src/lib/homeDesignerStorage.ts
+src/components/creative/HomeDesignerApp.tsx
+src/lib/maze3d.ts                    # 3D迷路
+src/components/games/Maze3dGame.tsx
+src/components/creative/CursorGallery.tsx
+```
 
 ## ゲーム実装の共通パターン
 
 - ボード/スポーツ系は初級・中級の2モード
 - CPU ロジックは src/lib/*.ts、UI は src/components/games/*.tsx
-- Canvas 系: エアホッケー（airHockey.ts）、スターシューター、ピクセルサッカー（soccer.ts）
+- Canvas 系: エアホッケー、スターシューター、ピクセルサッカー、3D迷路（レイキャスティング）
+- クリエイティブ系: Creative.tsx でモード切替（drawing / photo-sketch / home-designer / cursor-gallery）
 
 ## 画像・ギャラリー注意
 
@@ -62,6 +75,7 @@
 - 個人情報（予定・カレンダー等）を外部に出さない。docs や README に書き込まない
 - 「おじさん」= プレイヤー（先手）の呼び方として使われることがある
 - カーソル君と親しみやすく会話するのを好む
+- **相談相手兼パートナー** として、たまに「これどう？」と提案する関係を好む（半自律）
 
 ## プライバシー（重要）
 
@@ -72,17 +86,20 @@
 
 - お母さんは認知症。認知症・健康長寿に関心あり
 - 国立長寿医療研究センター「すこやかな高齢期をめざして」を読んでいる
-- ワールドカップ 2026 を観戦（カーボベルデ、アルゼンチン、ノルウェー・ブラジル、日本代表の守備の話など）
+- ワールドカップ 2026 を観戦
 - Cursor for iOS を Pro で利用。Cloud Agents セットアップ済み
-- Windows ↔ iOS のファイル転送（LocalSend 等）に興味あり
-- iOS で PC-98（RetroArch + NP2 Kai）、Windows（UTM SE）の話あり
+- マイホームデザイナーに興味（間取り→内装→3D）
+- いろいろなシミュレーション・戦略ゲームを自分で考えて楽しみたい
+- 家庭用ロボット（モジュール式キット）に興味
 
 ## 次にやりそうな候補（未着手・要望ベース）
 
+- 間取りデザイナー強化（窓・ドア、視点回転）
+- 3D迷路（攻撃ボタン、鍵付き宝箱）
 - ピクセルサッカーの調整（ボール物理・CPU）
-- 尾瀬ドライブ風ポスター / イラスト（別ブランチ cursor/oze-illustrated-map-d61a に過去案あり）
-- カーソル君のギャラリーに絵を追加（生成画像は public/images + CursorGallery.tsx）
-- その他ミニゲーム追加
+- おじさん考案のシミュレーション・戦略ゲーム プロトタイプ
+- 尾瀬ドライブ風ポスター（過去ブランチ cursor/oze-illustrated-map-d61a に案あり）
+- カーソル君のギャラリーに絵を追加
 
 ## ローカル確認
 
@@ -95,4 +112,4 @@ npm run build && npm run lint
 
 ---
 
-*最終更新: 2026年7月10日*
+*最終更新: 2026年7月16日*
