@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import {
+  attackMaze,
   createMazeGame,
   drawMaze3D,
   HEIGHT,
@@ -17,7 +18,7 @@ type Phase = 'menu' | 'playing' | 'won' | 'gameover'
 
 const MODES: { id: MazeMode; label: string; desc: string }[] = [
   { id: 'classic', label: 'ふつう', desc: 'ゴールを目指すだけ' },
-  { id: 'dungeon', label: 'ダンジョンRPG', desc: '宝箱とスケルトンが出現' },
+  { id: 'dungeon', label: 'ダンジョンRPG', desc: '宝箱・鍵・スケルトンが出現' },
 ]
 
 const SIZES: { id: MazeSize; label: string }[] = [
@@ -48,20 +49,32 @@ export function Maze3dGame() {
   const [mode, setMode] = useState<MazeMode>('dungeon')
   const [steps, setSteps] = useState(0)
   const [treasures, setTreasures] = useState(0)
+  const [totalChests, setTotalChests] = useState(0)
   const [hp, setHp] = useState(3)
+  const [keys, setKeys] = useState(0)
+  const [attackCooldown, setAttackCooldown] = useState(0)
 
   const startGame = useCallback(() => {
     const state = createMazeGame(size, theme, mode)
     stateRef.current = state
     setSteps(0)
     setTreasures(0)
+    setTotalChests(state.totalChests)
     setHp(state.maxHp)
+    setKeys(0)
+    setAttackCooldown(0)
     setPhase('playing')
   }, [size, theme, mode])
 
   const handleTurn90 = useCallback((left: boolean) => {
     if (!stateRef.current || stateRef.current.won || stateRef.current.gameOver) return
     stateRef.current = turnMaze90(stateRef.current, left)
+  }, [])
+
+  const handleAttack = useCallback(() => {
+    if (!stateRef.current || stateRef.current.won || stateRef.current.gameOver) return
+    stateRef.current = attackMaze(stateRef.current)
+    setAttackCooldown(stateRef.current.attackCooldown)
   }, [])
 
   const setInput = useCallback((key: keyof PlayerInput, value: boolean) => {
@@ -87,6 +100,8 @@ export function Maze3dGame() {
         setSteps(stateRef.current.steps)
         setTreasures(stateRef.current.treasures)
         setHp(stateRef.current.hp)
+        setKeys(stateRef.current.keys)
+        setAttackCooldown(stateRef.current.attackCooldown)
         if (stateRef.current.won) {
           setPhase('won')
         } else if (stateRef.current.gameOver) {
@@ -154,6 +169,10 @@ export function Maze3dGame() {
           if (down && !e.repeat) handleTurn90(false)
           e.preventDefault()
           break
+        case ' ':
+          if (down && !e.repeat) handleAttack()
+          e.preventDefault()
+          break
       }
     }
 
@@ -166,13 +185,13 @@ export function Maze3dGame() {
       window.removeEventListener('keydown', down)
       window.removeEventListener('keyup', up)
     }
-  }, [phase, handleTurn90])
+  }, [phase, handleTurn90, handleAttack])
 
   if (phase === 'menu') {
     return (
       <div className="space-y-4">
         <p className="text-sm text-coffee-600">
-          Windows の「3D 迷路」スクリーンセーバー風。ダンジョンRPGモードでは宝箱とスケルトンが出現します。
+          Win95「3D 迷路」風。ダンジョンRPGモードでは🗝️鍵・🔒宝箱・💀スケルトンが出現。⚔️で攻撃できます。
         </p>
 
         <div>
@@ -231,6 +250,16 @@ export function Maze3dGame() {
           </div>
         </div>
 
+        {mode === 'dungeon' && (
+          <div className="rounded-xl border border-coffee-200 bg-coffee-50 p-3 text-xs text-coffee-700 space-y-1">
+            <p className="font-medium text-coffee-800">ダンジョンRPG 遊び方</p>
+            <p>📦 普通の宝箱：近づくと自動で開く</p>
+            <p>🗝️ 鍵：近づくと自動で入手</p>
+            <p>🔒 鍵付き宝箱：🗝️を持っていると開く</p>
+            <p>💀 スケルトン：⚔️攻撃ボタンで先手、触れるとHP減少</p>
+          </div>
+        )}
+
         <button
           type="button"
           onClick={startGame}
@@ -247,8 +276,10 @@ export function Maze3dGame() {
       <div className="flex flex-wrap items-center justify-between gap-2 text-sm text-coffee-600">
         <span>歩数: {steps}</span>
         {mode === 'dungeon' && (
-          <span>
-            HP {'❤️'.repeat(hp)}{'🖤'.repeat(3 - hp)} / 📦 {treasures}
+          <span className="flex items-center gap-3">
+            <span>HP {'❤️'.repeat(hp)}{'🖤'.repeat(3 - hp)}</span>
+            <span>📦 {treasures}/{totalChests}</span>
+            <span>🗝️ {keys}</span>
           </span>
         )}
         <span className="text-xs">左上にミニマップ</span>
@@ -270,7 +301,7 @@ export function Maze3dGame() {
           <p className="mb-1 text-2xl">🎉 ゴール！</p>
           <p className="mb-3 text-sm text-coffee-600">
             歩数 {steps} 歩で脱出
-            {mode === 'dungeon' && `・宝箱 ${treasures} 個・残りHP ${hp}`}
+            {mode === 'dungeon' && `・宝箱 ${treasures}/${totalChests} 個・残りHP ${hp}`}
           </p>
           <button
             type="button"
@@ -289,7 +320,7 @@ export function Maze3dGame() {
         >
           <p className="mb-1 text-2xl">💀 ゲームオーバー</p>
           <p className="mb-3 text-sm text-coffee-600">
-            スケルトンにやられてしまった… 宝箱 {treasures} 個・歩数 {steps}
+            スケルトンにやられてしまった… 宝箱 {treasures}/{totalChests} 個・歩数 {steps}
           </p>
           <button
             type="button"
@@ -320,8 +351,21 @@ export function Maze3dGame() {
         <TapButton label="90°↻" ariaLabel="右に90度曲がる" onTap={() => handleTurn90(false)} />
       </div>
 
+      {mode === 'dungeon' && (
+        <div className="mx-auto max-w-xs">
+          <TapButton
+            label={attackCooldown > 0 ? `⚔️ …` : '⚔️ 攻撃'}
+            ariaLabel="攻撃"
+            onTap={handleAttack}
+            disabled={attackCooldown > 0}
+            fullWidth
+          />
+        </div>
+      )}
+
       <p className="text-center text-xs text-coffee-500">
-        前後: 長押し / 曲がる: 90度ボタンをタップ（キーボードは矢印左右）
+        前後: 長押し / 曲がる: 90°ボタン（矢印左右キー）
+        {mode === 'dungeon' && ' / 攻撃: ⚔️ボタン（スペースキー）'}
       </p>
 
       <button
@@ -339,17 +383,27 @@ function TapButton({
   label,
   ariaLabel,
   onTap,
+  disabled = false,
+  fullWidth = false,
 }: {
   label: string
   ariaLabel: string
   onTap: () => void
+  disabled?: boolean
+  fullWidth?: boolean
 }) {
   return (
     <button
       type="button"
       aria-label={ariaLabel}
-      className="touch-target select-none rounded-xl border-2 border-coffee-400 bg-coffee-100 py-3 text-sm font-bold text-coffee-800 active:bg-coffee-300"
+      disabled={disabled}
+      className={`touch-target select-none rounded-xl border-2 py-3 text-sm font-bold active:bg-coffee-300 ${fullWidth ? 'w-full' : ''} ${
+        disabled
+          ? 'border-coffee-200 bg-coffee-50 text-coffee-400'
+          : 'border-coffee-400 bg-coffee-100 text-coffee-800'
+      }`}
       onPointerDown={(e) => {
+        if (disabled) return
         e.preventDefault()
         onTap()
       }}

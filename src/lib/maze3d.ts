@@ -12,7 +12,7 @@ export const MAZE_CELL_COUNTS: Record<MazeSize, number> = {
   large: 14,
 }
 
-export type EntityKind = 'chest' | 'skeleton'
+export type EntityKind = 'chest' | 'skeleton' | 'key' | 'lockedChest'
 
 export interface MazeTextures {
   wall: CanvasPattern
@@ -49,11 +49,14 @@ export interface MazeGameState {
   maxHp: number
   treasures: number
   totalChests: number
+  keys: number
   won: boolean
   gameOver: boolean
   steps: number
   message: string
   messageTimer: number
+  attackCooldown: number
+  attackFlash: number
 }
 
 export type PlayerInput = {
@@ -96,6 +99,44 @@ export function turnMaze90(state: MazeGameState, left: boolean): MazeGameState {
   next.dirY = snapped.dirY
   next.planeX = snapped.planeX
   next.planeY = snapped.planeY
+  return next
+}
+
+export function attackMaze(state: MazeGameState): MazeGameState {
+  if (state.attackCooldown > 0 || state.won || state.gameOver || state.mode !== 'dungeon') return state
+
+  const ATTACK_RANGE = 1.1
+  let nearestId: string | null = null
+  let nearestDist = Infinity
+
+  for (const entity of state.entities) {
+    if (entity.defeated || entity.kind !== 'skeleton') continue
+    const dist = Math.hypot(state.playerX - entity.x, state.playerY - entity.y)
+    if (dist < ATTACK_RANGE && dist < nearestDist) {
+      nearestId = entity.id
+      nearestDist = dist
+    }
+  }
+
+  const next: MazeGameState = {
+    ...state,
+    entities: state.entities.map((e) => ({ ...e })),
+    attackCooldown: 0.55,
+    attackFlash: 0.15,
+  }
+
+  if (nearestId !== null) {
+    const target = next.entities.find((e) => e.id === nearestId)
+    if (target) {
+      target.defeated = true
+      next.message = 'スケルトンを倒した！⚔️'
+      next.messageTimer = 2
+    }
+  } else {
+    next.message = '空振り…周囲にスケルトンがいない'
+    next.messageTimer = 1
+  }
+
   return next
 }
 
@@ -167,8 +208,11 @@ function placeDungeonEntities(
     ]),
   )
 
-  const chestCount = size === 'small' ? 3 : size === 'medium' ? 5 : 7
+  const chestCount = size === 'small' ? 2 : size === 'medium' ? 4 : 6
+  const lockedChestCount = size === 'small' ? 1 : size === 'medium' ? 1 : 2
   const skeletonCount = size === 'small' ? 2 : size === 'medium' ? 3 : 5
+  const keyCount = lockedChestCount
+
   const entities: MazeEntity[] = []
   let idx = 0
 
@@ -181,10 +225,28 @@ function placeDungeonEntities(
     })
   }
 
+  for (let i = 0; i < lockedChestCount && idx < floor.length; i++, idx++) {
+    entities.push({
+      id: `lockedChest-${i}`,
+      kind: 'lockedChest',
+      x: floor[idx].x,
+      y: floor[idx].y,
+    })
+  }
+
   for (let i = 0; i < skeletonCount && idx < floor.length; i++, idx++) {
     entities.push({
       id: `skeleton-${i}`,
       kind: 'skeleton',
+      x: floor[idx].x,
+      y: floor[idx].y,
+    })
+  }
+
+  for (let i = 0; i < keyCount && idx < floor.length; i++, idx++) {
+    entities.push({
+      id: `key-${i}`,
+      kind: 'key',
       x: floor[idx].x,
       y: floor[idx].y,
     })
@@ -201,7 +263,7 @@ export function createMazeGame(size: MazeSize, theme: TextureTheme, mode: MazeMo
   const goalX = width - 2.5
   const goalY = height - 2.5
   const entities = mode === 'dungeon' ? placeDungeonEntities(grid, size, goalX, goalY) : []
-  const totalChests = entities.filter((e) => e.kind === 'chest').length
+  const totalChests = entities.filter((e) => e.kind === 'chest' || e.kind === 'lockedChest').length
 
   return {
     grid,
@@ -223,11 +285,14 @@ export function createMazeGame(size: MazeSize, theme: TextureTheme, mode: MazeMo
     maxHp: 3,
     treasures: 0,
     totalChests,
+    keys: 0,
     won: false,
     gameOver: false,
     steps: 0,
-    message: mode === 'dungeon' ? 'ダンジョンに入った！宝箱を集めてゴールへ' : '',
+    message: mode === 'dungeon' ? 'ダンジョンに入った！🗝️鍵を拾って🔒宝箱を開けよう' : '',
     messageTimer: 3,
+    attackCooldown: 0,
+    attackFlash: 0,
   }
 }
 
@@ -245,6 +310,8 @@ export function updateMazeGame(state: MazeGameState, input: PlayerInput, dt: num
     ...state,
     entities: state.entities.map((e) => ({ ...e })),
     messageTimer: Math.max(0, state.messageTimer - dt),
+    attackCooldown: Math.max(0, state.attackCooldown - dt),
+    attackFlash: Math.max(0, state.attackFlash - dt),
   }
 
   const move = MOVE_SPEED * dt
@@ -282,12 +349,34 @@ function processEntityEncounters(state: MazeGameState): void {
   for (const entity of state.entities) {
     if (entity.collected || entity.defeated) continue
     const dist = Math.hypot(state.playerX - entity.x, state.playerY - entity.y)
+
     if (entity.kind === 'chest' && dist < 0.55) {
       entity.collected = true
       state.treasures += 1
-      state.message = `宝箱を見つけた！ (${state.treasures}/${state.totalChests})`
+      state.message = `宝箱を発見！ 📦 (${state.treasures}/${state.totalChests})`
       state.messageTimer = 2
     }
+
+    if (entity.kind === 'key' && dist < 0.55) {
+      entity.collected = true
+      state.keys += 1
+      state.message = `🗝️ 鍵を拾った！鍵付き宝箱を開けられる`
+      state.messageTimer = 2
+    }
+
+    if (entity.kind === 'lockedChest' && dist < 0.55) {
+      if (state.keys > 0) {
+        entity.collected = true
+        state.keys -= 1
+        state.treasures += 1
+        state.message = `🔓 鍵付き宝箱を開けた！ 📦 (${state.treasures}/${state.totalChests})`
+        state.messageTimer = 2
+      } else {
+        state.message = '🔒 鍵がない！先に🗝️鍵を探そう'
+        state.messageTimer = 1.5
+      }
+    }
+
     if (entity.kind === 'skeleton' && dist < 0.55) {
       entity.defeated = true
       state.hp -= 1
@@ -299,8 +388,8 @@ function processEntityEncounters(state: MazeGameState): void {
         state.message = 'スケルトンにやられた…ゲームオーバー'
         state.messageTimer = 5
       } else {
-        state.message = `スケルトンが襲いかかってきた！ HP ${state.hp}/${state.maxHp}`
-        state.messageTimer = 2
+        state.message = `💀 スケルトンに攻撃された！ HP ${state.hp}/${state.maxHp}（⚔️で先手を打とう）`
+        state.messageTimer = 2.5
       }
     }
   }
@@ -539,6 +628,11 @@ export function drawMaze3D(ctx: CanvasRenderingContext2D, state: MazeGameState):
   drawEntitySprites(ctx, state, screenW, screenH, zBuffer)
   drawHud(ctx, state, screenW, screenH)
   drawMiniMap(ctx, state)
+
+  if (state.attackFlash > 0) {
+    ctx.fillStyle = `rgba(255,200,0,${state.attackFlash * 3})`
+    ctx.fillRect(0, 0, screenW, screenH)
+  }
 }
 
 interface SpriteSpec {
@@ -603,7 +697,11 @@ function drawEntitySprites(
     if (entity.collected || entity.defeated) continue
     if (entity.kind === 'chest') {
       sprites.push({ x: entity.x, y: entity.y, color: '#daa520', label: '📦', scale: 0.7 })
-    } else {
+    } else if (entity.kind === 'lockedChest') {
+      sprites.push({ x: entity.x, y: entity.y, color: '#8b6914', label: '🔒', scale: 0.7 })
+    } else if (entity.kind === 'key') {
+      sprites.push({ x: entity.x, y: entity.y, color: '#ffd700', label: '🗝️', scale: 0.55 })
+    } else if (entity.kind === 'skeleton') {
       sprites.push({ x: entity.x, y: entity.y, color: '#e8e8e8', label: '💀', scale: 0.85 })
     }
   }
@@ -621,21 +719,22 @@ function drawEntitySprites(
 
 function drawHud(ctx: CanvasRenderingContext2D, state: MazeGameState, screenW: number, screenH: number): void {
   if (state.mode === 'dungeon') {
-    ctx.fillStyle = 'rgba(0,0,0,0.55)'
-    ctx.fillRect(screenW - 108, 8, 100, 52)
+    ctx.fillStyle = 'rgba(0,0,0,0.6)'
+    ctx.fillRect(screenW - 120, 8, 112, 68)
     ctx.fillStyle = '#fff'
     ctx.font = 'bold 12px sans-serif'
     ctx.textAlign = 'left'
-    ctx.fillText(`HP ${'❤️'.repeat(state.hp)}${'🖤'.repeat(state.maxHp - state.hp)}`, screenW - 100, 26)
-    ctx.fillText(`📦 ${state.treasures}/${state.totalChests}`, screenW - 100, 44)
+    ctx.fillText(`HP ${'❤️'.repeat(state.hp)}${'🖤'.repeat(state.maxHp - state.hp)}`, screenW - 112, 26)
+    ctx.fillText(`📦 ${state.treasures}/${state.totalChests}`, screenW - 112, 44)
+    ctx.fillText(`🗝️ ${state.keys}`, screenW - 112, 62)
   }
 
   if (state.messageTimer > 0 && state.message) {
-    ctx.fillStyle = 'rgba(0,0,0,0.6)'
-    const textW = Math.min(screenW - 20, state.message.length * 8 + 20)
-    ctx.fillRect((screenW - textW) / 2, screenH - 36, textW, 28)
+    ctx.fillStyle = 'rgba(0,0,0,0.65)'
+    const textW = Math.min(screenW - 20, state.message.length * 7.5 + 24)
+    ctx.fillRect((screenW - textW) / 2, screenH - 38, textW, 30)
     ctx.fillStyle = '#fff8f0'
-    ctx.font = '12px sans-serif'
+    ctx.font = '11px sans-serif'
     ctx.textAlign = 'center'
     ctx.fillText(state.message, screenW / 2, screenH - 18)
   }
@@ -702,7 +801,10 @@ function drawMiniMap(ctx: CanvasRenderingContext2D, state: MazeGameState): void 
   if (state.mode === 'dungeon') {
     for (const entity of state.entities) {
       if (entity.collected || entity.defeated) continue
-      ctx.fillStyle = entity.kind === 'chest' ? '#daa520' : '#ccc'
+      if (entity.kind === 'chest') ctx.fillStyle = '#daa520'
+      else if (entity.kind === 'lockedChest') ctx.fillStyle = '#8b6914'
+      else if (entity.kind === 'key') ctx.fillStyle = '#ffd700'
+      else ctx.fillStyle = '#ccc'
       ctx.fillRect(ox + entity.x * cell - cell * 0.2, oy + entity.y * cell - cell * 0.2, cell * 0.4, cell * 0.4)
     }
   }
