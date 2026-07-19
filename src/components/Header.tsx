@@ -10,6 +10,7 @@ const tabs: { id: Tab; label: string; icon: string }[] = [
   { id: 'calendar', label: 'カレンダー', icon: '📅' },
   { id: 'games', label: 'ゲーム', icon: '🎮' },
   { id: 'creative', label: 'お絵描き', icon: '🖌' },
+  { id: 'news', label: 'AIニュース', icon: '📰' },
   { id: 'chat', label: 'コーヒー', icon: '🤖☕' },
   { id: 'clock', label: '時計', icon: '🕐' },
   { id: 'memo', label: 'メモ', icon: '📝' },
@@ -19,23 +20,23 @@ export function Header({ activeTab, onTabChange }: HeaderProps) {
   return (
     <header className="sticky top-0 z-10 border-b border-coffee-200/60 bg-cream/90 backdrop-blur-md">
       <div className="mx-auto flex max-w-4xl items-center justify-between gap-2 px-4 py-3">
-        <div className="flex items-center gap-2">
+        <div className="flex shrink-0 items-center gap-2">
           <span className="text-2xl sm:text-3xl" aria-hidden>☕</span>
           <h1 className="text-lg font-bold tracking-tight text-coffee-800 sm:text-xl">Coffee Break</h1>
         </div>
-        <nav className="flex gap-1 rounded-full bg-coffee-100/80 p-1">
+        <nav className="flex max-w-[65%] gap-1 overflow-x-auto rounded-full bg-coffee-100/80 p-1 sm:max-w-none">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               type="button"
               onClick={() => onTabChange(tab.id)}
-              className={`touch-target rounded-full px-3 py-2 text-sm font-medium transition-all sm:px-4 ${
+              className={`touch-target shrink-0 rounded-full px-2.5 py-2 text-sm font-medium transition-all sm:px-4 ${
                 activeTab === tab.id
                   ? 'bg-coffee-600 text-cream shadow-sm'
                   : 'text-coffee-600 hover:bg-coffee-200/60'
               }`}
             >
-              <span className="mr-1" aria-hidden>{tab.icon}</span>
+              <span className="mr-0.5 sm:mr-1" aria-hidden>{tab.icon}</span>
               <span className="hidden sm:inline">{tab.label}</span>
             </button>
           ))}
