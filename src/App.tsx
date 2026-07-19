@@ -7,6 +7,7 @@ import { Chat } from './components/Chat'
 import { Creative } from './components/Creative'
 import { Clock } from './components/Clock'
 import { Memo } from './components/Memo'
+import { AiNews } from './components/AiNews'
 import type { Tab } from './types'
 
 export default function App() {
@@ -25,6 +26,7 @@ export default function App() {
         {activeTab === 'chat' && <Chat />}
         {activeTab === 'clock' && <Clock />}
         {activeTab === 'memo' && <Memo />}
+        {activeTab === 'news' && <AiNews />}
       </main>
     </div>
   )

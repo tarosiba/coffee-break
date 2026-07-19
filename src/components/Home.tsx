@@ -1,8 +1,9 @@
 import { InstallPrompt } from './InstallPrompt'
 import { TodayReminder } from './TodayReminder'
+import type { Tab } from '../types'
 
 interface HomeProps {
-  onNavigate: (tab: 'calendar' | 'games' | 'creative' | 'chat' | 'clock' | 'memo') => void
+  onNavigate: (tab: Exclude<Tab, 'home'>) => void
 }
 
 export function Home({ onNavigate }: HomeProps) {
@@ -60,7 +61,21 @@ export function Home({ onNavigate }: HomeProps) {
             クリエイティブ
           </h3>
           <p className="text-sm text-coffee-500">
-            お絵描き、間取りデザイン、写真のスケッチ風変換ができます。
+            お絵描き、間取りデザイン、小説、写真のスケッチ風変換ができます。
+          </p>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => onNavigate('news')}
+          className="touch-target group rounded-2xl border border-coffee-200 bg-white/70 p-6 text-left shadow-sm transition active:scale-[0.98] hover:border-coffee-300 hover:shadow-md"
+        >
+          <span className="mb-3 block text-4xl" aria-hidden>📰</span>
+          <h3 className="mb-1 text-lg font-semibold text-coffee-800 group-hover:text-coffee-600">
+            AIニュース
+          </h3>
+          <p className="text-sm text-coffee-500">
+            カーソル君が気になった AI 関連ニュースを、1日3件ペースでお届け。
           </p>
         </button>
 
