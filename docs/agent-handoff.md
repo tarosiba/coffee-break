@@ -43,7 +43,7 @@
 - **カレンダー** … localStorage に予定保存
 - **時計・メモ** … コーヒーブレイク時計、メモ（音声メモあり）
 - **ミニゲーム** … 将棋・オセロ・チェッカー・サッカー・エアホッケー（初級/中級）、**3D迷路**（ふつう/ダンジョンRPG：⚔️攻撃・🗝️鍵・🔒宝箱）、スターシューター、神経衰弱、五目並べ、人生ゲーム、じゃんけん、数当て、三目並べ
-- **クリエイティブ** … お絵描き、写真スケッチ、**間取りデザイナー**、**カーソル君の絵**（ペンローズの階段・しば犬・サッカー選手・大冒険）、**カーソル君の小説**（『五分だけの隣人』『未完成でいい』『メニューの外側』『間奏のあるニュース』）
+- **クリエイティブ** … お絵描き、写真スケッチ、**間取りデザイナー**、**カーソル君の絵**、**カーソル君の小説**、**新車予想イラスト**（ハズレて当たり前・第1弾カローラセダン）
 - **AIニュース** … カーソル君が気になった AI 関連を要約記事化（目安1日3件）。データは `src/lib/aiNews.ts`、UI は `src/components/AiNews.tsx`
 - **雑談** … カーソル君とコーヒータイム（ローカル定型応答、外部 AI なし）
 
@@ -57,6 +57,7 @@ src/lib/maze3d.ts                    # 3D迷路
 src/components/games/Maze3dGame.tsx
 src/components/creative/CursorGallery.tsx
 src/components/creative/CursorStories.tsx  # 小説
+src/components/creative/CarPredictions.tsx # 新車予想イラスト
 src/lib/aiNews.ts                    # AIニュース記事データ
 src/components/AiNews.tsx
 ```
