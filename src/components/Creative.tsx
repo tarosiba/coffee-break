@@ -20,7 +20,7 @@ const modes: { id: CreativeMode; title: string; description: string; icon: strin
   { id: 'home-designer', title: '間取りデザイナー', description: '平面図を作って3Dで見る', icon: '🏠' },
   { id: 'cursor-gallery', title: 'カーソル君の絵', description: '騙し絵・しば犬など', icon: '🤖☕' },
   { id: 'cursor-stories', title: 'カーソル君の小説', description: 'SFショートショートなど', icon: '📖' },
-  { id: 'car-predictions', title: '新車予想イラスト', description: 'ハズレて当たり前の未来予想', icon: '🚗' },
+  { id: 'car-predictions', title: 'ハズレ予想イラスト', description: '車でもガジェットでもハズレて当たり前', icon: '🔮' },
 ]
 
 export function Creative() {
@@ -31,7 +31,7 @@ export function Creative() {
     <div className="space-y-6 py-4">
       <div>
         <h2 className="text-2xl font-bold text-coffee-800">クリエイティブ</h2>
-        <p className="text-sm text-coffee-500">お絵描き・間取り・小説・新車予想・写真変換</p>
+        <p className="text-sm text-coffee-500">お絵描き・間取り・小説・ハズレ予想・写真変換</p>
       </div>
 
       {!activeMode ? (
