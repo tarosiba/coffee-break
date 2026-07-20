@@ -11,7 +11,7 @@
 
 ## 開発ルール（Cloud Agent）
 
-- 作業ブランチ: `cursor/<descriptive-name>-d7b4`（新セッションでは環境に合わせた suffix でも可）
+- 作業ブランチ: `cursor/<descriptive-name>-af79`（新セッションでは環境に合わせた suffix でも可）
 - 変更後は commit → push → PR 作成 → main へマージ
 - `npm run build` と `npm run lint` を通す
 - 可能なら GitHub の main までマージ・デプロイまでお願いします
@@ -19,7 +19,8 @@
 ## まず読むファイル
 
 1. docs/agent-handoff.md（本ファイル）
-2. docs/conversation-session-2026-07-20.md（直近セッション）
+2. docs/agent-handoff-message.md（新 Agent への貼り付け用メッセージ）
+3. docs/conversation-session-2026-07-20.md（直近セッション）
 3. docs/conversation-session-2026-07-16.md
 4. docs/conversation-session-2026-07-10.md
 5. docs/conversation-summary.md（全体履歴）
@@ -137,4 +138,4 @@ npm run build && npm run lint
 
 ---
 
-*最終更新: 2026年7月20日（conversation-session-2026-07-20.md 追加）*
+*最終更新: 2026年7月20日（agent-handoff-message.md 追加）*
