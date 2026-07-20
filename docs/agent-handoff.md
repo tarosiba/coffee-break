@@ -1,6 +1,6 @@
 コーヒーproject 3引き継ぎ
 
-# Coffee Break 引き継ぎメッセージ（2026年7月16日時点）
+# Coffee Break 引き継ぎメッセージ（2026年7月20日時点）
 
 ## プロジェクト
 
@@ -19,13 +19,21 @@
 ## まず読むファイル
 
 1. docs/agent-handoff.md（本ファイル）
-2. docs/conversation-session-2026-07-16.md（直近セッション）
-3. docs/conversation-session-2026-07-10.md
-4. docs/conversation-summary.md（全体履歴）
-5. src/components/Games.tsx / src/components/Creative.tsx
-6. 変更対象の src/lib/*.ts と src/components/games/*.tsx または creative/*.tsx
+2. docs/conversation-session-2026-07-20.md（直近セッション）
+3. docs/conversation-session-2026-07-16.md
+4. docs/conversation-session-2026-07-10.md
+5. docs/conversation-summary.md（全体履歴）
+6. src/components/Games.tsx / src/components/Creative.tsx
+7. 変更対象の src/lib/*.ts と src/components/games/*.tsx または creative/*.tsx
 
-## 直近セッション（2026年7月10日〜16日）でマージ済み
+## 直近セッション（2026年7月17日〜20日）でマージ済み
+
+- **PR #43** 3D迷路ダンジョンRPG強化：⚔️攻撃ボタン・🗝️鍵・🔒鍵付き宝箱
+- **PR #45〜49, #53** カーソル君の小説（全5作）
+- **PR #48, #52** AIニュースコーナー（7/19・7/20 各3本）
+- **PR #50, #51** ハズレ予想イラスト（カローラセダン／Apple Glasses）
+
+## 以前のセッション（2026年7月10日〜16日）でマージ済み
 
 - **PR #32** README の機能一覧更新
 - **PR #33** 引き継ぎドキュメント「コーヒーproject 3引き継ぎ」に更新
@@ -33,9 +41,6 @@
 - **PR #36–38** 3D迷路（Win95風レイキャスティング、90度曲がり、ダンジョンRPGモード）
 - **PR #39–40** ギャラリーにサッカー選手・大冒険イラスト追加
 - **PR #41** 会話まとめ docs（conversation-session-2026-07-16.md）
-- **PR #43** 3D迷路ダンジョンRPG強化：⚔️攻撃ボタン・🗝️鍵・🔒鍵付き宝箱
-- クリエイティブに「カーソル君の小説」追加（『五分だけの隣人』ほか）
-- **AIニュース** コーナー追加（2026-07-19 初回3本）
 
 ## 既存機能（main の状態）
 
@@ -74,7 +79,7 @@ src/components/AiNews.tsx
 - ボード/スポーツ系は初級・中級の2モード
 - CPU ロジックは src/lib/*.ts、UI は src/components/games/*.tsx
 - Canvas 系: エアホッケー、スターシューター、ピクセルサッカー、3D迷路（レイキャスティング）
-- クリエイティブ系: Creative.tsx でモード切替（drawing / photo-sketch / home-designer / cursor-gallery）
+- クリエイティブ系: Creative.tsx でモード切替（drawing / photo-sketch / home-designer / cursor-gallery / cursor-stories / car-predictions）
 
 ## 画像・ギャラリー注意
 
@@ -91,6 +96,8 @@ src/components/AiNews.tsx
 - 「おじさん」= プレイヤー（先手）の呼び方として使われることがある
 - カーソル君と親しみやすく会話するのを好む
 - **相談相手兼パートナー** として、たまに「これどう？」と提案する関係を好む（半自律）
+- **コンテンツは毎日全部盛らない**運用を好む（小説・ニュース・予想をローテーション）
+- **ハズレ予想イラスト**（車・ガジェットなど）のアイデアを提案
 
 ## プライバシー（重要）
 
@@ -109,12 +116,15 @@ src/components/AiNews.tsx
 
 ## 次にやりそうな候補（未着手・要望ベース）
 
+- **軽自動車のハズレ予想イラスト**（小説第5作で予告済み）
 - 間取りデザイナー強化（窓・ドア、視点回転）
 - 3D迷路さらなる強化（スケルトンの移動AI、ボスモンスター、回復ポーション）
 - ピクセルサッカーの調整（ボール物理・CPU）
 - おじさん考案のシミュレーション・戦略ゲーム プロトタイプ
+- Unity 続き（モジュール確認、四角を動かす）
 - 尾瀬ドライブ風ポスター（過去ブランチ cursor/oze-illustrated-map-d61a に案あり）
 - カーソル君のギャラリーに絵を追加
+- 将来：**コーヒーブレイク劇場**（短編映画を別枠で）
 
 ## ローカル確認
 
@@ -127,4 +137,4 @@ npm run build && npm run lint
 
 ---
 
-*最終更新: 2026年7月16日（PR #43 反映）*
+*最終更新: 2026年7月20日（conversation-session-2026-07-20.md 追加）*
