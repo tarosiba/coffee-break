@@ -11,7 +11,7 @@
 
 ## 開発ルール（Cloud Agent）
 
-- 作業ブランチ: `cursor/<descriptive-name>-d7b4`（新セッションでは環境に合わせた suffix でも可）
+- 作業ブランチ: `cursor/<descriptive-name>-af79`（新セッションでは環境に合わせた suffix でも可）
 - 変更後は commit → push → PR 作成 → main へマージ
 - `npm run build` と `npm run lint` を通す
 - 可能なら GitHub の main までマージ・デプロイまでお願いします
