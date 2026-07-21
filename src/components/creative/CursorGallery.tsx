@@ -2,6 +2,11 @@ const BASE = import.meta.env.BASE_URL
 
 const GALLERY_ITEMS = [
   {
+    src: `${BASE}images/ojisan-wan-robot-coffee.jpg`,
+    alt: 'おじさん・しば犬ワンちゃん・ロボット君がコーヒーを飲むモノクロ漫画イラスト。65歳の白髪のおじさん、首輪の柴犬、丸い頭のロボットがテーブルを囲む。',
+    caption: 'おじさん・ワンちゃん・ロボット君のコーヒーブレイク ☕🤖🐕',
+  },
+  {
     src: `${BASE}images/penrose-stairs.png`,
     alt: 'ペンローズの階段 — ずっと登り続ける錯覚の階段',
     caption: 'ペンローズの階段（騙し絵）🤖☕',
@@ -27,7 +32,7 @@ export function CursorGallery() {
   return (
     <div className="space-y-6">
       <p className="text-sm text-coffee-600">
-        カーソル君が描いたイラスト集です。騙し絵、しば犬、サッカー選手など。
+        カーソル君が描いたイラスト集です。おじさんと仲間たち、騙し絵、しば犬、サッカー選手など。
       </p>
       {GALLERY_ITEMS.map((item) => (
         <figure
