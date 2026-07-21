@@ -20,14 +20,14 @@ export function AiNews() {
       <div>
         <h2 className="text-2xl font-bold text-coffee-800">AIニュース</h2>
         <p className="mt-1 text-sm text-coffee-500">
-          カーソル君が気になった AI 関連ニュースを、1日3件ペースでお届けします。
+          カーソル君が気になった AI 関連ニュースを、1日2〜3件ペースでお届けします。
         </p>
       </div>
 
       {groups.map((group) => (
         <section key={group.date} className="space-y-3">
           <h3 className="text-sm font-semibold tracking-wide text-coffee-600">
-            {formatAiNewsDate(group.date)} の3本
+            {formatAiNewsDate(group.date)} の{group.articles.length}本
           </h3>
           <ul className="space-y-3">
             {group.articles.map((article) => (
