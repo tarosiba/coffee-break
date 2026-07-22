@@ -7,6 +7,11 @@ const GALLERY_ITEMS = [
     caption: 'おじさん・ワンちゃん・ロボット君のコーヒーブレイク ☕🤖🐕',
   },
   {
+    src: `${BASE}images/smart-living-room.jpg`,
+    alt: '夕暮れの街並みが見えるスマートリビングルーム。間接照明、薄型テレビ、観葉植物、モジュールソファのある洗練された室内。',
+    caption: 'スマートリビングルーム（売り出し中のモデルルーム風）🏙️✨',
+  },
+  {
     src: `${BASE}images/penrose-stairs.png`,
     alt: 'ペンローズの階段 — ずっと登り続ける錯覚の階段',
     caption: 'ペンローズの階段（騙し絵）🤖☕',
@@ -32,7 +37,7 @@ export function CursorGallery() {
   return (
     <div className="space-y-6">
       <p className="text-sm text-coffee-600">
-        カーソル君が描いたイラスト集です。おじさんと仲間たち、騙し絵、しば犬、サッカー選手など。
+        カーソル君が描いたイラスト集です。おじさんと仲間たち、インテリア、騙し絵、しば犬、サッカー選手など。
       </p>
       {GALLERY_ITEMS.map((item) => (
         <figure
