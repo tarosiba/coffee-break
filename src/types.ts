@@ -22,6 +22,7 @@ export type GameId =
   | 'checkers'
   | 'soccer'
   | 'maze-3d'
+  | 'robot-cooling'
 
 export interface ChatMessage {
   id: string

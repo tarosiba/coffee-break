@@ -13,8 +13,10 @@ import { CheckersGame } from './games/CheckersGame'
 import { SoccerGame } from './games/SoccerGame'
 import { GalaxyShooterGame } from './games/GalaxyShooterGame'
 import { Maze3dGame } from './games/Maze3dGame'
+import { RobotCoolingGame } from './games/RobotCoolingGame'
 
 const games: { id: GameId; title: string; description: string; icon: string; category: string }[] = [
+  { id: 'robot-cooling', title: 'ロボット君冷却', description: '猛暑ののんびり休憩（初級・中級）', icon: '🤖❄️', category: 'カジュアル' },
   { id: 'maze-3d', title: '3D迷路', description: 'Win95風・ダンジョンRPGモードあり', icon: '🧱', category: 'アドベンチャー' },
   { id: 'soccer', title: 'ピクセルサッカー', description: '4対4・パス/シュート（初級・中級）', icon: '⚽', category: 'スポーツ' },
   { id: 'air-hockey', title: 'エアホッケー', description: 'パックを打って5点先取', icon: '🏒', category: 'スポーツ' },
@@ -44,6 +46,7 @@ const gameComponents: Record<GameId, ReactNode> = {
   'air-hockey': <AirHockeyGame />,
   soccer: <SoccerGame />,
   'maze-3d': <Maze3dGame />,
+  'robot-cooling': <RobotCoolingGame />,
 }
 
 export function Games() {
