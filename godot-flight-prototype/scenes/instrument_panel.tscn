@@ -1,0 +1,68 @@
+[gd_scene load_steps=4 format=3 uid="uid://d3instpanel001"]
+
+[ext_resource type="Script" path="res://scripts/instrument_panel.gd" id="1_panel"]
+[ext_resource type="Script" path="res://scripts/instruments/analog_gauge.gd" id="2_gauge"]
+[ext_resource type="Script" path="res://scripts/instruments/artificial_horizon.gd" id="3_horizon"]
+
+[node name="InstrumentPanel" type="Control"]
+layout_mode = 3
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -230.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("1_panel")
+
+[node name="Panel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = -100.0
+offset_right = 320.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Margin" type="MarginContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 10
+
+[node name="HBox" type="HBoxContainer" parent="Panel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 18
+alignment = 1
+
+[node name="SpeedGauge" type="Control" parent="Panel/Margin/HBox"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+script = ExtResource("2_gauge")
+gauge_label = "SPD"
+unit_label = "km/h"
+min_value = 0.0
+max_value = 180.0
+major_step = 20.0
+
+[node name="Horizon" type="Control" parent="Panel/Margin/HBox"]
+clip_contents = true
+custom_minimum_size = Vector2(190, 190)
+layout_mode = 2
+script = ExtResource("3_horizon")
+
+[node name="AltitudeGauge" type="Control" parent="Panel/Margin/HBox"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+script = ExtResource("2_gauge")
+gauge_label = "ALT"
+unit_label = "m"
+min_value = 0.0
+max_value = 500.0
+major_step = 50.0

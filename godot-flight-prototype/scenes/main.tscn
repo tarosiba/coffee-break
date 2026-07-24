@@ -1,0 +1,120 @@
+[gd_scene load_steps=22 format=3 uid="uid://c8flightproto001"]
+
+[ext_resource type="Script" path="res://scripts/airplane.gd" id="1_airplane"]
+[ext_resource type="Script" path="res://scripts/camera_follow.gd" id="2_camera"]
+[ext_resource type="Script" path="res://scripts/hud.gd" id="3_hud"]
+[ext_resource type="PackedScene" uid="uid://d3instpanel001" path="res://scenes/instrument_panel.tscn" id="4_instruments"]
+[ext_resource type="PackedScene" uid="uid://b9airportscene1" path="res://scenes/airport.tscn" id="5_airport"]
+[ext_resource type="PackedScene" uid="uid://lowpolyterrain1" path="res://scenes/low_poly_terrain.tscn" id="6_terrain"]
+[ext_resource type="PackedScene" uid="uid://crtoverlay001" path="res://scenes/crt_overlay.tscn" id="7_crt"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sky"]
+sky_top_color = Color(0.22, 0.46, 0.82, 1)
+sky_horizon_color = Color(0.58, 0.72, 0.88, 1)
+ground_bottom_color = Color(0.2, 0.42, 0.24, 1)
+ground_horizon_color = Color(0.3, 0.54, 0.26, 1)
+
+[sub_resource type="Sky" id="Sky_main"]
+sky_material = SubResource("ProceduralSkyMaterial_sky")
+
+[sub_resource type="Environment" id="Environment_main"]
+background_mode = 2
+sky = SubResource("Sky_main")
+ambient_light_source = 2
+ambient_light_color = Color(0.82, 0.88, 0.95, 1)
+tonemap_mode = 2
+fog_enabled = true
+fog_light_color = Color(0.62, 0.74, 0.86, 1)
+fog_density = 0.0018
+fog_sky_affect = 0.35
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ground"]
+size = Vector3(4000, 2, 4000)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_plane"]
+radius = 0.55
+height = 2.8
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fuselage"]
+albedo_color = Color(0.92, 0.93, 0.96, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wing"]
+albedo_color = Color(0.75, 0.18, 0.15, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_fuselage"]
+size = Vector3(0.9, 0.9, 3.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wing"]
+size = Vector3(6.5, 0.12, 1.0)
+
+[sub_resource type="BoxMesh" id="BoxMesh_tail"]
+size = Vector3(0.15, 1.2, 0.8)
+
+[node name="Main" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_main")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.353553, 0.353553, 0, 0.707107, 0.707107, -0.5, -0.612372, 0.612372, 0, 40, 0)
+light_energy = 1.3
+shadow_enabled = true
+
+[node name="LowPolyTerrain" parent="." instance=ExtResource("6_terrain")]
+
+[node name="Ground" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+shape = SubResource("BoxShape3D_ground")
+
+[node name="Airport" parent="." instance=ExtResource("5_airport")]
+
+[node name="Airplane" type="CharacterBody3D" parent="." groups=["airplane"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 80)
+script = ExtResource("1_airplane")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Airplane"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_plane")
+
+[node name="Visual" type="Node3D" parent="Airplane"]
+
+[node name="Fuselage" type="MeshInstance3D" parent="Airplane/Visual"]
+mesh = SubResource("BoxMesh_fuselage")
+surface_material_override/0 = SubResource("StandardMaterial3D_fuselage")
+
+[node name="Wing" type="MeshInstance3D" parent="Airplane/Visual"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.2)
+mesh = SubResource("BoxMesh_wing")
+surface_material_override/0 = SubResource("StandardMaterial3D_wing")
+
+[node name="Tail" type="MeshInstance3D" parent="Airplane/Visual"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, 1.4)
+mesh = SubResource("BoxMesh_tail")
+surface_material_override/0 = SubResource("StandardMaterial3D_wing")
+
+[node name="ChaseCamera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 6, 20)
+current = true
+script = ExtResource("2_camera")
+target_path = NodePath("../Airplane")
+
+[node name="CRTRetroOverlay" parent="." instance=ExtResource("7_crt")]
+
+[node name="HUD" type="CanvasLayer" parent="."]
+layer = 10
+script = ExtResource("3_hud")
+
+[node name="InstrumentPanel" parent="HUD" instance=ExtResource("4_instruments")]
+
+[node name="HelpLabel" type="Label" parent="HUD"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = -120.0
+offset_right = 700.0
+offset_bottom = -16.0
+theme_override_font_sizes/font_size = 14
+text = "W/S Pitch  A/D Roll  Q/E Yaw  Shift/Up Throttle  Ctrl/Down Cut  B/Space Brake  R Reset"
