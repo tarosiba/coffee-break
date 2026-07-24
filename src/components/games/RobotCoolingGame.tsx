@@ -10,6 +10,7 @@ import {
   tapItem,
   updateGame,
   type CoolingDifficulty,
+  type GamePhase,
   type RobotCoolingState,
 } from '../../lib/robotCooling'
 
@@ -28,14 +29,22 @@ export function RobotCoolingGame() {
   const stateRef = useRef<RobotCoolingState>(createGameState())
   const difficultyRef = useRef<CoolingDifficulty>('beginner')
   const [difficulty, setDifficulty] = useState<CoolingDifficulty>('beginner')
-  const [hud, setHud] = useState({
+  const [hud, setHud] = useState<{
+    temperature: number
+    comfortSeconds: number
+    elapsed: number
+    goalSeconds: number
+    message: string
+    highComfort: number
+    phase: GamePhase
+  }>({
     temperature: 52,
     comfortSeconds: 0,
     elapsed: 0,
     goalSeconds: 75,
     message: '',
     highComfort: 0,
-    phase: 'title' as const,
+    phase: 'title',
   })
 
   useEffect(() => {
