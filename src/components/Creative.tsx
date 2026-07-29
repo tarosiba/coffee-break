@@ -5,6 +5,7 @@ import { CursorGallery } from './creative/CursorGallery'
 import { CursorStories } from './creative/CursorStories'
 import { CarPredictions } from './creative/CarPredictions'
 import { HomeDesignerApp } from './creative/HomeDesignerApp'
+import { BrightAi } from './creative/BrightAi'
 
 type CreativeMode =
   | 'drawing'
@@ -13,8 +14,10 @@ type CreativeMode =
   | 'cursor-stories'
   | 'car-predictions'
   | 'home-designer'
+  | 'bright-ai'
 
 const modes: { id: CreativeMode; title: string; description: string; icon: string }[] = [
+  { id: 'bright-ai', title: '明るいAI', description: '暮らしを少し楽にする、AIのちょい技', icon: '🌤️☕' },
   { id: 'drawing', title: 'お絵描き', description: '指やマウスで自由に描く', icon: '🖌' },
   { id: 'photo-sketch', title: '写真→イラスト', description: 'モノクロ・スケッチ風に変換', icon: '🖼' },
   { id: 'home-designer', title: '間取りデザイナー', description: '平面図を作って3Dで見る', icon: '🏠' },
@@ -31,7 +34,7 @@ export function Creative() {
     <div className="space-y-6 py-4">
       <div>
         <h2 className="text-2xl font-bold text-coffee-800">クリエイティブ</h2>
-        <p className="text-sm text-coffee-500">お絵描き・間取り・小説・ハズレ予想・写真変換</p>
+        <p className="text-sm text-coffee-500">明るいAI・お絵描き・間取り・小説・ハズレ予想・写真変換</p>
       </div>
 
       {!activeMode ? (
@@ -73,6 +76,7 @@ export function Creative() {
           {activeMode === 'cursor-gallery' && <CursorGallery />}
           {activeMode === 'cursor-stories' && <CursorStories />}
           {activeMode === 'car-predictions' && <CarPredictions />}
+          {activeMode === 'bright-ai' && <BrightAi />}
         </div>
       )}
     </div>
