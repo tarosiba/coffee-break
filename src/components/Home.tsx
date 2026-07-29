@@ -61,7 +61,7 @@ export function Home({ onNavigate }: HomeProps) {
             クリエイティブ
           </h3>
           <p className="text-sm text-coffee-500">
-            お絵描き、間取りデザイン、小説、写真のスケッチ風変換ができます。
+            お絵描き、間取りデザイン、明るいAI、小説、写真のスケッチ風変換ができます。
           </p>
         </button>
 
