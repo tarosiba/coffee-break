@@ -1,6 +1,6 @@
 コーヒーproject 3引き継ぎ
 
-# Coffee Break 引き継ぎメッセージ（2026年7月29日時点）
+# Coffee Break 引き継ぎメッセージ（2026年8月1日時点）
 
 ## プロジェクト
 
@@ -11,7 +11,7 @@
 
 ## 開発ルール（Cloud Agent）
 
-- 作業ブランチ: `cursor/<descriptive-name>-3d7c`（新セッションでは環境に合わせた suffix でも可）
+- 作業ブランチ: `cursor/<descriptive-name>-9b60`
 - 変更後は commit → push → PR 作成 → main へマージ
 - `npm run build` と `npm run lint` を通す
 - 可能なら GitHub の main までマージ・デプロイまでお願いします
@@ -20,8 +20,8 @@
 ## まず読むファイル
 
 1. docs/agent-handoff.md（本ファイル）
-2. docs/conversation-session-2026-07-29.md（直近セッション）
-3. docs/conversation-session-2026-07-23-summer.md
+2. docs/conversation-session-2026-08-01.md（8月セッション開始）
+3. docs/conversation-session-2026-07-29.md（7月直近セッション）
 4. docs/conversation-summary.md（全体履歴）
 5. src/components/Games.tsx / src/components/Creative.tsx
 6. 変更対象の src/lib/*.ts と src/components/games/*.tsx または creative/*.tsx
@@ -33,6 +33,7 @@
 - **PR #64, #65, #66** AIニュース（7/24 2本・7/25 2本・7/29 3本）
 - **PR #67** クリエイティブ「明るいAI」コーナー（初回4記事）
 - **PR #68** 会話まとめ conversation-session-2026-07-29
+- **PR #69** 引き継ぎメッセージ更新
 
 ## 以前のセッション（2026年7月20日〜23日）でマージ済み
 
@@ -126,6 +127,7 @@ src/components/Creative.tsx            # クリエイティブモード切替
 ## 次にやりそうな候補（優先度はおじさんの一言で決める）
 
 - **明るいAI** の記事追加（おじさんの一言から）
+- **AIニュース** 8月分の追加
 - **今日の3つメモ**（カレンダー横ミニToDo）【候補B】
 - **コーヒー豆占い**（毎日1回）【候補C】
 - マンガ第3話・別シーンのイラスト
@@ -144,4 +146,4 @@ npm run build && npm run lint
 
 ---
 
-*最終更新: 2026年7月29日（conversation-session-2026-07-29.md・明るいAIコーナー）*
+*最終更新: 2026年8月1日（8月セッション開始・conversation-session-2026-08-01.md）*
