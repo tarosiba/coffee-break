@@ -1,6 +1,6 @@
 コーヒーproject 3引き継ぎ
 
-# Coffee Break 引き継ぎメッセージ（2026年7月23日時点）
+# Coffee Break 引き継ぎメッセージ（2026年7月29日時点）
 
 ## プロジェクト
 
@@ -19,13 +19,19 @@
 ## まず読むファイル
 
 1. docs/agent-handoff.md（本ファイル）
-2. docs/conversation-session-2026-07-23.md（直近セッション）
-3. docs/conversation-session-2026-07-20.md
-4. docs/conversation-session-2026-07-16.md
-5. docs/conversation-session-2026-07-10.md
-6. docs/conversation-summary.md（全体履歴）
-7. src/components/Games.tsx / src/components/Creative.tsx
-8. 変更対象の src/lib/*.ts と src/components/games/*.tsx または creative/*.tsx
+2. docs/conversation-session-2026-07-29.md（直近セッション）
+3. docs/conversation-session-2026-07-23-summer.md
+4. docs/conversation-session-2026-07-23.md
+5. docs/conversation-summary.md（全体履歴）
+6. src/components/Games.tsx / src/components/Creative.tsx
+7. 変更対象の src/lib/*.ts と src/components/games/*.tsx または creative/*.tsx
+
+## 直近セッション（2026年7月23日〜29日）でマージ済み
+
+- **PR #62** ロボット君冷却ゲーム・夏物語編短編『猛暑の午後、五分だけ』
+- **PR #63** GitHub Pages デプロイ修正（RobotCoolingGame 型エラー）
+- **PR #64, #65, #66** AIニュース（7/24 2本・7/25 2本・7/29 3本）
+- **PR #67** クリエイティブ「明るいAI」コーナー（初回4記事）
 
 ## 直近セッション（2026年7月23日・夏物語編）でマージ済み
 
@@ -59,7 +65,7 @@
 - **カレンダー** … localStorage に予定保存
 - **時計・メモ** … コーヒーブレイク時計、メモ（音声メモあり）
 - **ミニゲーム** … 将棋・オセロ・チェッカー・サッカー・エアホッケー（初級/中級）、**ロボット君冷却**（のんびり夏ゲーム）、**3D迷路**（ふつう/ダンジョンRPG：⚔️攻撃・🗝️鍵・🔒宝箱）、スターシューター、神経衰弱、五目並べ、人生ゲーム、じゃんけん、数当て、三目並べ
-- **クリエイティブ** … お絵描き、写真スケッチ、**間取りデザイナー**、**カーソル君の絵**（おじさん・ワンちゃん・ロボット君の漫画、スマートリビングルーム など）、**カーソル君の小説**（『五分だけの隣人』〜『猛暑の午後、五分だけ』）、**ハズレ予想イラスト**（カローラセダン／Apple Glasses／軽自動車 など）
+- **クリエイティブ** … お絵描き、写真スケッチ、**間取りデザイナー**、**明るいAI**（暮らしのちょい技）、**カーソル君の絵**、**カーソル君の小説**（『五分だけの隣人』〜『猛暑の午後、五分だけ』）、**ハズレ予想イラスト**
 - **AIニュース** … カーソル君が気になった AI 関連を要約記事化（目安1日3件）。データは `src/lib/aiNews.ts`、UI は `src/components/AiNews.tsx`
 - **雑談** … カーソル君とコーヒータイム（ローカル定型応答、外部 AI なし）
 
@@ -69,8 +75,9 @@
 src/lib/homeDesigner.ts              # 間取りデザイナー
 src/lib/homeDesignerStorage.ts
 src/components/creative/HomeDesignerApp.tsx
+src/lib/brightAi.ts                 # 明るいAIコーナー
+src/components/creative/BrightAi.tsx
 src/lib/robotCooling.ts              # ロボット君冷却ゲーム
-src/components/games/RobotCoolingGame.tsx
 src/lib/maze3d.ts                    # 3D迷路
 src/components/games/Maze3dGame.tsx
 src/components/creative/CursorGallery.tsx
