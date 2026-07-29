@@ -11,23 +11,24 @@ Coffee Break（tarosiba/coffee-break）の続きをお願いします。
 
 まず以下を読んでから作業してください:
 - docs/agent-handoff.md（最新の引き継ぎドキュメント）
-- docs/conversation-session-2026-07-29.md（直近セッションの会話まとめ）
+- docs/conversation-session-2026-08-01.md（8月セッション）
 - docs/conversation-summary.md（全体履歴）
 
 ## プロジェクト概要
 - React 19 + TypeScript + Vite + Tailwind CSS 4 の PWA
 - main マージ → GitHub Actions → GitHub Pages 自動デプロイ
-- 作業ブランチ: cursor/<descriptive-name>-3d7c（環境に合わせた suffix でも可）
+- 作業ブランチ: cursor/<descriptive-name>-9b60
 - 変更後は commit → push → PR → main マージまでお願いします
 - npm run build と npm run lint を通すこと
 - マージ後は GitHub Actions のデプロイ成功を確認すること
 
-## 直近でマージ済み（PR #62〜#68）
+## 直近でマージ済み（PR #62〜#69）
 - PR #62 ロボット君冷却ゲーム・夏物語編短編『猛暑の午後、五分だけ』
 - PR #63 デプロイ失敗修正（RobotCoolingGame 型エラー）
 - PR #64〜66 AIニュース（7/24 2本・7/25 2本・7/29 3本）
 - PR #67 クリエイティブ「明るいAI」コーナー（初回4記事）
-- PR #68 会話まとめ・引き継ぎドキュメント更新
+- PR #68 会話まとめ conversation-session-2026-07-29
+- PR #69 引き継ぎメッセージ更新
 
 ## 既存機能（main の状態）
 - ホーム … 予定リマインド、各タブへの導線
@@ -72,11 +73,11 @@ Coffee Break（tarosiba/coffee-break）の続きをお願いします。
 
 ## 次にやりそうな候補（優先度はおじさんの一言で決める）
 - 明るいAIの記事追加（おじさんの一言から）
+- AIニュース 8月分の追加
 - 今日の3つメモ（カレンダー横ミニToDo）【候補B】
 - コーヒー豆占い（毎日1回）【候補C】
 - マンガ第3話・別シーンのイラスト
-- 間取りデザイナー強化（窓・ドア、視点回転）
-- 3D迷路さらなる強化（スケルトン移動AI、回復ポーション）
+- 間取りデザイナー強化 / 3D迷路さらなる強化
 
 ## 注意
 - 画像追加時は public/images/ に配置し、PWA 2MB 制限のため sharp 等で圧縮必須
