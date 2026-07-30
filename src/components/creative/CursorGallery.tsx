@@ -12,6 +12,11 @@ const GALLERY_ITEMS = [
     caption: 'スマートリビングルーム（売り出し中のモデルルーム風）🏙️✨',
   },
   {
+    src: `${BASE}images/korean-resort-illustration.jpg`,
+    alt: '架空キャラの韓国風リゾートイラスト。白いレース水着の女性がインフィニティプールのラウンジチェアでくつろぐ夏の休日。',
+    caption: 'リゾートの夏、白い水着の休日 🏖️☕',
+  },
+  {
     src: `${BASE}images/penrose-stairs.png`,
     alt: 'ペンローズの階段 — ずっと登り続ける錯覚の階段',
     caption: 'ペンローズの階段（騙し絵）🤖☕',
