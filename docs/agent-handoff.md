@@ -20,8 +20,9 @@
 ## まず読むファイル
 
 1. docs/agent-handoff.md（本ファイル）
-2. docs/conversation-session-2026-08-01.md（8月セッション開始）
-3. docs/conversation-session-2026-07-29.md（7月直近セッション）
+2. docs/conversation-session-2026-07-31.md（直近セッション）
+3. docs/conversation-session-2026-08-01.md（8月セッション開始）
+4. docs/conversation-session-2026-07-29.md（7月セッション）
 4. docs/conversation-summary.md（全体履歴）
 5. src/components/Games.tsx / src/components/Creative.tsx
 6. 変更対象の src/lib/*.ts と src/components/games/*.tsx または creative/*.tsx
@@ -34,6 +35,13 @@
 - **PR #67** クリエイティブ「明るいAI」コーナー（初回4記事）
 - **PR #68** 会話まとめ conversation-session-2026-07-29
 - **PR #69** 引き継ぎメッセージ更新
+
+## 直近セッション（2026年7月29日〜31日）でマージ済み
+
+- **PR #70** 8月セッション向け引き継ぎドキュメント更新
+- **PR #71** ギャラリーに韓国風リゾートの架空キャライラストを追加
+- **PR #72** AIニュース 2026-07-31（3本）
+- **PR #73** 会話まとめ conversation-session-2026-07-31（予定）
 
 ## 以前のセッション（2026年7月20日〜23日）でマージ済み
 
@@ -146,4 +154,4 @@ npm run build && npm run lint
 
 ---
 
-*最終更新: 2026年8月1日（8月セッション開始・conversation-session-2026-08-01.md）*
+*最終更新: 2026年7月31日（conversation-session-2026-07-31.md）*
