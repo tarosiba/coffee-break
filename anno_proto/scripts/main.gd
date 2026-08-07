@@ -50,7 +50,7 @@ func _ready() -> void:
 
 
 func _load_textures() -> void:
-	var names := [
+	var names: Array[String] = [
 		"terrain-grass",
 		"terrain-water",
 		"terrain-dirt-path",
@@ -65,7 +65,7 @@ func _load_textures() -> void:
 		"field-fenced-wheat",
 	]
 	for name in names:
-		var path := CHIP_PATH + name + ".png"
+		var path: String = CHIP_PATH + name + ".png"
 		if ResourceLoader.exists(path):
 			textures[name] = load(path)
 
@@ -74,7 +74,7 @@ func _generate_island() -> void:
 	for y in range(GRID_H):
 		for x in range(GRID_W):
 			var grid := Vector2i(x, y)
-			var chip := "terrain-water" if not _is_land(grid) else "terrain-grass"
+			var chip: String = "terrain-water" if not _is_land(grid) else "terrain-grass"
 			_spawn_tile(terrain_layer, grid, chip)
 
 
@@ -125,7 +125,7 @@ func _place_at(grid: Vector2i) -> void:
 		hint_label.text = "すでに建物があります"
 		return
 
-	var kind := ""
+	var kind: String = ""
 	match build_mode:
 		BuildMode.HOUSE:
 			kind = "house"
@@ -142,7 +142,7 @@ func _place_at(grid: Vector2i) -> void:
 		hint_label.text = "資源が足りません（木材・コイン）"
 		return
 
-	var chip := BUILD_TEXTURE[kind]
+	var chip: String = BUILD_TEXTURE[kind]
 	if not textures.has(chip):
 		return
 
