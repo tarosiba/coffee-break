@@ -21,8 +21,8 @@ autostart = true
 [node name="Panel" type="PanelContainer" parent="UI"]
 offset_left = 8.0
 offset_top = 8.0
-offset_right = 320.0
-offset_bottom = 220.0
+offset_right = 360.0
+offset_bottom = 300.0
 
 [node name="MarginContainer" type="MarginContainer" parent="UI/Panel"]
 theme_override_constants/margin_left = 12
@@ -31,13 +31,14 @@ theme_override_constants/margin_right = 12
 theme_override_constants/margin_bottom = 10
 
 [node name="VBox" type="VBoxContainer" parent="UI/Panel/MarginContainer"]
-theme_override_constants/separation = 8
+theme_override_constants/separation = 6
 
 [node name="Title" type="Label" parent="UI/Panel/MarginContainer/VBox"]
 text = "☕ Coffee Break 島 Proto"
 
 [node name="ResourceLabel" type="Label" parent="UI/Panel/MarginContainer/VBox"]
-text = "🪵 木材 0　🌾 小麦 0　💰 コイン 0"
+text = "🪵 木材 0　🌾 小麦 0　🌽 小麦粉 0　🍞 パン 0　💰 コイン 0"
+autowrap_mode = 2
 
 [node name="BtnHouse" type="Button" parent="UI/Panel/MarginContainer/VBox"]
 text = "🏠 コーヒー小屋"
@@ -48,14 +49,22 @@ text = "🌾 小麦畑"
 [node name="BtnPlowed" type="Button" parent="UI/Panel/MarginContainer/VBox"]
 text = "🚜 耕起畑"
 
+[node name="BtnWindmill" type="Button" parent="UI/Panel/MarginContainer/VBox"]
+text = "🌀 風車"
+
+[node name="BtnBakery" type="Button" parent="UI/Panel/MarginContainer/VBox"]
+text = "🍞 パン屋"
+
 [node name="BtnErase" type="Button" parent="UI/Panel/MarginContainer/VBox"]
 text = "🗑 撤去"
 
 [node name="HintLabel" type="Label" parent="UI/Panel/MarginContainer/VBox"]
-text = "左クリックで配置。小麦畑は自動生産。"
+text = "左クリックで配置。小麦畑→風車→パン屋の順でパンを作れます。"
 autowrap_mode = 2
 
 [connection signal="pressed" from="UI/Panel/MarginContainer/VBox/BtnHouse" to="." method="_on_house_pressed"]
 [connection signal="pressed" from="UI/Panel/MarginContainer/VBox/BtnWheat" to="." method="_on_wheat_pressed"]
 [connection signal="pressed" from="UI/Panel/MarginContainer/VBox/BtnPlowed" to="." method="_on_plowed_pressed"]
+[connection signal="pressed" from="UI/Panel/MarginContainer/VBox/BtnWindmill" to="." method="_on_windmill_pressed"]
+[connection signal="pressed" from="UI/Panel/MarginContainer/VBox/BtnBakery" to="." method="_on_bakery_pressed"]
 [connection signal="pressed" from="UI/Panel/MarginContainer/VBox/BtnErase" to="." method="_on_erase_pressed"]

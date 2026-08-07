@@ -1,14 +1,14 @@
 extends Node2D
 
 ## 創世紀1602風 島開発プロトタイプ — メインシーン
-## グリッド配置・資源・簡易生産
+## グリッド配置・資源・生産チェーン（小麦→小麦粉→パン）
 
 const TILE_SIZE := 32
 const GRID_W := 22
 const GRID_H := 16
 const CHIP_PATH := "res://assets/sprites/mapchips/"
 
-enum BuildMode { HOUSE, FIELD_WHEAT, FIELD_PLOWED, ERASE }
+enum BuildMode { HOUSE, FIELD_WHEAT, FIELD_PLOWED, WINDMILL, BAKERY, ERASE }
 
 var build_mode: BuildMode = BuildMode.HOUSE
 var textures: Dictionary = {}
@@ -16,6 +16,8 @@ var cells: Dictionary = {} # Vector2i -> { kind: String, sprite: Sprite2D }
 
 var wood: int = 20
 var wheat: int = 0
+var flour: int = 0
+var bread: int = 0
 var coins: int = 100
 
 @onready var terrain_layer: Node2D = $TerrainLayer
@@ -27,13 +29,18 @@ const BUILD_COST := {
 	"house": { "wood": 5, "coins": 10 },
 	"field_wheat": { "wood": 2, "coins": 5 },
 	"field_plowed": { "wood": 1, "coins": 2 },
+	"windmill": { "wood": 8, "coins": 15 },
+	"bakery": { "wood": 6, "coins": 12 },
 }
 
 const BUILD_TEXTURE := {
 	"house": "house-coffee-shop",
 	"field_wheat": "field-wheat",
 	"field_plowed": "field-plowed",
+	"windmill": "house-windmill",
+	"bakery": "house-bakery",
 }
+
 
 func _ready() -> void:
 	_load_textures()
@@ -50,6 +57,8 @@ func _load_textures() -> void:
 		"house-red-roof",
 		"house-coffee-shop",
 		"house-blue-roof",
+		"house-windmill",
+		"house-bakery",
 		"field-wheat",
 		"field-plowed",
 		"field-sprouts",
@@ -72,7 +81,6 @@ func _generate_island() -> void:
 func _is_land(grid: Vector2i) -> bool:
 	if grid.x < 1 or grid.y < 1 or grid.x >= GRID_W - 1 or grid.y >= GRID_H - 1:
 		return false
-	# 島っぽく角を切る
 	if grid.x + grid.y < 4:
 		return false
 	if grid.x + grid.y > GRID_W + GRID_H - 10:
@@ -125,6 +133,10 @@ func _place_at(grid: Vector2i) -> void:
 			kind = "field_wheat"
 		BuildMode.FIELD_PLOWED:
 			kind = "field_plowed"
+		BuildMode.WINDMILL:
+			kind = "windmill"
+		BuildMode.BAKERY:
+			kind = "bakery"
 
 	if not _pay_cost(kind):
 		hint_label.text = "資源が足りません（木材・コイン）"
@@ -167,19 +179,45 @@ func _pay_cost(kind: String) -> bool:
 
 
 func _on_production_tick() -> void:
-	var produced := 0
+	var wheat_fields := 0
+	var windmills := 0
+	var bakeries := 0
+
 	for entry in cells.values():
-		if entry["kind"] == "field_wheat":
-			produced += 1
-	wheat += produced
-	if produced > 0:
-		coins += produced
+		match entry["kind"]:
+			"field_wheat":
+				wheat_fields += 1
+			"windmill":
+				windmills += 1
+			"bakery":
+				bakeries += 1
+
+	if wheat_fields > 0:
+		wheat += wheat_fields
+		coins += wheat_fields
+
+	for _i in range(windmills):
+		if wheat >= 1:
+			wheat -= 1
+			flour += 1
+
+	var bread_made := 0
+	for _i in range(bakeries):
+		if flour >= 1:
+			flour -= 1
+			bread += 1
+			bread_made += 1
+
+	if bread_made > 0:
+		coins += bread_made * 2
+
 	_update_ui()
 
 
 func _update_ui() -> void:
 	resource_label.text = (
-		"🪵 木材 %d　🌾 小麦 %d　💰 コイン %d" % [wood, wheat, coins]
+		"🪵 木材 %d　🌾 小麦 %d　🌽 小麦粉 %d　🍞 パン %d　💰 コイン %d"
+		% [wood, wheat, flour, bread, coins]
 	)
 
 
@@ -196,6 +234,16 @@ func _on_wheat_pressed() -> void:
 func _on_plowed_pressed() -> void:
 	build_mode = BuildMode.FIELD_PLOWED
 	hint_label.text = "モード: 耕起畑（木材1・コイン2）"
+
+
+func _on_windmill_pressed() -> void:
+	build_mode = BuildMode.WINDMILL
+	hint_label.text = "モード: 風車（木材8・コイン15）— 小麦1→小麦粉1"
+
+
+func _on_bakery_pressed() -> void:
+	build_mode = BuildMode.BAKERY
+	hint_label.text = "モード: パン屋（木材6・コイン12）— 小麦粉1→パン1・コイン+2"
 
 
 func _on_erase_pressed() -> void:
