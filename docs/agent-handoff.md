@@ -1,6 +1,6 @@
 コーヒーproject 3引き継ぎ
 
-# Coffee Break 引き継ぎメッセージ（2026年8月1日時点）
+# Coffee Break 引き継ぎメッセージ（2026年8月7日時点）
 
 ## プロジェクト
 
@@ -20,10 +20,10 @@
 ## まず読むファイル
 
 1. docs/agent-handoff.md（本ファイル）
-2. docs/conversation-session-2026-07-31.md（直近セッション）
+2. docs/conversation-session-2026-08-07.md（直近セッション）
 3. docs/conversation-session-2026-08-01.md（8月セッション開始）
-4. docs/conversation-session-2026-07-29.md（7月セッション）
-4. docs/conversation-summary.md（全体履歴）
+4. docs/conversation-session-2026-07-31.md（7月セッション）
+5. docs/conversation-summary.md（全体履歴）
 5. src/components/Games.tsx / src/components/Creative.tsx
 6. 変更対象の src/lib/*.ts と src/components/games/*.tsx または creative/*.tsx
 
@@ -36,12 +36,18 @@
 - **PR #68** 会話まとめ conversation-session-2026-07-29
 - **PR #69** 引き継ぎメッセージ更新
 
+## 直近セッション（2026年8月1日〜7日）でマージ済み
+
+- **PR #76** AIニュース 2026-08-01（3本）
+- **PR #77** 会話まとめ conversation-session-2026-08-07
+
 ## 直近セッション（2026年7月29日〜31日）でマージ済み
 
 - **PR #70** 8月セッション向け引き継ぎドキュメント更新
 - **PR #71** ギャラリーに韓国風リゾートの架空キャライラストを追加
 - **PR #72** AIニュース 2026-07-31（3本）
 - **PR #73** 会話まとめ conversation-session-2026-07-31
+- **PR #74, #75** agent-handoff 表記修正・引き継ぎメッセージ更新
 
 ## 以前のセッション（2026年7月20日〜23日）でマージ済み
 
@@ -129,13 +135,16 @@ src/components/Creative.tsx            # クリエイティブモード切替
 - 3Dセキュアでエアコン修理のカード決済エラー
 - キャンピングカー中古市場は活況（新車はベース車不足）
 - モノクロマンガAIアプリ（PixAI、Comistitch 等）に興味
-- お母さん（認知症）・健康長寿への関心。Unity 6.3 LTS 入門途中
+- お母さん（認知症）・健康長寿への関心。Unity 6.3 LTS 入門途中（Hub・`MyFirstUnity2D`・Square 配置まで）
+- Paragon Pioneers 2 にハマりやすい。Unity 製・iPad 対応。Islet 島で Townsmen 行き詰まり（パン0%・贅沢品8%）
+- 『ブラウザで動かす LLM実装入門』（Colab）を検討中・未購入
+- Cursor Cloud Agents Builds アップグレード案内（`tarosiba/coffee-break` 環境、8/17 自動アップグレード）
 - 将来構想：コーヒーブレイク劇場（3年後に短編映画を別枠で）
 
 ## 次にやりそうな候補（優先度はおじさんの一言で決める）
 
 - **明るいAI** の記事追加（おじさんの一言から）
-- **AIニュース** 8月分の追加
+- **AIニュース** 8月分の追加（最新 8/1。8/2以降）
 - **今日の3つメモ**（カレンダー横ミニToDo）【候補B】
 - **コーヒー豆占い**（毎日1回）【候補C】
 - マンガ第3話・別シーンのイラスト
@@ -154,4 +163,4 @@ npm run build && npm run lint
 
 ---
 
-*最終更新: 2026年7月31日（conversation-session-2026-07-31.md）*
+*最終更新: 2026年8月7日（conversation-session-2026-08-07.md）*
