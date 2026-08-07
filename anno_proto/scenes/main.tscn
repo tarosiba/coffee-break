@@ -1,0 +1,61 @@
+[gd_scene load_steps=2 format=3 uid="uid://cbislandproto01"]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_main")
+
+[node name="TerrainLayer" type="Node2D" parent="."]
+
+[node name="BuildingLayer" type="Node2D" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(352, 256)
+
+[node name="ProductionTimer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Panel" type="PanelContainer" parent="UI"]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 320.0
+offset_bottom = 220.0
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/Panel"]
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 10
+
+[node name="VBox" type="VBoxContainer" parent="UI/Panel/MarginContainer"]
+theme_override_constants/separation = 8
+
+[node name="Title" type="Label" parent="UI/Panel/MarginContainer/VBox"]
+text = "☕ Coffee Break 島 Proto"
+
+[node name="ResourceLabel" type="Label" parent="UI/Panel/MarginContainer/VBox"]
+text = "🪵 木材 0　🌾 小麦 0　💰 コイン 0"
+
+[node name="BtnHouse" type="Button" parent="UI/Panel/MarginContainer/VBox"]
+text = "🏠 コーヒー小屋"
+
+[node name="BtnWheat" type="Button" parent="UI/Panel/MarginContainer/VBox"]
+text = "🌾 小麦畑"
+
+[node name="BtnPlowed" type="Button" parent="UI/Panel/MarginContainer/VBox"]
+text = "🚜 耕起畑"
+
+[node name="BtnErase" type="Button" parent="UI/Panel/MarginContainer/VBox"]
+text = "🗑 撤去"
+
+[node name="HintLabel" type="Label" parent="UI/Panel/MarginContainer/VBox"]
+text = "左クリックで配置。小麦畑は自動生産。"
+autowrap_mode = 2
+
+[connection signal="pressed" from="UI/Panel/MarginContainer/VBox/BtnHouse" to="." method="_on_house_pressed"]
+[connection signal="pressed" from="UI/Panel/MarginContainer/VBox/BtnWheat" to="." method="_on_wheat_pressed"]
+[connection signal="pressed" from="UI/Panel/MarginContainer/VBox/BtnPlowed" to="." method="_on_plowed_pressed"]
+[connection signal="pressed" from="UI/Panel/MarginContainer/VBox/BtnErase" to="." method="_on_erase_pressed"]
