@@ -11,7 +11,7 @@
 |------|------|
 | プロジェクト | `tarosiba/coffee-break` |
 | 公開 URL | https://tarosiba.github.io/coffee-break/ |
-| テーマ | 8月セッション開始 → AIニュース追加 → Paragon Pioneers / Unity 雑談・攻略相談 |
+| テーマ | AIニュース → Unity/Godot 島開発相談 → Godot マップチップ＋島プロトタイプ |
 | 作業ブランチ命名 | `cursor/<descriptive-name>-9b60` |
 
 ---
@@ -27,6 +27,29 @@
 | 3本目 | スタンフォード、AIが設計した新種ウイルス16株を実験成功 |
 
 **主要ファイル:** `src/lib/aiNews.ts`
+
+### Godot 島開発プロトタイプ anno_proto（PR #82）
+
+創世紀1602風の島開発ゲーム **フェーズ1**（Godot 4）。
+
+| 機能 | 状態 |
+|------|------|
+| 島地形（草地＋海） | ✅ |
+| 建物配置（コーヒー小屋・小麦畑・耕起畑） | ✅ |
+| 撤去・資源（木材・小麦・コイン） | ✅ |
+| 小麦畑の自動生産（2秒） | ✅ |
+
+**起動:** Godot Hub → Import `anno_proto/project.godot` → F5  
+**引き継ぎ:** `anno_proto/HANDOFF.md`
+
+### Godot 用グラフィック（PR #80, #81）
+
+| PR | 内容 |
+|----|------|
+| #80 | アイソメ高解像度スプライト（家・畑、カーソル君絵風） |
+| #81 | 参考マップチップ風タイルセット（住宅16・畑16・地形4、32/128px） |
+
+**パス:** `public/images/godot-mapchips/`（PWA precache 除外済み）
 
 ### AIニュース 2026-08-01（PR #76）
 
@@ -44,7 +67,12 @@
 
 | PR | 内容 |
 |----|------|
+| [#82](https://github.com/tarosiba/coffee-break/pull/82) | Godot 4 島開発プロトタイプ `anno_proto`（フェーズ1） |
+| [#81](https://github.com/tarosiba/coffee-break/pull/81) | 参考マップチップ風タイルセット（32/128px） |
+| [#80](https://github.com/tarosiba/coffee-break/pull/80) | Godot用アイソメ家・畑スプライト |
 | [#79](https://github.com/tarosiba/coffee-break/pull/79) | AIニュース 2026-08-07 を3本追加 |
+| [#78](https://github.com/tarosiba/coffee-break/pull/78) | 引き継ぎメッセージ更新 |
+| [#77](https://github.com/tarosiba/coffee-break/pull/77) | 会話まとめ conversation-session-2026-08-07 |
 | [#76](https://github.com/tarosiba/coffee-break/pull/76) | AIニュース 2026-08-01 を3本追加 |
 
 ---
@@ -59,8 +87,13 @@
 | ゲームと生活 | ゲームにハマりやすいおじさん。「楽しんだ者の勝ち」イラストの話。ゲームはダメにしない、バランスが大事 |
 | Paragon Pioneers 2 | Unity 製・iPad 対応。クリア目安はリアル時間3〜6週間、実プレイ50〜100時間前後 |
 | Research（Creativity） | Pioneer 居住開始から自動生成。Colonist 昇格で体感ジャンプ。贅沢品は不要、人口が鍵 |
-| スーパー大戦略風ゲーム | Coffee Break には未実装。`strategy-game` リポジトリ言及あり。docs では「次の候補」 |
-| Unity 入門 | 7月セッション記録：6.3 LTS、Hub インストール、`MyFirstUnity2D`（Square 配置まで） |
+| スーパー大戦略風ゲーム | Godot 4 で別リポジトリにプロトタイプ済み（`daisenryaku_proto`、PR #15 等）。大戦略と同じ HANDOFF＋小PR 運用 |
+| Unity 入門 | 6.3 LTS、Hub、`MyFirstUnity2D`（Square 配置まで） |
+| Unity で島開発ゲーム | まずグリッド＋クリック配置から。Kenney 無料素材 → Classic City Builder Kit / Tycoon Tile 等 |
+| Unity Asset Store | 島開発向けアセット選定（Kenney、Classic City Builder Kit、Tycoon Tile、Modular World Builder 等） |
+| Unity vs Godot | 1602風は両方可能。Agent任せ＋大戦略の型再利用なら Godot、自分で Unity 学習なら Unity |
+| 創世紀1602 の画面 | **2Dアイソメ**（3Dではない）。手描きスプライトの完成度が高い |
+| 絵の方針 | 家・畑は最初こだわらず（四角・Kenney でOK）→ おじさんと一致 |
 
 ### Paragon Pioneers 攻略相談（Islet 島・Townsmen 行き詰まり）
 
@@ -105,14 +138,26 @@
 
 ## 次にやりそうなこと
 
-- Paragon Pioneers：パン供給の修正、島分け、贅沢品チェーン整備
+### anno_proto（Godot 島開発）
+
+- 小麦→パンの2段階生産チェーン
+- 風車・パン屋マップチップ追加
+- 人口・ニーズ表示
+- 2島目・貿易
+
+### Coffee Break PWA
+
 - 明るいAIの記事追加
-- AIニュース 8月分の追加（8/2以降）
-- Unity 続き（四角を動かす）
-- おじさん考案のシミュレーション・戦略ゲーム プロトタイプ
+- AIニュース 8月分（8/8以降）
 - 候補B「今日の3つメモ」／候補C「コーヒー豆占い」
-- Cursor Cloud Agents Builds の有効化（`tarosiba/coffee-break` 環境）
+
+### 雑談・プレイ
+
+- Paragon Pioneers：Islet パン0%修正、島分け
+- Unity 続き（グリッドに建物を置く）
+- 大戦略 Godot プロトの継続（別リポジトリ）
+- Cursor Cloud Agents Builds の有効化
 
 ---
 
-*最終更新: 2026年8月7日*
+*最終更新: 2026年8月7日（セッションまとめ追記）*

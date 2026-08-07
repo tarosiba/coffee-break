@@ -41,6 +41,8 @@
 - **PR #76** AIニュース 2026-08-01（3本）
 - **PR #77** 会話まとめ conversation-session-2026-08-07
 - **PR #79** AIニュース 2026-08-07（3本）
+- **PR #80, #81** Godot用スプライト・マップチップタイルセット（32/128px）
+- **PR #82** Godot 4 島開発プロトタイプ `anno_proto/`（フェーズ1）
 
 ## 直近セッション（2026年7月29日〜31日）でマージ済み
 
@@ -141,6 +143,16 @@ src/components/Creative.tsx            # クリエイティブモード切替
 - 『ブラウザで動かす LLM実装入門』（Colab）を検討中・未購入
 - Cursor Cloud Agents Builds アップグレード案内（`tarosiba/coffee-break` 環境、8/17 自動アップグレード）
 - 将来構想：コーヒーブレイク劇場（3年後に短編映画を別枠で）
+- **Godot 島開発** `anno_proto/`（創世紀1602風フェーズ1）。大戦略プロト（別リポ）と同じ HANDOFF 運用
+- Unity vs Godot：1602風は両方可。Agent任せは Godot、自分で学ぶは Unity
+
+## Godot 島開発プロト（anno_proto）
+
+- **場所:** `anno_proto/`（本リポジトリ内、PWA とは独立）
+- **起動:** Godot 4.3+ → Import `anno_proto/project.godot`
+- **引き継ぎ:** `anno_proto/HANDOFF.md`
+- **グラフィック:** `public/images/godot-mapchips/` および `anno_proto/assets/sprites/mapchips/`
+- **次:** 小麦→パン、風車・パン屋チップ、人口・貿易
 
 ## 次にやりそうな候補（優先度はおじさんの一言で決める）
 
@@ -151,7 +163,7 @@ src/components/Creative.tsx            # クリエイティブモード切替
 - マンガ第3話・別シーンのイラスト
 - 間取りデザイナー強化（窓・ドア、視点回転）
 - 3D迷路強化（スケルトン移動AI、回復ポーション）
-- おじさん考案のシミュレーション・戦略ゲーム プロトタイプ
+- おじさん考案のシミュレーション・戦略ゲーム プロトタイプ → **anno_proto 継続**（Godot）
 
 ## ローカル確認
 
@@ -164,4 +176,4 @@ npm run build && npm run lint
 
 ---
 
-*最終更新: 2026年8月7日（conversation-session-2026-08-07.md）*
+*最終更新: 2026年8月7日（8/7セッションまとめ・anno_proto 反映）*
