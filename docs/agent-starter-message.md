@@ -22,11 +22,19 @@ Coffee Break（tarosiba/coffee-break）の続きをお願いします。
 - npm run build と npm run lint を通すこと
 - マージ後は GitHub Actions のデプロイ成功を確認すること
 
-## 直近でマージ済み（PR #75〜#79）
+## 直近でマージ済み（PR #75〜#82）
 - PR #75 新Agent向け引き継ぎメッセージ更新
 - PR #76 AIニュース 2026-08-01（3本）
 - PR #77 会話まとめ conversation-session-2026-08-07
 - PR #79 AIニュース 2026-08-07（3本）
+- PR #80 Godot用アイソメ家・畑スプライト
+- PR #81 マップチップ風タイルセット（32/128px）
+- PR #82 Godot 4 島開発プロトタイプ anno_proto（フェーズ1）
+
+## Godot 島開発（別枠・同リポ内）
+- `anno_proto/project.godot` — 創世紀1602風フェーズ1（配置・資源・小麦生産）
+- 引き継ぎ: `anno_proto/HANDOFF.md`
+- 大戦略プロト（Godot・別リポ）と同じ HANDOFF＋小PR 運用
 
 ## 既存機能（main の状態）
 - ホーム … 予定リマインド、各タブへの導線
@@ -72,10 +80,11 @@ Coffee Break（tarosiba/coffee-break）の続きをお願いします。
 - Merchant へのアップグレードはまだしない
 
 ## 次の候補（優先度はおじさんの一言で決める）
-- AIニュース 8月分の追加（8/2以降）
+- anno_proto 続き（小麦→パン、風車・パン屋チップ）
+- AIニュース 8月分の追加（8/8以降）
 - 明るいAIの記事追加
 - 今日の3つメモ【B】／コーヒー豆占い【C】
-- おじさん考案のシミュレーション・戦略ゲーム プロトタイプ
+- おじさん考案のシミュレーション・戦略ゲーム → anno_proto（Godot）継続
 - ギャラリーイラスト追加（架空キャラのみ）
 - 間取り強化、3D迷路強化
 
