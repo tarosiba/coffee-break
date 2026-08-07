@@ -10,7 +10,7 @@ script = ExtResource("1_main")
 [node name="BuildingLayer" type="Node2D" parent="."]
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(352, 256)
+position = Vector2(528, 384)
 
 [node name="ProductionTimer" type="Timer" parent="."]
 wait_time = 2.0
@@ -59,7 +59,7 @@ text = "🍞 パン屋"
 text = "🗑 撤去"
 
 [node name="HintLabel" type="Label" parent="UI/Panel/MarginContainer/VBox"]
-text = "左クリックで配置。小麦畑→風車→パン屋の順でパンを作れます。"
+text = "左クリックで配置。中央の平地に建てて、左下は森です。"
 autowrap_mode = 2
 
 [connection signal="pressed" from="UI/Panel/MarginContainer/VBox/BtnHouse" to="." method="_on_house_pressed"]

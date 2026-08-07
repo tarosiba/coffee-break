@@ -3,7 +3,7 @@ extends Node2D
 ## 創世紀1602風 島開発プロトタイプ — メインシーン
 ## グリッド配置・資源・生産チェーン（小麦→小麦粉→パン）
 
-const TILE_SIZE := 32
+const TILE_SIZE := 48
 const GRID_W := 22
 const GRID_H := 16
 const CHIP_PATH := "res://assets/sprites/mapchips/"
@@ -52,6 +52,8 @@ func _ready() -> void:
 func _load_textures() -> void:
 	var names: Array[String] = [
 		"terrain-grass",
+		"terrain-grass-plain",
+		"terrain-forest",
 		"terrain-water",
 		"terrain-dirt-path",
 		"house-red-roof",
@@ -74,8 +76,24 @@ func _generate_island() -> void:
 	for y in range(GRID_H):
 		for x in range(GRID_W):
 			var grid := Vector2i(x, y)
-			var chip: String = "terrain-water" if not _is_land(grid) else "terrain-grass"
-			_spawn_tile(terrain_layer, grid, chip)
+			_spawn_tile(terrain_layer, grid, _terrain_chip(grid))
+
+
+func _terrain_chip(grid: Vector2i) -> String:
+	if not _is_land(grid):
+		return "terrain-water"
+	if _is_forest(grid):
+		return "terrain-forest"
+	return "terrain-grass-plain"
+
+
+func _is_forest(grid: Vector2i) -> bool:
+	# 島の左下エリアを森に（平地は中央〜右上）
+	return grid.x <= 7 and grid.y >= 9
+
+
+func _can_build_on(grid: Vector2i) -> bool:
+	return _is_land(grid) and not _is_forest(grid)
 
 
 func _is_land(grid: Vector2i) -> bool:
@@ -99,7 +117,15 @@ func _spawn_tile(parent: Node2D, grid: Vector2i, chip_name: String) -> void:
 	sprite.texture = textures[chip_name]
 	sprite.position = Vector2(grid.x * TILE_SIZE, grid.y * TILE_SIZE)
 	sprite.centered = false
+	_apply_tile_scale(sprite)
 	parent.add_child(sprite)
+
+
+func _apply_tile_scale(sprite: Sprite2D) -> void:
+	var tex_size: Vector2 = sprite.texture.get_size()
+	if tex_size.x > 0 and tex_size.x != TILE_SIZE:
+		var scale_factor: float = float(TILE_SIZE) / tex_size.x
+		sprite.scale = Vector2(scale_factor, scale_factor)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -120,6 +146,9 @@ func _mouse_to_grid() -> Vector2i:
 func _place_at(grid: Vector2i) -> void:
 	if not _is_land(grid):
 		hint_label.text = "ここは海です 🌊"
+		return
+	if not _can_build_on(grid):
+		hint_label.text = "森の中には建てられません 🌲"
 		return
 	if cells.has(grid):
 		hint_label.text = "すでに建物があります"
@@ -150,6 +179,7 @@ func _place_at(grid: Vector2i) -> void:
 	sprite.texture = textures[chip]
 	sprite.position = Vector2(grid.x * TILE_SIZE, grid.y * TILE_SIZE)
 	sprite.centered = false
+	_apply_tile_scale(sprite)
 	building_layer.add_child(sprite)
 	cells[grid] = { "kind": kind, "sprite": sprite }
 	hint_label.text = "配置しました ✓"
