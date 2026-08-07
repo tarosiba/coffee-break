@@ -47,16 +47,62 @@ function applyHighContrast(data: Uint8ClampedArray, threshold = 128): void {
   }
 }
 
-function blurCanvas(source: HTMLCanvasElement, radius: number): ImageData {
-  const canvas = document.createElement('canvas')
-  canvas.width = source.width
-  canvas.height = source.height
-  const ctx = canvas.getContext('2d')
-  if (!ctx) throw new Error('Canvas not supported')
-  ctx.filter = `blur(${radius}px)`
-  ctx.drawImage(source, 0, 0)
-  ctx.filter = 'none'
-  return ctx.getImageData(0, 0, canvas.width, canvas.height)
+function blurImageDataGrayscale(imageData: ImageData, radius: number): ImageData {
+  const { width, height, data } = imageData
+  const r = Math.max(1, Math.round(radius))
+  const windowSize = r * 2 + 1
+  const pixels = width * height
+  const gray = new Float32Array(pixels)
+
+  for (let i = 0; i < pixels; i++) {
+    gray[i] = data[i * 4]
+  }
+
+  const temp = new Float32Array(pixels)
+  const result = new Float32Array(pixels)
+
+  for (let y = 0; y < height; y++) {
+    const row = y * width
+    let sum = 0
+    for (let x = -r; x <= r; x++) {
+      sum += gray[row + Math.min(width - 1, Math.max(0, x))]
+    }
+    for (let x = 0; x < width; x++) {
+      temp[row + x] = sum / windowSize
+      const removeX = Math.max(0, x - r)
+      const addX = Math.min(width - 1, x + r + 1)
+      sum += gray[row + addX] - gray[row + removeX]
+    }
+  }
+
+  for (let x = 0; x < width; x++) {
+    let sum = 0
+    for (let y = -r; y <= r; y++) {
+      sum += temp[Math.min(height - 1, Math.max(0, y)) * width + x]
+    }
+    for (let y = 0; y < height; y++) {
+      const idx = y * width + x
+      result[idx] = sum / windowSize
+      const removeY = Math.max(0, y - r)
+      const addY = Math.min(height - 1, y + r + 1)
+      sum += temp[addY * width + x] - temp[removeY * width + x]
+    }
+  }
+
+  const out = new ImageData(width, height)
+  for (let i = 0; i < pixels; i++) {
+    const v = Math.round(result[i])
+    out.data[i * 4] = v
+    out.data[i * 4 + 1] = v
+    out.data[i * 4 + 2] = v
+    out.data[i * 4 + 3] = data[i * 4 + 3]
+  }
+  return out
+}
+
+function blurImageData(imageData: ImageData, radius: number): ImageData {
+  // Safari / iOS では ctx.filter の blur が効かないため、手動ぼかしを使う
+  return blurImageDataGrayscale(imageData, radius)
 }
 
 function putImageData(ctx: CanvasRenderingContext2D, imageData: ImageData): void {
@@ -125,13 +171,8 @@ export function applyFilterToCanvas(
   const inverted = cloneImageData(grayCtx, width, height)
   invertGrayscale(inverted.data)
 
-  const invertedCanvas = document.createElement('canvas')
-  invertedCanvas.width = width
-  invertedCanvas.height = height
-  const invertedCtx = invertedCanvas.getContext('2d')!
-  invertedCtx.putImageData(inverted, 0, 0)
-
-  const blurred = blurCanvas(invertedCanvas, Math.max(2, Math.round(width / 200)))
+  const blurRadius = Math.max(4, Math.round(width / 80))
+  const blurred = blurImageData(inverted, blurRadius)
   const result = applyColorDodge(grayData, blurred)
   putImageData(ctx, result)
   return output
