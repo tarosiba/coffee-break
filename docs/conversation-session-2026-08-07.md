@@ -67,6 +67,7 @@
 
 | PR | 内容 |
 |----|------|
+| [#83](https://github.com/tarosiba/coffee-break/pull/83) | 8/7セッションまとめ・引き継ぎドキュメント最終更新 |
 | [#82](https://github.com/tarosiba/coffee-break/pull/82) | Godot 4 島開発プロトタイプ `anno_proto`（フェーズ1） |
 | [#81](https://github.com/tarosiba/coffee-break/pull/81) | 参考マップチップ風タイルセット（32/128px） |
 | [#80](https://github.com/tarosiba/coffee-break/pull/80) | Godot用アイソメ家・畑スプライト |
@@ -160,4 +161,11 @@
 
 ---
 
-*最終更新: 2026年8月7日（セッションまとめ追記）*
+## セッション締め（8/7 夜）
+
+- おじさんが `/summarize` で本日のまとめを依頼
+- 会話まとめを `docs/conversation-session-2026-08-07.md` に保存し、GitHub へコミット（PR #83、本追記は PR #84）
+
+---
+
+*最終更新: 2026年8月7日（セッション締め・docs 保存済み）*
