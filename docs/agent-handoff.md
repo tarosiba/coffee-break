@@ -152,7 +152,8 @@ src/components/Creative.tsx            # クリエイティブモード切替
 - **起動:** Godot 4.3+ → Import `anno_proto/project.godot`
 - **引き継ぎ:** `anno_proto/HANDOFF.md`
 - **グラフィック:** `public/images/godot-mapchips/` および `anno_proto/assets/sprites/mapchips/`
-- **次:** 小麦→パン、風車・パン屋チップ、人口・貿易
+- **フェーズ2:** 小麦→小麦粉→パンの生産チェーン、風車・パン屋チップ ✅
+- **次:** 人口・ニーズ表示、2島目・貿易
 
 ## 次にやりそうな候補（優先度はおじさんの一言で決める）
 
