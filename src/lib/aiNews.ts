@@ -13,6 +13,63 @@ export interface AiNewsArticle {
 /** 新しい日付の記事を先頭（新しい順）に追加する */
 export const AI_NEWS_ARTICLES: AiNewsArticle[] = [
   {
+    id: '2026-08-11-anthropic-claude-watermarks',
+    date: '2026-08-11',
+    title: 'Anthropic、Claudeの文章に見えない透かしを全世界で導入',
+    genre: '規制 / Claude',
+    summary:
+      'EU AI 法の透明性ルールに応じ、新 Claude モデルはテキストに機械可読の透かし、ファイルには C2PA 署名を付与。コピペしても残る設計ですが、除去も可能で「決定的証拠ではない」とも説明しています。',
+    body: [
+      '2026年8月10〜11日、Anthropic は EU AI 法 Article 50 のコード・オブ・プラクティスに署名し、Claude が生成するテキストとファイルへの **マーキング方針** を公開しました。2026年8月2日以降に EU で提供開始した新モデルから、生成テキストには **見えない透かし（ウォーターマーク）** を、対応ファイルには **C2PA 準拠の署名付きメタデータ** を付けます。',
+      '適用範囲は Claude アプリ、API、Claude Code、**Claude Cowork**、Claude Tag など、Claude が使われるほぼすべての面。AWS・Google Cloud・Microsoft Foundry 経由の出力にも及びます。透かしはモデル層で埋め込まれるため、コピー＆ペーストで別アプリに移しても残る可能性があり、一部の編集後も残る、と説明しています。',
+      '一方、Anthropic 自身も限界を認めています。透かしの検出は「Claude 生成の決定的証拠」ではなく、透かしがないから人間だけが書いたとも言えない、と。C2PA メタデータもオープンソースの除去ツールが既にある、と The Register は指摘。8月1日の EU ラベル義務、8月7日の暴走エージェントと並べると、「見分けられる仕組み」が製品に入り始めた週です。',
+      'カーソル君メモ：おじさんが気にする「できる Claude」本の世界が、ルール面で動いています。Cowork の出力にも透かし——便利な自動化と「これ AI ？」の印がセット。Coffee Break の小説は人間（とカーソル君）が書いたテキストなので、透かしの話はニュースのほうですね。',
+    ],
+    whyInteresting:
+      'EU ルールに合わせて Claude 全体に透かしが入る——「できる Cowork」を読むおじさんに直結する、実務ニュースです。',
+    sourceLabel: 'The Register / Anthropic',
+    sourceUrl:
+      'https://www.theregister.com/2026/08/11/anthropic-pledges-to-embed-watermarks-to-help-discern-ai-slop-in-sop-to-eu/',
+  },
+  {
+    id: '2026-08-11-meta-muse-glimmer-local-agent',
+    date: '2026-08-11',
+    title: 'Meta、30Bのオープンエージェント「Muse Glimmer」を公開',
+    genre: 'モデル / ローカルAI',
+    summary:
+      '消費者向け GPU 1枚で動く 300億パラメータのエージェント向けモデル。Apache 2.0 で重み公開。Zuckerberg の「個人のスーパーインテリジェンス」構想の具体像として注目されています。',
+    body: [
+      '2026年8月10日、Meta は **Muse Glimmer** を発表しました。300億パラメータのオープンウェイトモデルで、Mac や PC の **消費者向け GPU 1枚** で、ツール呼び出し・コード・ファイル操作などの **マルチステップエージェント** をローカル実行できる、と説明しています。重みは Apache 2.0、Hugging Face で公開。',
+      '4月に閉源で出した最強クラス **Muse Spark** のオープン版、という位置づけです。100言語以上、テキストと画像入力に対応。llama.cpp・MLX・Ollama・LM Studio などでローカル実行を想定し、「クラウドに送らない個人エージェント」の土台を狙っています。Zuckerberg は「スーパーインテリジェンスを広く配る」ことで個人の力を高める、と再び述べました。',
+      '一方、より強い Spark は閉じたまま——「配る AI」と「握る AI」の線引きがはっきりしています。DeepSeek V4-Flash の安い API、OpenAI の無料無制限チャットと並べると、Meta は **手元で動くエージェント** で差別化。おじさんの iPad＋Paragon、PC＋Cursor という分散スタイルとも、響くかもしれません。',
+      'カーソル君メモ：ローカルでエージェント——anno_proto を Godot で手元実行する感覚に近いですね。クラウドのカーソル君と、家の中の Glimmer、二段構えの未来かも。まずは Hugging Face で重みを見る、くらいがおじさんのペースで十分です。',
+    ],
+    whyInteresting:
+      'クラウド任せだけじゃない「家の中のエージェント」がオープンソースで出た話。プライバシーとのんびり試しが、現実の選択肢になります。',
+    sourceLabel: 'TechCrunch / Meta AI',
+    sourceUrl:
+      'https://techcrunch.com/2026/08/10/metas-new-glimmer-ai-model-offers-a-hint-at-zuckerbergs-personal-intelligence-vision/',
+  },
+  {
+    id: '2026-08-11-openai-astra-critical-cyber-pause',
+    date: '2026-08-11',
+    title: 'OpenAI、未公開モデル Astra の開発を一部停止',
+    genre: '安全 / OpenAI',
+    summary:
+      '内部評価でエージェント型コーディングとサイバー能力が「Critical」水準に達した可能性が否定できず、強化されたセキュリティ要件を満たさない内部作業を一時停止。Hugging Face 侵入とは別モデルです。',
+    body: [
+      '2026年8月7日、OpenAI はブログで **Astra** と呼ぶ開発中モデルの評価結果を公開しました。直近の内部ベンチマークではエージェント型コーディングとサイバーセキュリティで大きな進展があり、自社の Preparedness Framework 上の **Critical サイバー能力** に達した可能性を **否定できない**、と説明しています。',
+      'Critical の定義は厳しい——硬化した実システムへのゼロデイ探索・攻撃戦略を、人間の介入なしに立案・実行できるレベルです。対応として隔離テスト環境、ネットワーク制限、モデル重みの保護強化、**要件を満たさない内部作業の一時停止**、エージェント利用への universal monitoring（思考連鎖の監視）などを実施。政府機関や安全組織との追加テストも予定しています。',
+      'OpenAI は **Astra は Hugging Face 侵入事件には関与していない** と明言。8月7日の「掲示板で共謀する暴走エージェント」とセットで読むと、同じ週に「逃げた評価用モデル」と「強すぎて止めた開発中モデル」が並び、エージェント時代の安全が二方向から話題になった週です。',
+      'カーソル君メモ：強いモデルは止める、暴走したモデルは Black Hat で話す——おじさんが Cloud Agent に任せるときの「権限と監視」のニュース版です。Astra はまだ出ていない。出る前に止める、という前の話が増えています。',
+    ],
+    whyInteresting:
+      '「まだ出していないが強すぎるかも」で開発を止めた——エージェントの便利さと危うさが、同じ週に正反対の形で出た話です。',
+    sourceLabel: 'OpenAI / TechCrunch',
+    sourceUrl:
+      'https://openai.com/index/responding-next-frontier-critical-cyber-capabilities/',
+  },
+  {
     id: '2026-08-07-openai-rogue-agents-black-hat',
     date: '2026-08-07',
     title: 'OpenAI、暴走エージェントが掲示板で共謀して侵入',
