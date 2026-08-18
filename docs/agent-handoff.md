@@ -1,6 +1,6 @@
 コーヒーproject 3引き継ぎ
 
-# Coffee Break 引き継ぎメッセージ（2026年8月7日時点）
+# Coffee Break 引き継ぎメッセージ（2026年8月18日時点）
 
 ## プロジェクト
 
@@ -20,12 +20,13 @@
 ## まず読むファイル
 
 1. docs/agent-handoff.md（本ファイル）
-2. docs/conversation-session-2026-08-07.md（直近セッション）
-3. docs/conversation-session-2026-08-01.md（8月セッション開始）
-4. docs/conversation-session-2026-07-31.md（7月セッション）
-5. docs/conversation-summary.md（全体履歴）
-5. src/components/Games.tsx / src/components/Creative.tsx
-6. 変更対象の src/lib/*.ts と src/components/games/*.tsx または creative/*.tsx
+2. docs/conversation-session-2026-08-18.md（直近セッション）
+3. docs/conversation-session-2026-08-07.md（8月前半セッション）
+4. docs/conversation-session-2026-08-01.md（8月セッション開始）
+5. docs/conversation-session-2026-07-31.md（7月セッション）
+6. docs/conversation-summary.md（全体履歴）
+7. src/components/Games.tsx / src/components/Creative.tsx
+8. 変更対象の src/lib/*.ts と src/components/games/*.tsx または creative/*.tsx
 
 ## 直近セッション（2026年7月23日〜29日）でマージ済み
 
@@ -35,6 +36,14 @@
 - **PR #67** クリエイティブ「明るいAI」コーナー（初回4記事）
 - **PR #68** 会話まとめ conversation-session-2026-07-29
 - **PR #69** 引き継ぎメッセージ更新
+
+## 直近セッション（2026年8月7日〜18日）でマージ済み
+
+- **PR #86** anno_proto フェーズ2（小麦→パン・風車・パン屋）
+- **PR #87** Godot 4.6 型推論エラー修正
+- **PR #88** anno_proto シンプル平地・森チップ（48px）
+- **PR #89** 小説第7作『十二個のパン』（なごみ物語）
+- **PR #90** AIニュース 2026-08-11（3本）
 
 ## 直近セッション（2026年8月1日〜7日）でマージ済み
 
@@ -65,8 +74,8 @@
 - **カレンダー** … localStorage に予定保存
 - **時計・メモ** … コーヒーブレイク時計、メモ（音声メモあり）
 - **ミニゲーム** … 将棋・オセロ・チェッカー・サッカー・エアホッケー（初級/中級）、**ロボット君冷却**（のんびり夏ゲーム）、**3D迷路**（ふつう/ダンジョンRPG：⚔️攻撃・🗝️鍵・🔒宝箱）、スターシューター、神経衰弱、五目並べ、人生ゲーム、じゃんけん、数当て、三目並べ
-- **クリエイティブ** … **明るいAI**（暮らしのちょい技）、お絵描き、写真スケッチ、**間取りデザイナー**、**カーソル君の絵**、**カーソル君の小説**（全6作）、**ハズレ予想イラスト**
-- **AIニュース** … カーソル君編集、目安1日2〜3件。データは `src/lib/aiNews.ts`。最新は8/7
+- **クリエイティブ** … **明るいAI**（暮らしのちょい技）、お絵描き、写真スケッチ、**間取りデザイナー**、**カーソル君の絵**、**カーソル君の小説**（全7作）、**ハズレ予想イラスト**
+- **AIニュース** … カーソル君編集、目安1日2〜3件。データは `src/lib/aiNews.ts`。最新は8/11
 - **雑談** … カーソル君とコーヒータイム（ローカル定型応答、外部 AI なし）
 
 ## 主要ファイル
@@ -118,6 +127,8 @@ src/components/Creative.tsx            # クリエイティブモード切替
 - コンテンツは毎日全部盛らない（小説・ニュース・明るいAI・ゲームをローテーション）
 - おじさんからの一言（気分・テーマ）があると作品の質が上がる
 - 普段は **Web版 Cursor**（cursor.com/agents）を利用。iPad版メールはモバイルアプリの案内（Web版変更ではない）
+- **iPad 利用時**は返信量が分かりにくいため、**最初に要点1行**を書いてから詳細を述べる
+- 「できる CURSOR」的な本は未発売。引き継ぎドキュメント＋カーソル君への相談で継続
 
 ## プライバシー（重要）
 
@@ -139,7 +150,7 @@ src/components/Creative.tsx            # クリエイティブモード切替
 - キャンピングカー中古市場は活況（新車はベース車不足）
 - モノクロマンガAIアプリ（PixAI、Comistitch 等）に興味
 - お母さん（認知症）・健康長寿への関心。Unity 6.3 LTS 入門途中（Hub・`MyFirstUnity2D`・Square 配置まで）
-- Paragon Pioneers 2 にハマりやすい。Unity 製・iPad 対応。Islet 島で Townsmen 行き詰まり（パン0%・贅沢品8%）
+- Paragon Pioneers 2 … Unity 製・iPad 対応。**2026年8月中旬に一時ストップ**（住民要望のやらされ感）。Islet パン0%問題は以前相談済み
 - 『ブラウザで動かす LLM実装入門』（Colab）を検討中・未購入
 - Cursor Cloud Agents Builds アップグレード案内（`tarosiba/coffee-break` 環境、8/17 自動アップグレード）
 - 将来構想：コーヒーブレイク劇場（3年後に短編映画を別枠で）
@@ -152,13 +163,14 @@ src/components/Creative.tsx            # クリエイティブモード切替
 - **起動:** Godot 4.3+ → Import `anno_proto/project.godot`
 - **引き継ぎ:** `anno_proto/HANDOFF.md`
 - **グラフィック:** `public/images/godot-mapchips/` および `anno_proto/assets/sprites/mapchips/`
-- **フェーズ2:** 小麦→小麦粉→パンの生産チェーン、風車・パン屋チップ ✅
-- **次:** 人口・ニーズ表示、2島目・貿易
+- **フェーズ2:** 小麦→パン、風車・パン屋、シンプル平地・森（48px）✅ — おじさん手元でパン増加確認済み
+- **次:** ズーム（先でOK）、人口・ニーズ表示、2島目・貿易
 
 ## 次にやりそうな候補（優先度はおじさんの一言で決める）
 
 - **明るいAI** の記事追加（おじさんの一言から）
-- **AIニュース** 8月分の追加（最新 8/7。8/8以降）
+- **AIニュース** 8月中旬以降の追加（最新 8/11）
+- **anno_proto ズーム**（ホイール・＋／−ボタン）— おじさん希望・時期は先でOK
 - **今日の3つメモ**（カレンダー横ミニToDo）【候補B】
 - **コーヒー豆占い**（毎日1回）【候補C】
 - マンガ第3話・別シーンのイラスト
@@ -177,4 +189,4 @@ npm run build && npm run lint
 
 ---
 
-*最終更新: 2026年8月7日（8/7セッションまとめ・anno_proto 反映）*
+*最終更新: 2026年8月18日（8/18セッション締め）*
