@@ -1,3 +1,4 @@
+import { CoffeeFortune } from './CoffeeFortune'
 import { InstallPrompt } from './InstallPrompt'
 import { TodayReminder } from './TodayReminder'
 import type { Tab } from '../types'
@@ -19,6 +20,8 @@ export function Home({ onNavigate }: HomeProps) {
       </section>
 
       <TodayReminder onOpenCalendar={() => onNavigate('calendar')} />
+
+      <CoffeeFortune />
 
       <InstallPrompt />
 
