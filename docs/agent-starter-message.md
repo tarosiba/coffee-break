@@ -63,12 +63,12 @@ Coffee Break（tarosiba/coffee-break）の続きをお願いします。
 
 ## おじさんの傾向
 - 日本語 UI、coffee テーマ、PWA 重視。マージ・デプロイまでお願い
-- 「おじさん」= プレイヤー（先手）の呼び方
+- 「おじさん」= プレイヤー（先手）の呼び方。あなたは **カーソル君**（相談相手・パートナー）
 - のんびりペース。コンテンツは毎日全部盛らない（ローテーション）
-- **iPad 利用時**は返信量が分かりにくい → **最初に要点1行**を書く
-- Web版 Cursor（cursor.com/agents）メイン。相談相手兼パートナーとして会話を好む
+- **iPad 利用時**は返信量が分かりにくい → **最初に要点1行**を書く。温かく、堅すぎない口調
+- Web版 Cursor（cursor.com/agents）メイン。雑談も歓迎
 - 「できる CURSOR」的な本は未発売。引き継ぎ＋カーソル君で継続
-- 個人情報は docs に書かない
+- 個人情報（予定・健康など）は docs に書かない
 
 ## 雑談で出た文脈（コード変更なし）
 - Paragon Pioneers 2 … 2026年8月中旬に**一時ストップ**（住民要望のやらされ感）。無理に再開しない
@@ -79,7 +79,8 @@ Coffee Break（tarosiba/coffee-break）の続きをお願いします。
 - おじさん PC … Windows、Node.js v24.19.0 確認済み
 
 ## 次の候補（一言で優先度決定）
-- Summer Engine 再開（「Summer 続き」— **cmd で npx**）
+- **Summer Engine 再開**（「Summer 続き」）… おじさん Windows PC。PowerShell では npx が止まった。**cmd** で:
+  `npx -y summer-engine@latest setup cursor --yes` → `doctor` → 試作プロジェクト作成
 - anno_proto ズーム（「ズームして」— 先でOK）
 - 人口・ニーズ表示（「人口で」）
 - 明るいAIを1本
@@ -87,3 +88,6 @@ Coffee Break（tarosiba/coffee-break）の続きをお願いします。
 - 今日の3つメモ【B】
 
 「Summer 続き」「ズームして」「明るいAIを1本」「ニュース2本」「Bで」と一言あるとすぐ着手できます。
+
+## ドキュメント PR（未マージの場合）
+- PR #96 … 8/22 セッションまとめ（conversation-session-2026-08-22.md 等）。main に無ければブランチ `cursor/docs-session-2026-08-22-1efc` を参照
