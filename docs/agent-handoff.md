@@ -1,6 +1,6 @@
 コーヒーproject 3引き継ぎ
 
-# Coffee Break 引き継ぎメッセージ（2026年8月18日時点）
+# Coffee Break 引き継ぎメッセージ（2026年8月22日時点）
 
 ## プロジェクト
 
@@ -20,13 +20,14 @@
 ## まず読むファイル
 
 1. docs/agent-handoff.md（本ファイル）
-2. docs/conversation-session-2026-08-18.md（直近セッション）
-3. docs/conversation-session-2026-08-07.md（8月前半セッション）
-4. docs/conversation-session-2026-08-01.md（8月セッション開始）
-5. docs/conversation-session-2026-07-31.md（7月セッション）
-6. docs/conversation-summary.md（全体履歴）
-7. src/components/Games.tsx / src/components/Creative.tsx
-8. 変更対象の src/lib/*.ts と src/components/games/*.tsx または creative/*.tsx
+2. docs/conversation-session-2026-08-22.md（直近セッション）
+3. docs/conversation-session-2026-08-18.md（8月中旬セッション）
+4. docs/conversation-session-2026-08-07.md（8月前半セッション）
+5. docs/conversation-session-2026-08-01.md（8月セッション開始）
+6. docs/conversation-session-2026-07-31.md（7月セッション）
+7. docs/conversation-summary.md（全体履歴）
+8. src/components/Games.tsx / src/components/Creative.tsx
+9. 変更対象の src/lib/*.ts と src/components/games/*.tsx または creative/*.tsx
 
 ## 直近セッション（2026年7月23日〜29日）でマージ済み
 
@@ -37,13 +38,16 @@
 - **PR #68** 会話まとめ conversation-session-2026-07-29
 - **PR #69** 引き継ぎメッセージ更新
 
-## 直近セッション（2026年8月7日〜18日）でマージ済み
+## 直近セッション（2026年8月7日〜22日）でマージ済み
 
 - **PR #86** anno_proto フェーズ2（小麦→パン・風車・パン屋）
 - **PR #87** Godot 4.6 型推論エラー修正
 - **PR #88** anno_proto シンプル平地・森チップ（48px）
 - **PR #89** 小説第7作『十二個のパン』（なごみ物語）
 - **PR #90** AIニュース 2026-08-11（3本）
+- **PR #93** AIニュース 2026-08-18（2本）・明るいAI 1本
+- **PR #94** コーヒー豆占い（ホーム・1日1回）
+- **PR #95** AIニュース Particle6 バーチャル女優 Tilly Norwood
 
 ## 直近セッション（2026年8月1日〜7日）でマージ済み
 
@@ -75,7 +79,8 @@
 - **時計・メモ** … コーヒーブレイク時計、メモ（音声メモあり）
 - **ミニゲーム** … 将棋・オセロ・チェッカー・サッカー・エアホッケー（初級/中級）、**ロボット君冷却**（のんびり夏ゲーム）、**3D迷路**（ふつう/ダンジョンRPG：⚔️攻撃・🗝️鍵・🔒宝箱）、スターシューター、神経衰弱、五目並べ、人生ゲーム、じゃんけん、数当て、三目並べ
 - **クリエイティブ** … **明るいAI**（暮らしのちょい技）、お絵描き、写真スケッチ、**間取りデザイナー**、**カーソル君の絵**、**カーソル君の小説**（全7作）、**ハズレ予想イラスト**
-- **AIニュース** … カーソル君編集、目安1日2〜3件。データは `src/lib/aiNews.ts`。最新は8/11
+- **AIニュース** … カーソル君編集、目安1日2〜3件。データは `src/lib/aiNews.ts`。最新は8/18 以降（Particle6 等）
+- **コーヒー豆占い** … ホーム、1日1回（`src/lib/coffeeFortune.ts`）
 - **雑談** … カーソル君とコーヒータイム（ローカル定型応答、外部 AI なし）
 
 ## 主要ファイル
@@ -156,6 +161,9 @@ src/components/Creative.tsx            # クリエイティブモード切替
 - 将来構想：コーヒーブレイク劇場（3年後に短編映画を別枠で）
 - **Godot 島開発** `anno_proto/`（創世紀1602風フェーズ1）。大戦略プロト（別リポ）と同じ HANDOFF 運用
 - Unity vs Godot：1602風は両方可。Agent任せは Godot、自分で学ぶは Unity
+- **Summer Engine** … Godot 4 系ベース。MCP 連携は無料。おじさん PC は **Windows**、Node.js v24.19.0 確認済み
+- Summer セットアップ … PowerShell で `npx` が **実行ポリシーエラー**（`PSSecurityException`）。**次回は cmd から再開**（または `Set-ExecutionPolicy RemoteSigned -Scope CurrentUser`）
+- iPad Cloud Agent からは PC 上の Summer Engine には直接つながらない
 
 ## Godot 島開発プロト（anno_proto）
 
@@ -169,10 +177,10 @@ src/components/Creative.tsx            # クリエイティブモード切替
 ## 次にやりそうな候補（優先度はおじさんの一言で決める）
 
 - **明るいAI** の記事追加（おじさんの一言から）
-- **AIニュース** 8月中旬以降の追加（最新 8/11）
+- **AIニュース** 8月下旬以降の追加
+- **Summer Engine 試用**（Windows・cmd から `npx -y summer-engine@latest setup cursor --yes`）
 - **anno_proto ズーム**（ホイール・＋／−ボタン）— おじさん希望・時期は先でOK
 - **今日の3つメモ**（カレンダー横ミニToDo）【候補B】
-- **コーヒー豆占い**（毎日1回）【候補C】
 - マンガ第3話・別シーンのイラスト
 - 間取りデザイナー強化（窓・ドア、視点回転）
 - 3D迷路強化（スケルトン移動AI、回復ポーション）
@@ -189,4 +197,4 @@ npm run build && npm run lint
 
 ---
 
-*最終更新: 2026年8月18日（8/18セッション締め）*
+*最終更新: 2026年8月22日（8/22セッション締め）*

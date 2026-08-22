@@ -11,7 +11,7 @@ Coffee Break（tarosiba/coffee-break）の続きをお願いします。
 
 まず以下を読んでから作業してください:
 - docs/agent-handoff.md（最新の引き継ぎドキュメント）
-- docs/conversation-session-2026-08-18.md（直近セッションの会話まとめ）
+- docs/conversation-session-2026-08-22.md（直近セッションの会話まとめ）
 - docs/conversation-summary.md（全体履歴）
 - anno_proto/HANDOFF.md（Godot 島開発プロトを触る場合）
 
@@ -23,13 +23,15 @@ Coffee Break（tarosiba/coffee-break）の続きをお願いします。
 - npm run build と npm run lint を通すこと
 - マージ後は GitHub Actions のデプロイ成功を確認すること
 
-## 直近でマージ済み（PR #86〜#91）
+## 直近でマージ済み（PR #86〜#95）
 - PR #86 anno_proto フェーズ2（小麦→パン・風車・パン屋）
 - PR #87 Godot 4.6 型推論エラー修正
 - PR #88 anno_proto シンプル平地・森チップ（48px）
 - PR #89 小説第7作『十二個のパン』（なごみ物語）
 - PR #90 AIニュース 2026-08-11（3本）
-- PR #91 8/18セッションまとめ・引き継ぎドキュメント更新
+- PR #93 AIニュース 2026-08-18（2本）・明るいAI 1本
+- PR #94 コーヒー豆占い（ホーム・1日1回）
+- PR #95 AIニュース Particle6（Tilly Norwood）
 
 ## Godot 島開発 anno_proto（同リポ内・PWAとは別）
 - 起動: Godot 4.3+ → Import `anno_proto/project.godot` → F5
@@ -43,7 +45,8 @@ Coffee Break（tarosiba/coffee-break）の続きをお願いします。
 - カレンダー・時計・メモ … localStorage のみ（サーバー送信なし）
 - ミニゲーム … 将棋・オセロ・チェッカー・サッカー・エアホッケー、ロボット君冷却、3D迷路（ふつう/ダンジョンRPG）、スターシューター、神経衰弱、五目並べ、人生ゲーム、じゃんけん、数当て、三目並べ
 - クリエイティブ … 明るいAI、お絵描き、写真スケッチ、間取りデザイナー、カーソル君の絵、小説（7作）、ハズレ予想
-- AIニュース … カーソル君編集、目安1日2〜3件（src/lib/aiNews.ts）。最新は8/11
+- AIニュース … カーソル君編集、目安1日2〜3件（src/lib/aiNews.ts）
+- コーヒー豆占い … ホーム、1日1回（src/lib/coffeeFortune.ts）
 - 雑談 … カーソル君とコーヒータイム（ローカル定型応答）
 
 ## 主要ファイル
@@ -72,12 +75,15 @@ Coffee Break（tarosiba/coffee-break）の続きをお願いします。
 - 創世紀1602 … Windows版はCD要。No-CD改変は案内不可。anno_proto が1602風の代替プロト
 - iOS レトロゲーム … DOS は iDOS 3、Windows は UTM SE（遅い）か PC から配信が現実的
 - できる Claude & Cowork … 参考になるが Cursor メインなら急がなくてよい
+- **Summer Engine** … Windows PC で試用予定。MCP 無料。PowerShell で npx が実行ポリシーエラー → **次回は cmd から再開**
+- おじさん PC … Windows、Node.js v24.19.0 確認済み
 
 ## 次の候補（一言で優先度決定）
+- Summer Engine 再開（「Summer 続き」— **cmd で npx**）
 - anno_proto ズーム（「ズームして」— 先でOK）
 - 人口・ニーズ表示（「人口で」）
 - 明るいAIを1本
-- AIニュース 8月中旬以降
-- 今日の3つメモ【B】／コーヒー豆占い【C】
+- AIニュース追加
+- 今日の3つメモ【B】
 
-「ズームして」「明るいAIを1本」「ニュース2本」「Bで」と一言あるとすぐ着手できます。
+「Summer 続き」「ズームして」「明るいAIを1本」「ニュース2本」「Bで」と一言あるとすぐ着手できます。
