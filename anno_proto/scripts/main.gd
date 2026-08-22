@@ -19,10 +19,15 @@ var wheat: int = 0
 var flour: int = 0
 var bread: int = 0
 var coins: int = 100
+var population: int = 0
+var bread_supply_pct: int = 100 # 直近 tick のパン供給率（0〜100）
+
+const PEOPLE_PER_HOUSE := 3
 
 @onready var terrain_layer: Node2D = $TerrainLayer
 @onready var building_layer: Node2D = $BuildingLayer
 @onready var resource_label: Label = $UI/Panel/MarginContainer/VBox/ResourceLabel
+@onready var population_label: Label = $UI/Panel/MarginContainer/VBox/PopulationLabel
 @onready var hint_label: Label = $UI/Panel/MarginContainer/VBox/HintLabel
 
 const BUILD_COST := {
@@ -182,6 +187,8 @@ func _place_at(grid: Vector2i) -> void:
 	_apply_tile_scale(sprite)
 	building_layer.add_child(sprite)
 	cells[grid] = { "kind": kind, "sprite": sprite }
+	if kind == "house":
+		population = _count_houses() * PEOPLE_PER_HOUSE
 	hint_label.text = "配置しました ✓"
 	_update_ui()
 
@@ -191,12 +198,23 @@ func _remove_at(grid: Vector2i) -> void:
 		hint_label.text = "何もありません"
 		return
 	var entry: Dictionary = cells[grid]
+	var was_house: bool = entry["kind"] == "house"
 	var sprite: Sprite2D = entry["sprite"]
 	sprite.queue_free()
 	cells.erase(grid)
 	wood += 1
+	if was_house:
+		population = _count_houses() * PEOPLE_PER_HOUSE
 	hint_label.text = "撤去しました（木材+1）"
 	_update_ui()
+
+
+func _count_houses() -> int:
+	var houses := 0
+	for entry in cells.values():
+		if entry["kind"] == "house":
+			houses += 1
+	return houses
 
 
 func _pay_cost(kind: String) -> bool:
@@ -212,15 +230,20 @@ func _on_production_tick() -> void:
 	var wheat_fields := 0
 	var windmills := 0
 	var bakeries := 0
+	var houses := 0
 
 	for entry in cells.values():
 		match entry["kind"]:
+			"house":
+				houses += 1
 			"field_wheat":
 				wheat_fields += 1
 			"windmill":
 				windmills += 1
 			"bakery":
 				bakeries += 1
+
+	population = houses * PEOPLE_PER_HOUSE
 
 	if wheat_fields > 0:
 		wheat += wheat_fields
@@ -241,7 +264,19 @@ func _on_production_tick() -> void:
 	if bread_made > 0:
 		coins += bread_made * 2
 
+	_consume_bread_for_population()
 	_update_ui()
+
+
+func _consume_bread_for_population() -> void:
+	if population <= 0:
+		bread_supply_pct = 100
+		return
+
+	var need: int = population
+	var fed: int = min(bread, need)
+	bread -= fed
+	bread_supply_pct = int(100.0 * fed / need)
 
 
 func _update_ui() -> void:
@@ -250,10 +285,20 @@ func _update_ui() -> void:
 		% [wood, wheat, flour, bread, coins]
 	)
 
+	var supply_text: String = "—"
+	if population > 0:
+		supply_text = "%d%%" % bread_supply_pct
+		if bread_supply_pct < 50:
+			supply_text += " ⚠️"
+		elif bread_supply_pct >= 100:
+			supply_text += " ✓"
+
+	population_label.text = "👥 人口 %d　🍞 パン供給率 %s" % [population, supply_text]
+
 
 func _on_house_pressed() -> void:
 	build_mode = BuildMode.HOUSE
-	hint_label.text = "モード: コーヒー小屋（木材5・コイン10）"
+	hint_label.text = "モード: コーヒー小屋（木材5・コイン10）— 住人+%d人" % PEOPLE_PER_HOUSE
 
 
 func _on_wheat_pressed() -> void:

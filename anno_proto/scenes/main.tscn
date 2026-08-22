@@ -22,7 +22,7 @@ autostart = true
 offset_left = 8.0
 offset_top = 8.0
 offset_right = 360.0
-offset_bottom = 300.0
+offset_bottom = 330.0
 
 [node name="MarginContainer" type="MarginContainer" parent="UI/Panel"]
 theme_override_constants/margin_left = 12
@@ -38,6 +38,10 @@ text = "☕ Coffee Break 島 Proto"
 
 [node name="ResourceLabel" type="Label" parent="UI/Panel/MarginContainer/VBox"]
 text = "🪵 木材 0　🌾 小麦 0　🌽 小麦粉 0　🍞 パン 0　💰 コイン 0"
+autowrap_mode = 2
+
+[node name="PopulationLabel" type="Label" parent="UI/Panel/MarginContainer/VBox"]
+text = "👥 人口 0　🍞 パン供給率 —"
 autowrap_mode = 2
 
 [node name="BtnHouse" type="Button" parent="UI/Panel/MarginContainer/VBox"]
