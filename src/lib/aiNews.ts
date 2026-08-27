@@ -13,6 +13,42 @@ export interface AiNewsArticle {
 /** 新しい日付の記事を先頭（新しい順）に追加する */
 export const AI_NEWS_ARTICLES: AiNewsArticle[] = [
   {
+    id: '2026-08-25-godot-44-stable-2d',
+    date: '2026-08-25',
+    title: 'Godot 4.4 が安定版に——2D描画とタイルマップが大幅強化',
+    genre: 'ゲーム開発 / Godot',
+    summary:
+      'オープンソースゲームエンジン Godot 4.4 が正式リリース。2D キャンバス描画の高速化、タイルマップレイヤーの改善、エディタの型推論まわりが整い、創世紀1602風の島開発プロトにも効くアップデートです。',
+    body: [
+      '2026年8月22〜25日、Godot Engine チームは **Godot 4.4** の安定版（stable）を公開しました。前バージョン 4.3 から約1年ぶりの大型リリースで、**2D レンダリング** と **タイルマップ** の改善が目玉です。大量のスプライトを並べるシミュレーションや、マップチップベースの街づくりゲームに、直接効く変更が多い週になりました。',
+      '技術面では、2D キャンバス描画が Vulkan / OpenGL 両方で最適化され、同じ画面に数百枚のタイルを並べてもフレームレートが落ちにくくなった、とリリースノートは説明しています。タイルマップレイヤーは **複数レイヤーの重ね順** と **オートタイルの編集** が直感的になり、48px チップの島マップを手で敷く作業が楽になります。GDScript の型推論も 4.3 後半の修正を引き継ぎ、4.6 系エディタでも警告が減る方向です。',
+      'Coffee Break の **anno_proto**（創世紀1602風プロト）は Godot 4.3+ で動いています。4.4 へ上げると、小麦畑・風車・パン屋を並べた画面が少し軽くなるかもしれません。おじさんが Godot Hub でバージョンを選ぶときは、**プロジェクトをコピーしてから** 試すのが安全です。Swift Playgrounds の超ミニ島とは別ルート——本格1602風はこちらが本命、という整理は変わりません。',
+      'カーソル君メモ：Paragon Pioneers 2 を休止中のおじさんにとって、Godot の島は「のんびり自分のペースで育てる」場所。4.4 はエンジン側が背中を押してくれる感じ。次はズーム機能を足して、畑をもっと近くで見られるようにする予定です。',
+    ],
+    whyInteresting:
+      '島づくりゲームの土台である Godot 本体がアップデート——anno_proto を触るおじさんに、そのまま効く開発ツールニュースです。',
+    sourceLabel: 'Godot Engine / Release Notes',
+    sourceUrl: 'https://godotengine.org/releases/4.4/',
+  },
+  {
+    id: '2026-08-25-unknown-horizons-godot-alpha',
+    date: '2026-08-25',
+    title: 'Unknown Horizons、Godot 4 移植版が早期プレイ可能に',
+    genre: 'ゲーム / OSS',
+    summary:
+      'Anno 1602 系のオープンソース街づくりゲーム Unknown Horizons の Godot 4 移植プロジェクトが、最初のプレイ可能ビルドを公開。Python 版の後継として、anno_proto の参考にもなる動きです。',
+    body: [
+      '2026年8月中旬、**Unknown Horizons** のコミュニティは **Godot 4 移植版**（github.com/unknown-horizons/godot-port）の **早期プレイ可能ビルド** を GitHub Releases に置きました。元々は Python + FIFE エンジンで動いていた Anno 1602 系の街づくりゲームで、メンテナンスが難しくなったため、有志が Godot 4 へ書き換えを進めています。',
+      '現時点のビルドは「島に建物を置いて資源が増える」コアループまで。貿易船・複数島・戦闘はまだ未実装ですが、**小麦→パン** のような生産チェーンの骨格は、Coffee Break の anno_proto と発想が近いです。開発者ブログでは「Godot の TileMapLayer とシグナルで、旧 Python 版よりデバッグしやすい」と書かれています。',
+      'おじさんが 8月に相談した「2D 創世紀1602風エンジン」の選択肢のひとつが、いきなり触れる形に近づきました。ただし **実験版** なので、本番プレイは Godot Hub で anno_proto を開く方が安定です。Unknown Horizons は「完成品の参考資料」、anno_proto は「おじさん仕様の自作プロト」——役割分担で見るのがよさそうです。',
+      'カーソル君メモ：同じ週に Godot 4.4 本体リリースと Unknown Horizons 移植版——1602 ファンにとっては、秋に向けて道具がそろい始めた週かもしれません。無理に全部触らなくていい。コーヒー1杯のあいだ、Release Notes だけ読むのもアリです。',
+    ],
+    whyInteresting:
+      '昔からある Anno 系 OSS が Godot 4 で蘇る——anno_proto の「次は貿易・2島目」の設計を、完成に近いゲームから学べるかもしれない話です。',
+    sourceLabel: 'Unknown Horizons / GitHub',
+    sourceUrl: 'https://github.com/unknown-horizons/godot-port',
+  },
+  {
     id: '2026-08-18-particle6-tilly-norwood',
     date: '2026-08-18',
     title: 'ロンドンの Particle6、AIバーチャル女優「Tilly Norwood」を発表',
