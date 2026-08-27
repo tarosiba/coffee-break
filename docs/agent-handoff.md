@@ -1,6 +1,6 @@
 コーヒーproject 3引き継ぎ
 
-# Coffee Break 引き継ぎメッセージ（2026年8月18日時点）
+# Coffee Break 引き継ぎメッセージ（2026年8月27日時点）
 
 ## プロジェクト
 
@@ -20,8 +20,9 @@
 ## まず読むファイル
 
 1. docs/agent-handoff.md（本ファイル）
-2. docs/conversation-session-2026-08-18.md（直近セッション）
-3. docs/conversation-session-2026-08-07.md（8月前半セッション）
+2. docs/conversation-session-2026-08-27.md（直近セッション）
+3. docs/conversation-session-2026-08-18.md（8月中旬セッション）
+4. docs/conversation-session-2026-08-07.md（8月前半セッション）
 4. docs/conversation-session-2026-08-01.md（8月セッション開始）
 5. docs/conversation-session-2026-07-31.md（7月セッション）
 6. docs/conversation-summary.md（全体履歴）
@@ -47,6 +48,11 @@
 - **PR #93** AIニュース 2026-08-18（2本）・明るいAI 1本
 - **PR #94** コーヒー豆占い（ホーム・1日1回）
 - **PR #95** AIニュース Particle6（Tilly Norwood）
+
+## 直近セッション（2026年8月22日〜27日）でマージ済み
+
+- **PR #97** anno_proto 人口・パン供給率（フェーズ2.5）
+- **PR #98, #99, #100** Swift Playgrounds 超ミニ島（v3：畑タップ収穫・パン屋）
 
 ## 直近セッション（2026年8月1日〜7日）でマージ済み
 
@@ -78,8 +84,9 @@
 - **時計・メモ** … コーヒーブレイク時計、メモ（音声メモあり）
 - **ミニゲーム** … 将棋・オセロ・チェッカー・サッカー・エアホッケー（初級/中級）、**ロボット君冷却**（のんびり夏ゲーム）、**3D迷路**（ふつう/ダンジョンRPG：⚔️攻撃・🗝️鍵・🔒宝箱）、スターシューター、神経衰弱、五目並べ、人生ゲーム、じゃんけん、数当て、三目並べ
 - **クリエイティブ** … **明るいAI**（暮らしのちょい技）、お絵描き、写真スケッチ、**間取りデザイナー**、**カーソル君の絵**、**カーソル君の小説**（全7作）、**ハズレ予想イラスト**
-- **AIニュース** … カーソル君編集、目安1日2〜3件。データは `src/lib/aiNews.ts`
+- **AIニュース** … カーソル君編集、目安1日2〜3件。データは `src/lib/aiNews.ts`。最新は8/18
 - **コーヒー豆占い** … ホーム、1日1回（`src/lib/coffeeFortune.ts`）
+- **Swift 超ミニ島** … `swift-playgrounds/MiniIsland/`（iPad Swift Playgrounds 用・学習向け）
 - **雑談** … カーソル君とコーヒータイム（ローカル定型応答、外部 AI なし）
 
 ## 主要ファイル
@@ -160,6 +167,10 @@ src/components/Creative.tsx            # クリエイティブモード切替
 - 将来構想：コーヒーブレイク劇場（3年後に短編映画を別枠で）
 - **Godot 島開発** `anno_proto/`（創世紀1602風フェーズ1）。大戦略プロト（別リポ）と同じ HANDOFF 運用
 - Unity vs Godot：1602風は両方可。Agent任せは Godot、自分で学ぶは Unity
+- **Summer Engine** … Windows 版インストール・Sign in 済み（taroron2000@gmail.com）。MCP 連携は `~/.cursor/mcp.json` または cmd で `npx -y summer-engine@latest setup cursor --yes`。**PowerShell では npx が止まる** → cmd 推奨。anno_proto は Godot 用のため Summer では重い
+- **Swift Playgrounds** … 超ミニ島 v3 成功（畑タップ＝小麦+1、6でパン屋）。タイマーは Playgrounds で動かないことが多い
+- **Unknown Horizons** … Anno 1602 系 OSS。Godot 4 移植中（github.com/unknown-horizons/godot-port）
+- **GameMaker / Construct** … 2D向け。Construct＝ノーコード、GameMaker＝GML本格。1602級は Godot/Unity が有利
 
 ## Godot 島開発プロト（anno_proto）
 
@@ -174,7 +185,9 @@ src/components/Creative.tsx            # クリエイティブモード切替
 ## 次にやりそうな候補（優先度はおじさんの一言で決める）
 
 - **明るいAI** の記事追加（おじさんの一言から）
-- **AIニュース** 8月中旬以降の追加（最新 8/11）
+- **AIニュース** 8月下旬の追加
+- **Swift 超ミニ島** 風車追加（おじさんの一言で）
+- **Summer Engine** Cursor MCP 連携完成（cmd + mcp.json）
 - **anno_proto ズーム**（ホイール・＋／−ボタン）— おじさん希望・時期は先でOK
 - **今日の3つメモ**（カレンダー横ミニToDo）【候補B】
 - マンガ第3話・別シーンのイラスト
@@ -193,4 +206,4 @@ npm run build && npm run lint
 
 ---
 
-*最終更新: 2026年8月22日（8/22セッション開始）*
+*最終更新: 2026年8月27日（8/27セッション締め）*

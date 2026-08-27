@@ -11,9 +11,10 @@ Coffee Break（tarosiba/coffee-break）の続きをお願いします。
 
 まず以下を読んでから作業してください:
 - docs/agent-handoff.md（最新の引き継ぎドキュメント）
-- docs/conversation-session-2026-08-18.md（直近セッションの会話まとめ）
+- docs/conversation-session-2026-08-27.md（直近セッションの会話まとめ）
 - docs/conversation-summary.md（全体履歴）
 - anno_proto/HANDOFF.md（Godot 島開発プロトを触る場合）
+- swift-playgrounds/MiniIsland/README.md（Swift 超ミニ島を触る場合）
 
 ## プロジェクト概要
 - React 19 + TypeScript + Vite + Tailwind CSS 4 の PWA
@@ -23,61 +24,59 @@ Coffee Break（tarosiba/coffee-break）の続きをお願いします。
 - npm run build と npm run lint を通すこと
 - マージ後は GitHub Actions のデプロイ成功を確認すること
 
-## 直近でマージ済み（PR #86〜#91）
+## 直近でマージ済み（PR #86〜#100）
 - PR #86 anno_proto フェーズ2（小麦→パン・風車・パン屋）
 - PR #87 Godot 4.6 型推論エラー修正
 - PR #88 anno_proto シンプル平地・森チップ（48px）
 - PR #89 小説第7作『十二個のパン』（なごみ物語）
 - PR #90 AIニュース 2026-08-11（3本）
-- PR #91 8/18セッションまとめ・引き継ぎドキュメント更新
+- PR #93 AIニュース 2026-08-18（2本）・明るいAI 1本
+- PR #94 コーヒー豆占い（ホーム・1日1回）
+- PR #95 AIニュース Particle6
+- PR #97 anno_proto 人口・パン供給率（フェーズ2.5）
+- PR #98〜#100 Swift Playgrounds 超ミニ島（v3）
 
 ## Godot 島開発 anno_proto（同リポ内・PWAとは別）
 - 起動: Godot 4.3+ → Import `anno_proto/project.godot` → F5
 - フェーズ2: 小麦→パン、風車・パン屋、左下森・中央平地（48pxチップ）
+- フェーズ2.5: 人口・パン供給率表示
 - 引き継ぎ: anno_proto/HANDOFF.md
-- おじさん手元で畑3・風車1・パン屋1・パン増加を確認済み
-- 次候補: ズーム（先でOK）、人口・ニーズ、2島目・貿易
+- 次候補: ズーム（先でOK）、2島目・貿易
+
+## Swift Playgrounds 超ミニ島（学習用・PWAとは別）
+- コード: swift-playgrounds/MiniIsland/ContentView.swift
+- v3: タイマーなし。🌾畑タップ＝小麦+1。小麦6で🍞パン屋解放
+- おじさん iPad で v3 成功済み
+
+## Summer Engine（おじさん PC・別途）
+- Sign in 済み（taroron2000@gmail.com）
+- PowerShell の npx エラー → cmd を使う
+- MCP: C:\Users\petsi\.cursor\mcp.json または setup cursor
+- anno_proto は Godot 用。Summer では Create project 推奨
 
 ## 既存機能（Coffee Break PWA・main の状態）
-- ホーム … 予定リマインド、各タブへの導線
+- ホーム … 予定リマインド、コーヒー豆占い、各タブへの導線
 - カレンダー・時計・メモ … localStorage のみ（サーバー送信なし）
-- ミニゲーム … 将棋・オセロ・チェッカー・サッカー・エアホッケー、ロボット君冷却、3D迷路（ふつう/ダンジョンRPG）、スターシューター、神経衰弱、五目並べ、人生ゲーム、じゃんけん、数当て、三目並べ
+- ミニゲーム … 将棋・オセロ・チェッカー・サッカー・エアホッケー、ロボット君冷却、3D迷路、スターシューター、神経衰弱、五目並べ、人生ゲーム、じゃんけん、数当て、三目並べ
 - クリエイティブ … 明るいAI、お絵描き、写真スケッチ、間取りデザイナー、カーソル君の絵、小説（7作）、ハズレ予想
-- AIニュース … カーソル君編集、目安1日2〜3件（src/lib/aiNews.ts）。最新は8/11
-- 雑談 … カーソル君とコーヒータイム（ローカル定型応答）
-
-## 主要ファイル
-- src/lib/brightAi.ts / src/components/creative/BrightAi.tsx（明るいAI）
-- src/lib/aiNews.ts / src/components/AiNews.tsx
-- src/components/creative/CursorStories.tsx（小説）
-- anno_proto/scripts/main.gd（Godot 島プロト）
-
-## イラストキャラ設定
-- おじさん … 65歳、白髪、頭頂が少し薄い、黒縁メガネ
-- ワンちゃん … 柴犬、首輪に鈴
-- ロボット君 … 丸い頭、小さなアンテナ、胸パネル、蛇腹の腕
-- お手本: public/images/ojisan-wan-robot-coffee.jpg
+- AIニュース … 最新は8/18（src/lib/aiNews.ts）
+- 雑談 … カーソル君とコーヒータイム
 
 ## おじさんの傾向
-- 日本語 UI、coffee テーマ、PWA 重視。マージ・デプロイまでお願い
-- 「おじさん」= プレイヤー（先手）の呼び方
-- のんびりペース。コンテンツは毎日全部盛らない（ローテーション）
-- **iPad 利用時**は返信量が分かりにくい → **最初に要点1行**を書く
-- Web版 Cursor（cursor.com/agents）メイン。相談相手兼パートナーとして会話を好む
-- 「できる CURSOR」的な本は未発売。引き継ぎ＋カーソル君で継続
-- 個人情報は docs に書かない
+- のんびりペース。マージ・デプロイまでお願い
+- **iPad 利用時は最初に要点1行**
+- Paragon Pioneers 2 は一時ストップ中（無理に再開しない）
+- 「できる CURSOR」は未発売 → 引き継ぎ＋カーソル君で継続
+- PC が熱い日は無理しない
 
-## 雑談で出た文脈（コード変更なし）
-- Paragon Pioneers 2 … 2026年8月中旬に**一時ストップ**（住民要望のやらされ感）。無理に再開しない
-- 創世紀1602 … Windows版はCD要。No-CD改変は案内不可。anno_proto が1602風の代替プロト
-- iOS レトロゲーム … DOS は iDOS 3、Windows は UTM SE（遅い）か PC から配信が現実的
-- できる Claude & Cowork … 参考になるが Cursor メインなら急がなくてよい
+## 次の候補（一言で）
+- 「ズームして」… anno_proto カメラ拡大（先でOK）
+- 「明るいAIを1本」
+- 「ニュース2本」
+- 「風車で」… Swift 超ミニ島に風車追加
+- 「Bで」… 今日の3つメモ
+- 「MCPで」… Summer Engine × Cursor 連携の続き
 
-## 次の候補（一言で優先度決定）
-- anno_proto ズーム（「ズームして」— 先でOK）
-- 人口・ニーズ表示（「人口で」）
-- 明るいAIを1本
-- AIニュース 8月中旬以降
-- 今日の3つメモ【B】／コーヒー豆占い【C】
+---
 
-「ズームして」「明るいAIを1本」「ニュース2本」「Bで」と一言あるとすぐ着手できます。
+常設ファイル: `docs/agent-starter-message.md`（GitHub 上でもコピーできます）
