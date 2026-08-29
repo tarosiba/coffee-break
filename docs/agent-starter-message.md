@@ -11,7 +11,7 @@ Coffee Break（tarosiba/coffee-break）の続きをお願いします。
 
 まず以下を読んでから作業してください:
 - docs/agent-handoff.md（最新の引き継ぎドキュメント）
-- docs/conversation-session-2026-08-27.md（直近セッションの会話まとめ）
+- docs/conversation-session-2026-08-29.md（直近セッションの会話まとめ）
 - docs/conversation-summary.md（全体履歴）
 - anno_proto/HANDOFF.md（Godot 島開発プロトを触る場合）
 - swift-playgrounds/MiniIsland/README.md（Swift 超ミニ島を触る場合）
@@ -24,7 +24,7 @@ Coffee Break（tarosiba/coffee-break）の続きをお願いします。
 - npm run build と npm run lint を通すこと
 - マージ後は GitHub Actions のデプロイ成功を確認すること
 
-## 直近でマージ済み（PR #86〜#100）
+## 直近でマージ済み（PR #86〜#102）
 - PR #86 anno_proto フェーズ2（小麦→パン・風車・パン屋）
 - PR #87 Godot 4.6 型推論エラー修正
 - PR #88 anno_proto シンプル平地・森チップ（48px）
@@ -35,6 +35,8 @@ Coffee Break（tarosiba/coffee-break）の続きをお願いします。
 - PR #95 AIニュース Particle6
 - PR #97 anno_proto 人口・パン供給率（フェーズ2.5）
 - PR #98〜#100 Swift Playgrounds 超ミニ島（v3）
+- PR #101 8/27セッションまとめ・引き継ぎ更新
+- PR #102 AIニュース 2026-08-25（2本）
 
 ## Godot 島開発 anno_proto（同リポ内・PWAとは別）
 - 起動: Godot 4.3+ → Import `anno_proto/project.godot` → F5
@@ -59,17 +61,19 @@ Coffee Break（tarosiba/coffee-break）の続きをお願いします。
 - カレンダー・時計・メモ … localStorage のみ（サーバー送信なし）
 - ミニゲーム … 将棋・オセロ・チェッカー・サッカー・エアホッケー、ロボット君冷却、3D迷路、スターシューター、神経衰弱、五目並べ、人生ゲーム、じゃんけん、数当て、三目並べ
 - クリエイティブ … 明るいAI、お絵描き、写真スケッチ、間取りデザイナー、カーソル君の絵、小説（7作）、ハズレ予想
-- AIニュース … 最新は8/18（src/lib/aiNews.ts）
+- AIニュース … 最新は8/25（src/lib/aiNews.ts）
 - 雑談 … カーソル君とコーヒータイム
 
 ## おじさんの傾向
 - のんびりペース。マージ・デプロイまでお願い
 - **iPad 利用時は最初に要点1行**
-- Paragon Pioneers 2 は一時ストップ中（無理に再開しない）
+- Paragon Pioneers 2 … 8/29 Islet で Paragon 到達。無理に再開しない
+- デュカト L2H2 自作キャンピングカー検討中（縦ベッド＋後部マルチルーム）
 - 「できる CURSOR」は未発売 → 引き継ぎ＋カーソル君で継続
 - PC が熱い日は無理しない
 
 ## 次の候補（一言で）
+- 「秘書で」… カレンダーから来週の予定リマインド（将来構想）
 - 「ズームして」… anno_proto カメラ拡大（先でOK）
 - 「明るいAIを1本」
 - 「ニュース2本」
