@@ -24,7 +24,7 @@ Coffee Break（tarosiba/coffee-break）の続きをお願いします。
 - npm run build と npm run lint を通すこと
 - マージ後は GitHub Actions のデプロイ成功を確認すること
 
-## 直近でマージ済み（PR #86〜#102）
+## 直近でマージ済み（PR #86〜#103）
 - PR #86 anno_proto フェーズ2（小麦→パン・風車・パン屋）
 - PR #87 Godot 4.6 型推論エラー修正
 - PR #88 anno_proto シンプル平地・森チップ（48px）
@@ -37,6 +37,7 @@ Coffee Break（tarosiba/coffee-break）の続きをお願いします。
 - PR #98〜#100 Swift Playgrounds 超ミニ島（v3）
 - PR #101 8/27セッションまとめ・引き継ぎ更新
 - PR #102 AIニュース 2026-08-25（2本）
+- PR #103 8/29セッションまとめ・引き継ぎ更新
 
 ## Godot 島開発 anno_proto（同リポ内・PWAとは別）
 - 起動: Godot 4.3+ → Import `anno_proto/project.godot` → F5
@@ -68,8 +69,9 @@ Coffee Break（tarosiba/coffee-break）の続きをお願いします。
 - のんびりペース。マージ・デプロイまでお願い
 - **iPad 利用時は最初に要点1行**
 - Paragon Pioneers 2 … 8/29 Islet で Paragon 到達。無理に再開しない
-- デュカト L2H2 自作キャンピングカー検討中（縦ベッド＋後部マルチルーム）
-- 「できる CURSOR」は未発売 → 引き継ぎ＋カーソル君で継続
+- GitHub Cursor … Merge queues 権限許可済み（coffee-break / kakeibo）
+- 秘書カーソル君（将来構想）… カレンダーから予定リマインド。localStorage のみ
+- デュカト L2H2 自作キャンピングカー検討中（縦ベッド＋後部マルチルーム、1ナンバー自動車税年11,500円目安）
 - PC が熱い日は無理しない
 
 ## 次の候補（一言で）
