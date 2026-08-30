@@ -9,6 +9,49 @@ export interface BrightAiArticle {
   tryThis: string
 }
 
+export interface BrightAiUsageStep {
+  title: string
+  description: string
+  icon: string
+}
+
+/** 明るいAIコーナーの使い方（コーヒーにのせる説明） */
+export const BRIGHT_AI_USAGE = {
+  heading: '明るいAIの飲み方',
+  lead: '難しい技術記事ではなく、コーヒーブレイク向けの「ちょい技」です。のんびり、1記事ずつ。',
+  steps: [
+    {
+      icon: '☕',
+      title: '1. 豆を選ぶ',
+      description:
+        'いまの気分に合う記事を1つだけ。全部読まなくて大丈夫。暑い日は暑さ、しんどい日は心の休み、からでOK。',
+    },
+    {
+      icon: '🫖',
+      title: '2. ゆっくり蒸らす',
+      description:
+        'コーヒーを片手に、急がず読む。正解を探さなくていい。「あ、そういう見方もあるか」と受け取るくらいで十分です。',
+    },
+    {
+      icon: '✨',
+      title: '3. ひと口試す',
+      description:
+        '記事下の「今日試せる一手」をやってみる。ChatGPT・Gemini・Claude など、おじさんが使い慣れたAIで聞いてもOKです。',
+    },
+    {
+      icon: '📝',
+      title: '4. メモに残す',
+      description:
+        'Coffee Break のメモタブに一言メモ。次に開いたとき、カーソル君と続きがしやすくなります。',
+    },
+  ] satisfies BrightAiUsageStep[],
+  notes: [
+    '毎日全部試さなくていい。週に1つでも、立派な使い方です。',
+    '体調が悪い・胸の痛みなどはAIではなく医療機関へ。ここは暮らしの相談係です。',
+    '個人情報（住所・家族の詳細・健康データ）はAIに送らなくて大丈夫です。',
+  ],
+}
+
 /** 新しい記事を先頭（新しい順）に追加する */
 export const BRIGHT_AI_ARTICLES: BrightAiArticle[] = [
   {
