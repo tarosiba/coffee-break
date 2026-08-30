@@ -1,9 +1,67 @@
 import { useState } from 'react'
 import {
   BRIGHT_AI_ARTICLES,
+  BRIGHT_AI_USAGE,
   formatBrightAiDate,
   type BrightAiArticle,
 } from '../../lib/brightAi'
+
+function BrightAiUsageGuide() {
+  return (
+    <section
+      className="relative overflow-hidden rounded-2xl border border-coffee-300/80 bg-gradient-to-b from-cream via-amber-50/90 to-coffee-100/60 p-5 shadow-sm"
+      aria-labelledby="bright-ai-usage-heading"
+    >
+      {/* ソーサー */}
+      <div
+        className="pointer-events-none absolute -bottom-8 left-1/2 h-8 w-[88%] -translate-x-1/2 rounded-[50%] bg-coffee-200/40"
+        aria-hidden
+      />
+      <div className="relative flex items-start gap-4">
+        <div
+          className="flex h-[4.5rem] w-[4.5rem] shrink-0 flex-col items-center justify-end rounded-b-3xl rounded-t-lg border-2 border-coffee-300/60 bg-gradient-to-b from-coffee-50 to-coffee-200/50 pb-2 shadow-inner"
+          aria-hidden
+        >
+          <span className="text-2xl leading-none">☕</span>
+          <span className="mt-1 h-1.5 w-8 rounded-full bg-coffee-400/50" />
+        </div>
+        <div className="min-w-0 flex-1">
+          <h3 id="bright-ai-usage-heading" className="text-lg font-bold text-coffee-900">
+            {BRIGHT_AI_USAGE.heading}
+          </h3>
+          <p className="mt-1 text-sm leading-relaxed text-coffee-700">{BRIGHT_AI_USAGE.lead}</p>
+        </div>
+      </div>
+
+      <ol className="relative mt-4 space-y-3">
+        {BRIGHT_AI_USAGE.steps.map((step, index) => (
+          <li
+            key={step.title}
+            className="flex gap-3 rounded-xl border border-coffee-200/70 bg-white/70 px-3 py-3 backdrop-blur-sm"
+          >
+            <span className="text-xl" aria-hidden>
+              {step.icon}
+            </span>
+            <div className="min-w-0">
+              <p className="text-sm font-semibold text-coffee-900">{step.title}</p>
+              <p className="mt-1 text-sm leading-relaxed text-coffee-600">{step.description}</p>
+            </div>
+            <span className="sr-only">{index + 1}番目のステップ</span>
+          </li>
+        ))}
+      </ol>
+
+      <ul className="relative mt-4 space-y-1.5 border-t border-coffee-200/60 pt-3 text-xs leading-relaxed text-coffee-500">
+        {BRIGHT_AI_USAGE.notes.map((note) => (
+          <li key={note} className="flex gap-2">
+            <span aria-hidden>・</span>
+            <span>{note}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+}
 
 export function BrightAi() {
   const [selectedId, setSelectedId] = useState<string | null>(null)
@@ -15,6 +73,8 @@ export function BrightAi() {
 
   return (
     <div className="space-y-4">
+      <BrightAiUsageGuide />
+
       <div className="rounded-2xl border border-amber-200 bg-gradient-to-br from-amber-50 to-cream p-4">
         <p className="text-sm leading-relaxed text-coffee-700">
           しんどいニュースが続くときこそ、暮らしを少し楽にする AI の使い方を。
