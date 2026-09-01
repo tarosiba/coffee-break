@@ -11,7 +11,8 @@ Coffee Break（tarosiba/coffee-break）の続きをお願いします。
 
 まず以下を読んでから作業してください:
 - docs/agent-handoff.md（最新の引き継ぎドキュメント）
-- docs/conversation-session-2026-08-29.md（直近セッションの会話まとめ）
+- docs/conversation-session-2026-09-01.md（直近セッションの会話まとめ）
+- docs/conversation-session-2026-08-29.md（8月下旬セッション）
 - docs/conversation-summary.md（全体履歴）
 - anno_proto/HANDOFF.md（Godot 島開発プロトを触る場合）
 - swift-playgrounds/MiniIsland/README.md（Swift 超ミニ島を触る場合）
@@ -38,6 +39,13 @@ Coffee Break（tarosiba/coffee-break）の続きをお願いします。
 - PR #101 8/27セッションまとめ・引き継ぎ更新
 - PR #102 AIニュース 2026-08-25（2本）
 - PR #103 8/29セッションまとめ・引き継ぎ更新
+- PR #105 明るいAIの飲み方ガイド
+
+## 直近セッション（8/30〜9/1・コード変更なし）
+- デュカト L2H2 中古調査（600万以下・3万km→ドンガラ510〜520万）
+- お天気エージェント構想（先送り）、プライベートLLM（Noema/LocalRAG!/Sigmy）
+- PC版 Cursor ホーム画面・coffee-break は Clone repo 推奨
+- 会話まとめ: docs/conversation-session-2026-09-01.md
 
 ## Godot 島開発 anno_proto（同リポ内・PWAとは別）
 - 起動: Godot 4.3+ → Import `anno_proto/project.godot` → F5
@@ -71,10 +79,13 @@ Coffee Break（tarosiba/coffee-break）の続きをお願いします。
 - Paragon Pioneers 2 … 8/29 Islet で Paragon 到達。無理に再開しない
 - GitHub Cursor … Merge queues 権限許可済み（coffee-break / kakeibo）
 - 秘書カーソル君（将来構想）… カレンダーから予定リマインド。localStorage のみ
-- デュカト L2H2 自作キャンピングカー検討中（縦ベッド＋後部マルチルーム、1ナンバー自動車税年11,500円目安）
+- デュカト L2H2 自作キャンピングカー検討中（縦ベッド＋後部マルチルーム、1ナンバー自動車税年11,500円目安。中古600万以下ならドンガラ510〜520万）
+- PC版 Cursor … coffee-break は Clone repo: https://github.com/tarosiba/coffee-break
+- プライベートLLM（iOS）… Noema無料 / LocalRAG! / Sigmy有料。家計・機密向け
 - PC が熱い日は無理しない
 
 ## 次の候補（一言で）
+- 「お天気で」… お天気エージェント（将来構想・先送り）
 - 「秘書で」… カレンダーから来週の予定リマインド（将来構想）
 - 「ズームして」… anno_proto カメラ拡大（先でOK）
 - 「明るいAIを1本」

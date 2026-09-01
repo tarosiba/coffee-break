@@ -1,6 +1,6 @@
 コーヒーproject 3引き継ぎ
 
-# Coffee Break 引き継ぎメッセージ（2026年8月29日時点）
+# Coffee Break 引き継ぎメッセージ（2026年9月1日時点）
 
 ## プロジェクト
 
@@ -20,15 +20,16 @@
 ## まず読むファイル
 
 1. docs/agent-handoff.md（本ファイル）
-2. docs/conversation-session-2026-08-29.md（直近セッション）
-3. docs/conversation-session-2026-08-27.md（8月下旬セッション）
-4. docs/conversation-session-2026-08-18.md（8月中旬セッション）
-5. docs/conversation-session-2026-08-07.md（8月前半セッション）
-6. docs/conversation-session-2026-08-01.md（8月セッション開始）
-7. docs/conversation-session-2026-07-31.md（7月セッション）
-8. docs/conversation-summary.md（全体履歴）
-9. src/components/Games.tsx / src/components/Creative.tsx
-10. 変更対象の src/lib/*.ts と src/components/games/*.tsx または creative/*.tsx
+2. docs/conversation-session-2026-09-01.md（直近セッション）
+3. docs/conversation-session-2026-08-29.md（8月下旬セッション）
+4. docs/conversation-session-2026-08-27.md（8月下旬セッション）
+5. docs/conversation-session-2026-08-18.md（8月中旬セッション）
+6. docs/conversation-session-2026-08-07.md（8月前半セッション）
+7. docs/conversation-session-2026-08-01.md（8月セッション開始）
+8. docs/conversation-session-2026-07-31.md（7月セッション）
+9. docs/conversation-summary.md（全体履歴）
+10. src/components/Games.tsx / src/components/Creative.tsx
+11. 変更対象の src/lib/*.ts と src/components/games/*.tsx または creative/*.tsx
 
 ## 直近セッション（2026年7月23日〜29日）でマージ済み
 
@@ -50,9 +51,19 @@
 - **PR #94** コーヒー豆占い（ホーム・1日1回）
 - **PR #95** AIニュース Particle6（Tilly Norwood）
 
+## 直近セッション（2026年8月30日〜9月1日）
+
+- コード変更なし（雑談・調査・イラスト・ドキュメント）
+- デュカト L2H2 中古調査（600万以下・3万km以内→ドンガラ510〜520万が現実的）
+- お天気エージェント構想（ゲリラ豪雨対応）→ **実行は先送り**
+- プライベートLLM（iOS）調査：Noema / LocalRAG! / Sigmy（Pro: 月$5.99・年$39.99・買切$79.99）
+- PC版 Cursor ホーム画面の説明、`coffee-break` は **Clone repo** 推奨
+- 会話まとめ: `docs/conversation-session-2026-09-01.md`
+
 ## 直近セッション（2026年8月27日〜29日）でマージ済み
 
 - **PR #102** AIニュース 2026-08-25（2本）：Godot 4.4・Unknown Horizons 移植
+- **PR #103〜#105** 8/29セッションまとめ・明るいAIの飲み方ガイド
 
 ## 直近セッション（2026年8月22日〜27日）でマージ済み
 
@@ -168,8 +179,11 @@ src/components/Creative.tsx            # クリエイティブモード切替
 - モノクロマンガAIアプリ（PixAI、Comistitch 等）に興味
 - お母さん（認知症）・健康長寿への関心。Unity 6.3 LTS 入門途中（Hub・`MyFirstUnity2D`・Square 配置まで）
 - Paragon Pioneers 2 … Unity 製・iPad 対応。8月中旬に一時ストップ後、**8/29 Islet で Paragon（最上位）到達**（Need 100%）。無理に再開しない
-- **デュカト L2H2** … ドンガラ自作キャンピングカー検討中。縦ベッド＋後部マルチルーム案。1ナンバー貨物のまま自動車税 **年11,500円** 目安
+- **デュカト L2H2** … ドンガラ自作キャンピングカー検討中。縦ベッド＋後部マルチルーム案。1ナンバー貨物のまま自動車税 **年11,500円** 目安。中古は **600万以下・3万km以内ならドンガラ510〜520万** が現実的（2026/8調査）
+- **お天気エージェント**（将来構想）… ゲリラ豪雨対応の対話型天気。天気API＋ルールベース・外部AIに送らない。**実行は先送り**（北陸豪雨をきっかけに構想）
 - **秘書カーソル君**（将来構想）… カレンダー予定から「来週内科」「お母さんの美容院」等をリマインド。localStorage のみ・外部 AI に送らない
+- **プライベートLLM（iOS）** … ファイル対応は Noema（無料）/ LocalRAG! / Sigmy（有料）。家計・機密文書向け。Cursor（クラウド）との住み分け
+- **PC版 Cursor** … ホーム画面はプロジェクト未オープン時の正常表示。`coffee-break` は Clone repo: `https://github.com/tarosiba/coffee-break`
 - 『ブラウザで動かす LLM実装入門』（Colab）を検討中・未購入
 - Cursor Cloud Agents Builds アップグレード案内（`tarosiba/coffee-break` 環境、8/17 自動アップグレード）
 - 将来構想：コーヒーブレイク劇場（3年後に短編映画を別枠で）
@@ -193,6 +207,7 @@ src/components/Creative.tsx            # クリエイティブモード切替
 ## 次にやりそうな候補（優先度はおじさんの一言で決める）
 
 - **明るいAI** の記事追加（おじさんの一言から）
+- **お天気エージェント**（将来構想・先送り）— フェーズ1: チャット＋降水予報
 - **カレンダー秘書リマインド**（将来構想・おじさんの夢）— 7日先表示から段階的に
 - **AIニュース** 9月分の追加
 - **Swift 超ミニ島** 風車追加（おじさんの一言で）
@@ -215,4 +230,4 @@ npm run build && npm run lint
 
 ---
 
-*最終更新: 2026年8月29日（8/29セッション締め）*
+*最終更新: 2026年9月1日（9/1セッション締め）*
