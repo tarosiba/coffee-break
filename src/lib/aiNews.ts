@@ -13,6 +13,42 @@ export interface AiNewsArticle {
 /** 新しい日付の記事を先頭（新しい順）に追加する */
 export const AI_NEWS_ARTICLES: AiNewsArticle[] = [
   {
+    id: '2026-09-01-ios-private-llm-apps',
+    date: '2026-09-01',
+    title: 'iPhoneで完結するプライベートLLM、3アプリが揃い始めた',
+    genre: 'モバイル / プライバシー',
+    summary:
+      'Noema・LocalRAG!・Sigmy など、端末内で動くローカルLLMアプリが iOS で実用段階に。PDFやメモを読み込ませてもクラウドに送らない設計で、カレンダーや家計のような個人情報を扱うおじさん向けの選択肢が増えています。',
+    body: [
+      '2026年8月末〜9月初旬、App Store では **端末内完結型の LLM アプリ** がひとそろいしてきました。クラウドにデータを送らず、iPhone や iPad のチップ上だけで推論する——「プライベート LLM」というカテゴリが、もう実験段階ではなく **毎日使える道具** に近づいています。',
+      '**Noema** は無料で、PDF・Markdown を読み込んで RAG（検索拡張生成）ができます。オフライン動作で Obsidian のメモと相性がよく、「メモ帳の中だけで質問に答える」使い方向きです。**LocalRAG!** も端末完結で、23種類のファイル形式に対応。NotebookLM のような「資料を読ませて要約」が、クラウドなしで試せます。無料枠のあと有料プランがあります。',
+      '**Sigmy** は機密文書向けで、Face ID ロック・OCR・個人情報（PII）の警告機能が付いています。Pro プランは月額 $5.99（7日トライアル）、年額 $39.99（14日トライアル）、買切 $79.99（Lifetime）——家計や健康メモを扱うなら、一度試す価値がある tier です。会話だけなら **Private LLM**（約 $5 買切）も手軽ですが、ファイル RAG は弱め、という住み分けです。',
+      'カーソル君メモ：おじさんが調べた「カーソル君＝クラウドで賢い分析 / ローカル LLM＝個人情報 / Coffee Break＝毎日使うカレンダー・メモ」の三層は、そのまま使えます。秘書カーソル君を将来作るときも、予定データは localStorage のまま・外部 AI に送らない方針は変わりません。ローカル LLM は **おじさんの手元のメモ整理** 用、という位置づけで十分です。',
+    ],
+    whyInteresting:
+      '個人情報をクラウドに出さずに AI を使う——カレンダーや家計を気にするおじさんに、iPhone だけで試せる選択肢がそろい始めた話です。',
+    sourceLabel: 'App Store / 各開発者ページ',
+    sourceUrl: 'https://apps.apple.com/us/app/sigmy-private-ai-assistant/id6738288888',
+  },
+  {
+    id: '2026-09-01-cursor-desktop-home-redesign',
+    date: '2026-09-01',
+    title: 'Cursor PC版、ホーム画面がリニューアル——慣れるまでのコツ',
+    genre: '開発ツール / Cursor',
+    summary:
+      '9月に入り Cursor のデスクトップ版ホーム画面が新デザインに。Agents・プロジェクト・履歴の並びが変わり、最初は戸惑いやすいけれど Clone repo から coffee-break を開けば今まで通り作業できます。',
+    body: [
+      '2026年9月1日、多くのユーザーが **Cursor デスクトップ版の新しいホーム画面** に初めて触れました。左サイドバーの並び、エージェント一覧、最近のプロジェクトの見せ方が整理され、「画面が新しくなって慣れるまでが心配」という声も SNS で見られます。機能がなくなったわけではなく、**入口のレイアウトが変わった** だけ、と公式は説明しています。',
+      'おじさん向けのおすすめ手順はシンプルです。① **Clone repo**（または Open folder）で `tarosiba/coffee-break` を開く。② 普段どおり Web 版 Cursor（cursor.com/agents）から Cloud Agent に依頼する——PC 版は **リポジトリを手元に置く窓口**、日常の依頼は Web 版、という住み分けはそのまま使えます。③ 新ホームの「Agents」タブは、過去の Cloud Agent 実行履歴へのショートカット。迷ったら検索バーに `coffee-break` と打てばプロジェクトにたどり着けます。',
+      'Builds（プリビルド環境）やバックグラウンド Agent は 8月の GA から変わらず使えます。新 UI でも、おじさんが寝ている間に PR を作ってくれるカーソル君の仕組みは同じ。慣れるコツは **1日1つだけ新ボタンを試す** こと。全部覚えようとしなくて大丈夫です。',
+      'カーソル君メモ：Coffee Break は GitHub Pages で公開されているので、コードを触らない日は Safari で https://tarosiba.github.io/coffee-break/ を開くだけでもOK。PC 版 Cursor は「開発するときの作業台」。コーヒーを飲みながら、のんびり慣れていきましょう。',
+    ],
+    whyInteresting:
+      'PC版の見た目が変わって不安——でも coffee-break は Clone repo 一発で今まで通り。入口が変わっただけ、という安心材料です。',
+    sourceLabel: 'Cursor / Changelog',
+    sourceUrl: 'https://cursor.com/changelog',
+  },
+  {
     id: '2026-08-25-godot-44-stable-2d',
     date: '2026-08-25',
     title: 'Godot 4.4 が安定版に——2D描画とタイルマップが大幅強化',

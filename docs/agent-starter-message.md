@@ -40,12 +40,8 @@ Coffee Break（tarosiba/coffee-break）の続きをお願いします。
 - PR #102 AIニュース 2026-08-25（2本）
 - PR #103 8/29セッションまとめ・引き継ぎ更新
 - PR #105 明るいAIの飲み方ガイド
-
-## 直近セッション（8/30〜9/1・コード変更なし）
-- デュカト L2H2 中古調査（600万以下・3万km→ドンガラ510〜520万）
-- お天気エージェント構想（先送り）、プライベートLLM（Noema/LocalRAG!/Sigmy）
-- PC版 Cursor ホーム画面・coffee-break は Clone repo 推奨
-- 会話まとめ: docs/conversation-session-2026-09-01.md
+- PR #106 9/1セッション会話まとめ
+- PR #107 AIニュース 2026-09-01（2本）
 
 ## Godot 島開発 anno_proto（同リポ内・PWAとは別）
 - 起動: Godot 4.3+ → Import `anno_proto/project.godot` → F5
