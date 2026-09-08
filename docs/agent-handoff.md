@@ -1,6 +1,6 @@
 コーヒーproject 3引き継ぎ
 
-# Coffee Break 引き継ぎメッセージ（2026年9月1日時点）
+# Coffee Break 引き継ぎメッセージ（2026年9月8日時点）
 
 ## プロジェクト
 
@@ -20,16 +20,17 @@
 ## まず読むファイル
 
 1. docs/agent-handoff.md（本ファイル）
-2. docs/conversation-session-2026-09-01.md（直近セッション）
-3. docs/conversation-session-2026-08-29.md（8月下旬セッション）
-4. docs/conversation-session-2026-08-27.md（8月下旬セッション）
-5. docs/conversation-session-2026-08-18.md（8月中旬セッション）
-6. docs/conversation-session-2026-08-07.md（8月前半セッション）
-7. docs/conversation-session-2026-08-01.md（8月セッション開始）
-8. docs/conversation-session-2026-07-31.md（7月セッション）
-9. docs/conversation-summary.md（全体履歴）
-10. src/components/Games.tsx / src/components/Creative.tsx
-11. 変更対象の src/lib/*.ts と src/components/games/*.tsx または creative/*.tsx
+2. docs/conversation-session-2026-09-08.md（直近セッション）
+3. docs/conversation-session-2026-09-01.md（9月初旬セッション）
+4. docs/conversation-session-2026-08-29.md（8月下旬セッション）
+5. docs/conversation-session-2026-08-27.md（8月下旬セッション）
+6. docs/conversation-session-2026-08-18.md（8月中旬セッション）
+7. docs/conversation-session-2026-08-07.md（8月前半セッション）
+8. docs/conversation-session-2026-08-01.md（8月セッション開始）
+9. docs/conversation-session-2026-07-31.md（7月セッション）
+10. docs/conversation-summary.md（全体履歴）
+11. src/components/Games.tsx / src/components/Creative.tsx
+12. 変更対象の src/lib/*.ts と src/components/games/*.tsx または creative/*.tsx
 
 ## 直近セッション（2026年7月23日〜29日）でマージ済み
 
@@ -60,9 +61,14 @@
 - PC版 Cursor ホーム画面の説明、`coffee-break` は **Clone repo** 推奨
 - 会話まとめ: `docs/conversation-session-2026-09-01.md`
 
-## 直近セッション（2026年9月1日）でマージ済み
+## 直近セッション（2026年9月1日〜9月8日）
 
 - **PR #107** AIニュース 2026-09-01（2本）：iOSプライベートLLM・Cursor PC版ホーム画面
+- PC版 Cursor：**Git 未インストール**で Clone repo 不可（cmd 確認済み・案内済み）
+- プライベートLLM：LocalRAG!（3GBでオフライン）・Noema（Visionモデルで画像可）
+- 秋は飽きやすい・**雑談が長続き**。丸投げアプリビルダーはお試しのみ、普段はカーソル君
+- 将来構想：第2次世界大戦テーマ短編（原稿40枚・未着手）
+- 会話まとめ: `docs/conversation-session-2026-09-08.md`
 
 ## 直近セッション（2026年8月27日〜29日）でマージ済み
 
@@ -105,7 +111,7 @@
 - **時計・メモ** … コーヒーブレイク時計、メモ（音声メモあり）
 - **ミニゲーム** … 将棋・オセロ・チェッカー・サッカー・エアホッケー（初級/中級）、**ロボット君冷却**（のんびり夏ゲーム）、**3D迷路**（ふつう/ダンジョンRPG：⚔️攻撃・🗝️鍵・🔒宝箱）、スターシューター、神経衰弱、五目並べ、人生ゲーム、じゃんけん、数当て、三目並べ
 - **クリエイティブ** … **明るいAI**（暮らしのちょい技）、お絵描き、写真スケッチ、**間取りデザイナー**、**カーソル君の絵**、**カーソル君の小説**（全7作）、**ハズレ予想イラスト**
-- **AIニュース** … カーソル君編集、目安1日2〜3件。データは `src/lib/aiNews.ts`（最新 9/1）
+- **AIニュース** … カーソル君編集、目安1日2〜3件。データは `src/lib/aiNews.ts`（最新 2026-09-01）
 - **コーヒー豆占い** … ホーム、1日1回（`src/lib/coffeeFortune.ts`）
 - **Swift 超ミニ島** … `swift-playgrounds/MiniIsland/`（iPad Swift Playgrounds 用・学習向け）
 - **雑談** … カーソル君とコーヒータイム（ローカル定型応答、外部 AI なし）
@@ -187,7 +193,11 @@ src/components/Creative.tsx            # クリエイティブモード切替
 - **お天気エージェント**（将来構想）… ゲリラ豪雨対応の対話型天気。天気API＋ルールベース・外部AIに送らない。**実行は先送り**（北陸豪雨をきっかけに構想）
 - **秘書カーソル君**（将来構想）… カレンダー予定から「来週内科」「お母さんの美容院」等をリマインド。localStorage のみ・外部 AI に送らない
 - **プライベートLLM（iOS）** … ファイル対応は Noema（無料）/ LocalRAG! / Sigmy（有料）。家計・機密文書向け。Cursor（クラウド）との住み分け
-- **PC版 Cursor** … ホーム画面はプロジェクト未オープン時の正常表示。`coffee-break` は Clone repo: `https://github.com/tarosiba/coffee-break`
+- **PC版 Cursor** … ホーム画面はプロジェクト未オープン時の正常表示。`coffee-break` は Clone repo: `https://github.com/tarosiba/coffee-break`。**おじさん PC は Git 未インストール**（2026/9確認）→ git-scm.com から入れてから Clone
+- **秋は飽きやすい**（ゲーム・アプリ作り・動画も）。**雑談が長続き**。テーマを絞らないのがコツ
+- **丸投げアプリビルダー**（Bolt / Lovable 等）は **お試しのみ**（別テーマ）。普段の依頼はカーソル君（話のつじつま重視）
+- **Anysphere** … Cursor の開発会社。稼ぎ頭はほぼ Cursor 一筋
+- **将来の小説** … 第2次世界大戦テーマ・原稿40枚（約1.6万字）。いつか依頼。今は未着手
 - 『ブラウザで動かす LLM実装入門』（Colab）を検討中・未購入
 - Cursor Cloud Agents Builds アップグレード案内（`tarosiba/coffee-break` 環境、8/17 自動アップグレード）
 - 将来構想：コーヒーブレイク劇場（3年後に短編映画を別枠で）
@@ -213,7 +223,7 @@ src/components/Creative.tsx            # クリエイティブモード切替
 - **明るいAI** の記事追加（おじさんの一言から）
 - **お天気エージェント**（将来構想・先送り）— フェーズ1: チャット＋降水予報
 - **カレンダー秘書リマインド**（将来構想・おじさんの夢）— 7日先表示から段階的に
-- **AIニュース** 9月分の追加
+- **第2次世界大戦テーマ短編**（原稿40枚・将来依頼・未着手）
 - **Swift 超ミニ島** 風車追加（おじさんの一言で）
 - **Summer Engine** Cursor MCP 連携完成（cmd + mcp.json）
 - **anno_proto ズーム**（ホイール・＋／−ボタン）— おじさん希望・時期は先でOK
@@ -234,4 +244,4 @@ npm run build && npm run lint
 
 ---
 
-*最終更新: 2026年9月1日（9/1セッション締め）*
+*最終更新: 2026年9月8日（9/8セッション締め）*
