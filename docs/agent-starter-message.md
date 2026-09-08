@@ -11,8 +11,8 @@ Coffee Break（tarosiba/coffee-break）の続きをお願いします。
 
 まず以下を読んでから作業してください:
 - docs/agent-handoff.md（最新の引き継ぎドキュメント）
-- docs/conversation-session-2026-09-01.md（直近セッションの会話まとめ）
-- docs/conversation-session-2026-08-29.md（8月下旬セッション）
+- docs/conversation-session-2026-09-08.md（直近セッションの会話まとめ）
+- docs/conversation-session-2026-09-01.md（9月初旬セッション）
 - docs/conversation-summary.md（全体履歴）
 - anno_proto/HANDOFF.md（Godot 島開発プロトを触る場合）
 - swift-playgrounds/MiniIsland/README.md（Swift 超ミニ島を触る場合）
@@ -25,70 +25,40 @@ Coffee Break（tarosiba/coffee-break）の続きをお願いします。
 - npm run build と npm run lint を通すこと
 - マージ後は GitHub Actions のデプロイ成功を確認すること
 
-## 直近でマージ済み（PR #86〜#103）
-- PR #86 anno_proto フェーズ2（小麦→パン・風車・パン屋）
-- PR #87 Godot 4.6 型推論エラー修正
-- PR #88 anno_proto シンプル平地・森チップ（48px）
-- PR #89 小説第7作『十二個のパン』（なごみ物語）
-- PR #90 AIニュース 2026-08-11（3本）
-- PR #93 AIニュース 2026-08-18（2本）・明るいAI 1本
-- PR #94 コーヒー豆占い（ホーム・1日1回）
-- PR #95 AIニュース Particle6
-- PR #97 anno_proto 人口・パン供給率（フェーズ2.5）
-- PR #98〜#100 Swift Playgrounds 超ミニ島（v3）
-- PR #101 8/27セッションまとめ・引き継ぎ更新
-- PR #102 AIニュース 2026-08-25（2本）
-- PR #103 8/29セッションまとめ・引き継ぎ更新
+## 直近でマージ済み
 - PR #105 明るいAIの飲み方ガイド
 - PR #106 9/1セッション会話まとめ
 - PR #107 AIニュース 2026-09-01（2本）
 
+## 直近セッション（9/1〜9/8）
+- PC版 Cursor：Git 未インストールで Clone repo 不可（案内済み）
+- プライベートLLM：LocalRAG!（3GBでオフライン）・Noema（Visionで画像可）
+- 秋は飽きやすい・雑談が長続き。丸投げアプリビルダーはお試しのみ、普段はカーソル君
+- 将来：第2次世界大戦テーマ短編（原稿40枚・未着手）
+- 会話まとめ: docs/conversation-session-2026-09-08.md
+
 ## Godot 島開発 anno_proto（同リポ内・PWAとは別）
 - 起動: Godot 4.3+ → Import `anno_proto/project.godot` → F5
-- フェーズ2: 小麦→パン、風車・パン屋、左下森・中央平地（48pxチップ）
-- フェーズ2.5: 人口・パン供給率表示
-- 引き継ぎ: anno_proto/HANDOFF.md
+- フェーズ2・2.5 完了（小麦→パン、人口・パン供給率）
 - 次候補: ズーム（先でOK）、2島目・貿易
-
-## Swift Playgrounds 超ミニ島（学習用・PWAとは別）
-- コード: swift-playgrounds/MiniIsland/ContentView.swift
-- v3: タイマーなし。🌾畑タップ＝小麦+1。小麦6で🍞パン屋解放
-- おじさん iPad で v3 成功済み
-
-## Summer Engine（おじさん PC・別途）
-- Sign in 済み（taroron2000@gmail.com）
-- PowerShell の npx エラー → cmd を使う
-- MCP: C:\Users\petsi\.cursor\mcp.json または setup cursor
-- anno_proto は Godot 用。Summer では Create project 推奨
-
-## 既存機能（Coffee Break PWA・main の状態）
-- ホーム … 予定リマインド、コーヒー豆占い、各タブへの導線
-- カレンダー・時計・メモ … localStorage のみ（サーバー送信なし）
-- ミニゲーム … 将棋・オセロ・チェッカー・サッカー・エアホッケー、ロボット君冷却、3D迷路、スターシューター、神経衰弱、五目並べ、人生ゲーム、じゃんけん、数当て、三目並べ
-- クリエイティブ … 明るいAI、お絵描き、写真スケッチ、間取りデザイナー、カーソル君の絵、小説（7作）、ハズレ予想
-- AIニュース … 最新は8/25（src/lib/aiNews.ts）
-- 雑談 … カーソル君とコーヒータイム
 
 ## おじさんの傾向
 - のんびりペース。マージ・デプロイまでお願い
-- **iPad 利用時は最初に要点1行**
-- Paragon Pioneers 2 … 8/29 Islet で Paragon 到達。無理に再開しない
-- GitHub Cursor … Merge queues 権限許可済み（coffee-break / kakeibo）
-- 秘書カーソル君（将来構想）… カレンダーから予定リマインド。localStorage のみ
-- デュカト L2H2 自作キャンピングカー検討中（縦ベッド＋後部マルチルーム、1ナンバー自動車税年11,500円目安。中古600万以下ならドンガラ510〜520万）
-- PC版 Cursor … coffee-break は Clone repo: https://github.com/tarosiba/coffee-break
-- プライベートLLM（iOS）… Noema無料 / LocalRAG! / Sigmy有料。家計・機密向け
-- PC が熱い日は無理しない
+- iPad 利用時は最初に要点1行
+- 普段は Web版 Cursor（cursor.com/agents）。PC版は Git 後に coffee-break を Clone
+- 秋だけ飽きやすい。ゲーム・アプリ作りより雑談が長続き
+- 丸投げアプリビルダー（Bolt/Lovable等）は別枠お試し。本番はカーソル君
+- デュカト L2H2 中古（600万以下→ドンガラ510〜520万）、お天気エージェントは先送り
+- 個人情報（予定・健康・家計）はリポジトリに含めない
 
 ## 次の候補（一言で）
-- 「お天気で」… お天気エージェント（将来構想・先送り）
-- 「秘書で」… カレンダーから来週の予定リマインド（将来構想）
-- 「ズームして」… anno_proto カメラ拡大（先でOK）
 - 「明るいAIを1本」
 - 「ニュース2本」
+- 「お天気で」… お天気エージェント（先送り中）
+- 「秘書で」… カレンダー予定リマインド（将来構想）
+- 「ズームして」… anno_proto カメラ拡大（先でOK）
 - 「風車で」… Swift 超ミニ島に風車追加
 - 「Bで」… 今日の3つメモ
-- 「MCPで」… Summer Engine × Cursor 連携の続き
 
 ---
 
