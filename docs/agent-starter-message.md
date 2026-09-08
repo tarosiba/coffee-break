@@ -29,6 +29,7 @@ Coffee Break（tarosiba/coffee-break）の続きをお願いします。
 - PR #105 明るいAIの飲み方ガイド
 - PR #106 9/1セッション会話まとめ
 - PR #107 AIニュース 2026-09-01（2本）
+- PR #108 9/8セッション会話まとめ
 
 ## 直近セッション（9/1〜9/8）
 - PC版 Cursor：Git 未インストールで Clone repo 不可（案内済み）
