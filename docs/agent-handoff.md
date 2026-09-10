@@ -1,6 +1,6 @@
 コーヒーproject 3引き継ぎ
 
-# Coffee Break 引き継ぎメッセージ（2026年9月8日時点）
+# Coffee Break 引き継ぎメッセージ（2026年9月10日時点）
 
 ## プロジェクト
 
@@ -20,17 +20,18 @@
 ## まず読むファイル
 
 1. docs/agent-handoff.md（本ファイル）
-2. docs/conversation-session-2026-09-08.md（直近セッション）
-3. docs/conversation-session-2026-09-01.md（9月初旬セッション）
-4. docs/conversation-session-2026-08-29.md（8月下旬セッション）
-5. docs/conversation-session-2026-08-27.md（8月下旬セッション）
-6. docs/conversation-session-2026-08-18.md（8月中旬セッション）
-7. docs/conversation-session-2026-08-07.md（8月前半セッション）
-8. docs/conversation-session-2026-08-01.md（8月セッション開始）
-9. docs/conversation-session-2026-07-31.md（7月セッション）
-10. docs/conversation-summary.md（全体履歴）
-11. src/components/Games.tsx / src/components/Creative.tsx
-12. 変更対象の src/lib/*.ts と src/components/games/*.tsx または creative/*.tsx
+2. docs/conversation-session-2026-09-10.md（直近セッション）
+3. docs/conversation-session-2026-09-08.md（9月上旬セッション）
+4. docs/conversation-session-2026-09-01.md（9月初旬セッション）
+5. docs/conversation-session-2026-08-29.md（8月下旬セッション）
+6. docs/conversation-session-2026-08-27.md（8月下旬セッション）
+7. docs/conversation-session-2026-08-18.md（8月中旬セッション）
+8. docs/conversation-session-2026-08-07.md（8月前半セッション）
+9. docs/conversation-session-2026-08-01.md（8月セッション開始）
+10. docs/conversation-session-2026-07-31.md（7月セッション）
+11. docs/conversation-summary.md（全体履歴）
+12. src/components/Games.tsx / src/components/Creative.tsx
+13. 変更対象の src/lib/*.ts と src/components/games/*.tsx または creative/*.tsx
 
 ## 直近セッション（2026年7月23日〜29日）でマージ済み
 
@@ -61,9 +62,18 @@
 - PC版 Cursor ホーム画面の説明、`coffee-break` は **Clone repo** 推奨
 - 会話まとめ: `docs/conversation-session-2026-09-01.md`
 
+## 直近セッション（2026年9月9日〜9月10日）
+
+- **PR #110** AIニュース 2026-09-09（2本）：WeatherNext 3・ウェザーニュースグローバルAIアプリ
+- **Noema（iPad）** … Qwen 3.5 0.8B セットアップ済み。2通目でランタイムエラー・会話品質も期待以下 → **いったん中断**（2026/9/10）
+- iPad専用チャットボット調査：Noema/LocalRAG!/Sigmy の住み分け案内。口調はチャット指示 or 思い出
+- **9/10** 急に秋の陽気（雨続きのあと）
+- 会話まとめ: `docs/conversation-session-2026-09-10.md`
+
 ## 直近セッション（2026年9月1日〜9月8日）
 
 - **PR #107** AIニュース 2026-09-01（2本）：iOSプライベートLLM・Cursor PC版ホーム画面
+- **PR #108** 9/8セッション会話まとめ
 - PC版 Cursor：**Git 未インストール**で Clone repo 不可（cmd 確認済み・案内済み）
 - プライベートLLM：LocalRAG!（3GBでオフライン）・Noema（Visionモデルで画像可）
 - 秋は飽きやすい・**雑談が長続き**。丸投げアプリビルダーはお試しのみ、普段はカーソル君
@@ -192,7 +202,7 @@ src/components/Creative.tsx            # クリエイティブモード切替
 - **デュカト L2H2** … ドンガラ自作キャンピングカー検討中。縦ベッド＋後部マルチルーム案。1ナンバー貨物のまま自動車税 **年11,500円** 目安。中古は **600万以下・3万km以内ならドンガラ510〜520万** が現実的（2026/8調査）
 - **お天気エージェント**（将来構想）… ゲリラ豪雨対応の対話型天気。天気API＋ルールベース・外部AIに送らない。**実行は先送り**（北陸豪雨をきっかけに構想）
 - **秘書カーソル君**（将来構想）… カレンダー予定から「来週内科」「お母さんの美容院」等をリマインド。localStorage のみ・外部 AI に送らない
-- **プライベートLLM（iOS）** … ファイル対応は Noema（無料）/ LocalRAG! / Sigmy（有料）。家計・機密文書向け。Cursor（クラウド）との住み分け
+- **プライベートLLM（iOS）** … ファイル対応は Noema（無料）/ LocalRAG! / Sigmy（有料）。家計・機密文書向け。Cursor（クラウド）との住み分け。**Noema はおじさん手元で試用後いったん中断**（0.8B・iPad Air 4世代でランタイムエラー・会話品質も期待以下。再開時は Sigmy / LocalRAG! も検討）
 - **PC版 Cursor** … ホーム画面はプロジェクト未オープン時の正常表示。`coffee-break` は Clone repo: `https://github.com/tarosiba/coffee-break`。**おじさん PC は Git 未インストール**（2026/9確認）→ git-scm.com から入れてから Clone
 - **秋は飽きやすい**（ゲーム・アプリ作り・動画も）。**雑談が長続き**。テーマを絞らないのがコツ
 - **丸投げアプリビルダー**（Bolt / Lovable 等）は **お試しのみ**（別テーマ）。普段の依頼はカーソル君（話のつじつま重視）
@@ -244,4 +254,4 @@ npm run build && npm run lint
 
 ---
 
-*最終更新: 2026年9月8日（9/8セッション締め）*
+*最終更新: 2026年9月10日（9/10セッション締め）*
