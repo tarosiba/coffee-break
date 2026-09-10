@@ -11,7 +11,8 @@ Coffee Break（tarosiba/coffee-break）の続きをお願いします。
 
 まず以下を読んでから作業してください:
 - docs/agent-handoff.md（最新の引き継ぎドキュメント）
-- docs/conversation-session-2026-09-08.md（直近セッションの会話まとめ）
+- docs/conversation-session-2026-09-10.md（直近セッションの会話まとめ）
+- docs/conversation-session-2026-09-08.md（9月上旬セッション）
 - docs/conversation-session-2026-09-01.md（9月初旬セッション）
 - docs/conversation-summary.md（全体履歴）
 - anno_proto/HANDOFF.md（Godot 島開発プロトを触る場合）
@@ -26,17 +27,16 @@ Coffee Break（tarosiba/coffee-break）の続きをお願いします。
 - マージ後は GitHub Actions のデプロイ成功を確認すること
 
 ## 直近でマージ済み
-- PR #105 明るいAIの飲み方ガイド
-- PR #106 9/1セッション会話まとめ
-- PR #107 AIニュース 2026-09-01（2本）
 - PR #108 9/8セッション会話まとめ
+- PR #109 引き継ぎメッセージ更新（9/8）
+- PR #110 AIニュース 2026-09-09（2本）
 
-## 直近セッション（9/1〜9/8）
-- PC版 Cursor：Git 未インストールで Clone repo 不可（案内済み）
-- プライベートLLM：LocalRAG!（3GBでオフライン）・Noema（Visionで画像可）
-- 秋は飽きやすい・雑談が長続き。丸投げアプリビルダーはお試しのみ、普段はカーソル君
-- 将来：第2次世界大戦テーマ短編（原稿40枚・未着手）
-- 会話まとめ: docs/conversation-session-2026-09-08.md
+## 直近セッション（9/9〜9/10）
+- AIニュース：WeatherNext 3・ウェザーニュースAIアプリ（雨の季節向け）
+- Noema（iPad）… Qwen 0.8B セットアップ済み。**会話品質・ランタイムエラーでいったん中断**
+- iPad専用チャットボット調査・Noema初回設定手順を案内
+- 9/10 急に秋の陽気
+- 会話まとめ: docs/conversation-session-2026-09-10.md
 
 ## Godot 島開発 anno_proto（同リポ内・PWAとは別）
 - 起動: Godot 4.3+ → Import `anno_proto/project.godot` → F5
@@ -49,6 +49,7 @@ Coffee Break（tarosiba/coffee-break）の続きをお願いします。
 - 普段は Web版 Cursor（cursor.com/agents）。PC版は Git 後に coffee-break を Clone
 - 秋だけ飽きやすい。ゲーム・アプリ作りより雑談が長続き
 - 丸投げアプリビルダー（Bolt/Lovable等）は別枠お試し。本番はカーソル君
+- プライベートLLM：Noema は中断中。雑談・開発はカーソル君
 - デュカト L2H2 中古（600万以下→ドンガラ510〜520万）、お天気エージェントは先送り
 - 個人情報（予定・健康・家計）はリポジトリに含めない
 
