@@ -13,6 +13,42 @@ export interface AiNewsArticle {
 /** 新しい日付の記事を先頭（新しい順）に追加する */
 export const AI_NEWS_ARTICLES: AiNewsArticle[] = [
   {
+    id: '2026-09-10-ios27-siri-ai',
+    date: '2026-09-10',
+    title: 'iOS 27、9月14日配信——Siri AI が英語でベータ公開',
+    genre: 'モバイル / Apple',
+    summary:
+      '9月9日の Apple イベントで iOS 27 の配信日が9月14日（月）に決定。長らく待たれた Siri AI が英語端末向けにベータで同梱。日本語は10月以降。Liquid Glass の透明度調整や新アイコンも秋の iPad 体験を少し変えます。',
+    body: [
+      '2026年9月9日、Apple は「Surprise and Shine」イベントで **iOS 27** の公開日を **9月14日（月）** と発表しました。同時に、WWDC 2026 で予告されていた **Siri AI** のロールアウト計画も明らかになりました。英語設定の iPhone・iPad が最初の対象で、**フランス語・日本語・韓国語・ポルトガル語・スペイン語** は **10月** から順次追加されます。',
+      'Siri AI は、複数ステップの指示や複雑な質問に答える **再設計版アシスタント** です。Google の Gemini モデルを学習に活用したと報じられ、Engadget の早期テストでは「実際に多段階のプロンプトをこなせる」との評価がありました。ただし **iPhone 15 Pro 以降** など Apple Intelligence 対応端末に限定され、**EU・中国では配信されません**。さらに Siri AI は **ベータ** のまま、サーバー側モデルには **1日の利用上限** があり、将来は有料拡張の可能性も示されています。',
+      'iOS 27 本体の変更も秋らしく整えられています。**Liquid Glass** の透明度スライダー（クリア寄り／フロスト寄り）、ビルトインアプリの **新アイコン**、ロック画面の時計サイズ調整、着信音とアラームの音量を別々に設定——など。おじさんの iPad Air 4 世代は Siri AI 対象外ですが、**iPadOS 27** 自体は配信されるため、見た目と操作性のアップデートは受けられます。Noema をいったん休止中のおじさんにとって、「端末内 LLM」より「OS 標準の話し相手」が近づく、という別ルートの話でもあります。',
+      'カーソル君メモ：9/10 に急に秋の陽気になった週に、Apple の秋アップデート日程が固まりました。無理に Siri AI を追わなくて大丈夫——日本語は10月、対応機種も限定的です。コーヒーを片手に「9月14日以降、設定→ソフトウェアアップデートをのんびり見る」くらいで十分。雑談・開発はこれまで通りカーソル君で。',
+    ],
+    whyInteresting:
+      '秋の Apple アップデート週——Siri AI がついにベータ公開。iPad ユーザーにも届く OS 27 と、日本語は10月待ちという現実的なスケジュールです。',
+    sourceLabel: 'Apple / The Verge',
+    sourceUrl: 'https://www.theverge.com/news/992408/ios-27-release-date-features',
+  },
+  {
+    id: '2026-09-10-openai-gpt6-astra',
+    date: '2026-09-10',
+    title: 'OpenAI「GPT-6 Astra」公開——9月初旬のフラッグシップ争い',
+    genre: '大規模言語モデル',
+    summary:
+      '9月3日、OpenAI が GPT-6 世代のフラッグシップ GPT-6 Astra を発表。数学・コーディング・ブラウザ操作のベンチマークで高スコアを記録。同週に Google の Gemini 3.8 Flash も登場し、秋の AI ニュースが一気に動き出しました。',
+    body: [
+      '2026年9月3日、OpenAI は **GPT-6 Astra** を公開しました。会社は「世界で最もインテリジェントで整列されたモデル」と位置づけ、**FrontierMath Tier 4 で 98%**、**ARC-AGI-3 で 99.9%** などのスコアを公表しています。コンピュータ操作・ブラウジング・ソフトウェア工学・サイバーセキュリティ・科学分野での性能向上が主眼です。',
+      '配信は段階的で、まず限定組織向け、その後 **ChatGPT Plus / Pro / Business / Enterprise** と **OpenAI API**（`gpt-6-astra`）、Microsoft Azure、AWS Bedrock へ展開。Enterprise では管理者が明示的に有効化する必要があり、**デフォルトはオフ** です。API 価格は入力 $10 / 出力 $50（100万トークンあたり）と、前世代より高めの tier です。',
+      '同じ週、**9月2日** に Google は **Gemini 3.8 Flash** を、Anthropic は **Claude Fable 5.1** を、Meta は **Muse Spark 1.3** をリリース——四社がほぼ同時期に新モデルを出した、と業界メディアは報じています。Astra は「最高峰の推論・エージェント作業」、Gemini 3.8 Flash は「コスト効率の良い大量処理」という住み分けがはっきりしています。おじさんが普段使う **Cursor（カーソル君）** はクラウド側のモデルを組み合わせて動くため、裏で使われるモデルが少しずつ新しくなる——体感は「いつも通り話せるが、たまに賢くなった？」くらいかもしれません。',
+      'カーソル君メモ：秋は飽きやすいおじさんには、新モデル名を全部覚える必要はありません。「Astra が出た週だった」程度で十分。Coffee Break の雑談タブは外部 AI なしのまま。個人情報は Noema 休止中でも、カーソル君＝開発・相談、Coffee Break＝毎日の予定、という三層は変わりません。のんびりコーヒーをどうぞ。',
+    ],
+    whyInteresting:
+      '9月初旬に四社同時リリース——GPT-6 Astra は「賢さの新記録」、でもおじさんの日常は今まで通りカーソル君で十分、という安心もセットの話です。',
+    sourceLabel: 'OpenAI / Blog',
+    sourceUrl: 'https://openai.com/index/gpt-6-astra/',
+  },
+  {
     id: '2026-09-09-google-weathernext-3',
     date: '2026-09-09',
     title: 'Google「WeatherNext 3」——衛星を直接読む天気AIがSearch・Geminiに',
