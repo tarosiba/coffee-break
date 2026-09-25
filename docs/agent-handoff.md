@@ -1,6 +1,6 @@
 コーヒーproject 3引き継ぎ
 
-# Coffee Break 引き継ぎメッセージ（2026年9月10日時点）
+# Coffee Break 引き継ぎメッセージ（2026年9月25日時点）
 
 ## プロジェクト
 
@@ -20,18 +20,14 @@
 ## まず読むファイル
 
 1. docs/agent-handoff.md（本ファイル）
-2. docs/conversation-session-2026-09-10.md（直近セッション）
-3. docs/conversation-session-2026-09-08.md（9月上旬セッション）
-4. docs/conversation-session-2026-09-01.md（9月初旬セッション）
-5. docs/conversation-session-2026-08-29.md（8月下旬セッション）
-6. docs/conversation-session-2026-08-27.md（8月下旬セッション）
-7. docs/conversation-session-2026-08-18.md（8月中旬セッション）
-8. docs/conversation-session-2026-08-07.md（8月前半セッション）
-9. docs/conversation-session-2026-08-01.md（8月セッション開始）
-10. docs/conversation-session-2026-07-31.md（7月セッション）
-11. docs/conversation-summary.md（全体履歴）
-12. src/components/Games.tsx / src/components/Creative.tsx
-13. 変更対象の src/lib/*.ts と src/components/games/*.tsx または creative/*.tsx
+2. docs/conversation-session-2026-09-25.md（直近セッション）
+3. docs/conversation-session-2026-09-10.md（9月上旬セッション）
+4. docs/conversation-session-2026-09-08.md（9月上旬セッション）
+5. docs/manga-colony-prep-unintended-orbit.md（入植前哨マンガの設定・ネーム）
+6. docs/conversation-session-2026-09-01.md（9月初旬セッション）
+7. docs/conversation-summary.md（全体履歴）
+8. src/components/Games.tsx / src/components/Creative.tsx
+9. 変更対象の src/lib/*.ts と src/components/games/*.tsx または creative/*.tsx
 
 ## 直近セッション（2026年7月23日〜29日）でマージ済み
 
@@ -61,6 +57,16 @@
 - プライベートLLM（iOS）調査：Noema / LocalRAG! / Sigmy（Pro: 月$5.99・年$39.99・買切$79.99）
 - PC版 Cursor ホーム画面の説明、`coffee-break` は **Clone repo** 推奨
 - 会話まとめ: `docs/conversation-session-2026-09-01.md`
+
+## 直近セッション（2026年9月10日〜9月25日）
+
+- **PR #113** AIニュース 2026-09-10（2本）：iOS 27 Siri AI・GPT-6 Astra
+- **PR #114** AIニュース 2026-09-13：コクソン警告（NHK朝ニュース）
+- **PR #115〜#117** 入植前哨マンガ設定ドキュメント（ロボ人型・冬眠・軟着陸）
+- **PR #118** クリエイティブ **入植前哨マンガ** 第1話1〜2ページ
+- 雑談：カローラクロス／バンテック・コルドリーブス中古相場、YouTube要約、秋の「新しいこと」
+- おじさん：**漫画の絵を高評価**、続きを楽しみにしている（**第3ページ以降は「続き」待ち**）
+- 会話まとめ: `docs/conversation-session-2026-09-25.md`
 
 ## 直近セッション（2026年9月9日〜9月10日）
 
@@ -120,8 +126,8 @@
 - **カレンダー** … localStorage に予定保存
 - **時計・メモ** … コーヒーブレイク時計、メモ（音声メモあり）
 - **ミニゲーム** … 将棋・オセロ・チェッカー・サッカー・エアホッケー（初級/中級）、**ロボット君冷却**（のんびり夏ゲーム）、**3D迷路**（ふつう/ダンジョンRPG：⚔️攻撃・🗝️鍵・🔒宝箱）、スターシューター、神経衰弱、五目並べ、人生ゲーム、じゃんけん、数当て、三目並べ
-- **クリエイティブ** … **明るいAI**（暮らしのちょい技）、お絵描き、写真スケッチ、**間取りデザイナー**、**カーソル君の絵**、**カーソル君の小説**（全7作）、**ハズレ予想イラスト**
-- **AIニュース** … カーソル君編集、目安1日2〜3件。データは `src/lib/aiNews.ts`（最新 2026-09-09）
+- **クリエイティブ** … **明るいAI**、お絵描き、写真スケッチ、**間取りデザイナー**、**カーソル君の絵**、**カーソル君の小説**（全7作）、**入植前哨マンガ**（第1話2ページ）、**ハズレ予想イラスト**
+- **AIニュース** … カーソル君編集、目安1日2〜3件。データは `src/lib/aiNews.ts`（最新 2026-09-13）
 - **コーヒー豆占い** … ホーム、1日1回（`src/lib/coffeeFortune.ts`）
 - **Swift 超ミニ島** … `swift-playgrounds/MiniIsland/`（iPad Swift Playgrounds 用・学習向け）
 - **雑談** … カーソル君とコーヒータイム（ローカル定型応答、外部 AI なし）
@@ -139,6 +145,9 @@ src/lib/homeDesigner.ts              # 間取りデザイナー
 src/components/creative/CursorStories.tsx   # 小説
 src/components/creative/CursorGallery.tsx   # ギャラリー
 src/components/creative/CarPredictions.tsx  # ハズレ予想
+src/lib/colonyPrepManga.ts           # 入植前哨マンガ
+src/components/creative/ColonyPrepManga.tsx
+docs/manga-colony-prep-unintended-orbit.md  # 漫画設定・ネーム
 src/components/Creative.tsx            # クリエイティブモード切替
 ```
 
@@ -159,7 +168,7 @@ src/components/Creative.tsx            # クリエイティブモード切替
 - ボード/スポーツ系は初級・中級の2モード
 - CPU ロジックは src/lib/*.ts、UI は src/components/games/*.tsx
 - Canvas 系: エアホッケー、スターシューター、ピクセルサッカー、3D迷路、ロボット君冷却
-- クリエイティブ系: Creative.tsx でモード切替（bright-ai / drawing / photo-sketch / home-designer / cursor-gallery / cursor-stories / car-predictions）
+- クリエイティブ系: Creative.tsx でモード切替（bright-ai / drawing / photo-sketch / home-designer / cursor-gallery / cursor-stories / **colony-prep-manga** / car-predictions）
 
 ## 画像・ギャラリー注意
 
@@ -238,7 +247,8 @@ src/components/Creative.tsx            # クリエイティブモード切替
 - **Summer Engine** Cursor MCP 連携完成（cmd + mcp.json）
 - **anno_proto ズーム**（ホイール・＋／−ボタン）— おじさん希望・時期は先でOK
 - **今日の3つメモ**（カレンダー横ミニToDo）【候補B】
-- マンガ第3話・別シーンのイラスト
+- **入植前哨マンガ** 第1話3ページ以降（おじさんが「続き」と言ったとき）
+- マンガ第3話（おじさん・ワンちゃん・ロボット君）・別シーンのイラスト
 - 間取りデザイナー強化（窓・ドア、視点回転）
 - 3D迷路強化（スケルトン移動AI、回復ポーション）
 - おじさん考案のシミュレーション・戦略ゲーム プロトタイプ → **anno_proto 継続**（Godot）
@@ -254,4 +264,4 @@ npm run build && npm run lint
 
 ---
 
-*最終更新: 2026年9月10日（9/10セッション締め）*
+*最終更新: 2026年9月25日（9/25セッション締め）*
