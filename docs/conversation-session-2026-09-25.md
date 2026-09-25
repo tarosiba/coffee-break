@@ -28,6 +28,7 @@
 | [#116](https://github.com/tarosiba/coffee-break/pull/116) | 漫画設定：C-3PO型ロボ2体・執筆保留明記 |
 | [#117](https://github.com/tarosiba/coffee-break/pull/117) | 漫画設定：人間3名・冬眠2名死亡・軌道逸脱・軟着陸 |
 | [#118](https://github.com/tarosiba/coffee-break/pull/118) | **クリエイティブ「入植前哨マンガ」** 第1話1〜2ページ |
+| [#119](https://github.com/tarosiba/coffee-break/pull/119) | 会話まとめ `docs/conversation-session-2026-09-25.md`・引き継ぎ更新 |
 
 - `npm run build` / `npm run lint` 通過
 - GitHub Actions デプロイ成功確認済み（各PRマージ後）
@@ -129,9 +130,10 @@
 
 ## セッション締め（9/25）
 
-- おじさんが `/summarize` でまとめ依頼
-- 漫画を高く評価。本ドキュメント作成・引き継ぎ更新
+- おじさん：**「マンガがとても良かったのでここでちょっとまとめをしよう」** → `/summarize`
+- 漫画を高く評価（「絵がきれい」「続きが楽しみ」）。本ドキュメントと `docs/agent-handoff.md`・`docs/agent-starter-message.md` を更新 → **PR #119** で main マージ
+- おじさん：**「この会話のまとめを docs/ に Markdown で保存して、GitHub にコミットしてください」** → 本ファイルを正本として維持（追記・保存の明示依頼）
 
 ---
 
-*最終更新: 2026年9月25日（セッション締め）*
+*最終更新: 2026年9月25日（会話まとめ保存・GitHub 反映）*
