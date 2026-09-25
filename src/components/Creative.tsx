@@ -6,12 +6,14 @@ import { CursorStories } from './creative/CursorStories'
 import { CarPredictions } from './creative/CarPredictions'
 import { HomeDesignerApp } from './creative/HomeDesignerApp'
 import { BrightAi } from './creative/BrightAi'
+import { ColonyPrepManga } from './creative/ColonyPrepManga'
 
 type CreativeMode =
   | 'drawing'
   | 'photo-sketch'
   | 'cursor-gallery'
   | 'cursor-stories'
+  | 'colony-prep-manga'
   | 'car-predictions'
   | 'home-designer'
   | 'bright-ai'
@@ -23,6 +25,12 @@ const modes: { id: CreativeMode; title: string; description: string; icon: strin
   { id: 'home-designer', title: '間取りデザイナー', description: '平面図を作って3Dで見る', icon: '🏠' },
   { id: 'cursor-gallery', title: 'カーソル君の絵', description: '騙し絵・しば犬など', icon: '🤖☕' },
   { id: 'cursor-stories', title: 'カーソル君の小説', description: 'SFショートショートなど', icon: '📖' },
+  {
+    id: 'colony-prep-manga',
+    title: '入植前哨マンガ',
+    description: 'レトロSF「誤った軌道」第1話',
+    icon: '🚀📖',
+  },
   { id: 'car-predictions', title: 'ハズレ予想イラスト', description: '車でもガジェットでもハズレて当たり前', icon: '🔮' },
 ]
 
@@ -34,7 +42,7 @@ export function Creative() {
     <div className="space-y-6 py-4">
       <div>
         <h2 className="text-2xl font-bold text-coffee-800">クリエイティブ</h2>
-        <p className="text-sm text-coffee-500">明るいAI・お絵描き・間取り・小説・ハズレ予想・写真変換</p>
+        <p className="text-sm text-coffee-500">明るいAI・お絵描き・間取り・小説・マンガ・ハズレ予想・写真変換</p>
       </div>
 
       {!activeMode ? (
@@ -75,6 +83,7 @@ export function Creative() {
           {activeMode === 'home-designer' && <HomeDesignerApp />}
           {activeMode === 'cursor-gallery' && <CursorGallery />}
           {activeMode === 'cursor-stories' && <CursorStories />}
+          {activeMode === 'colony-prep-manga' && <ColonyPrepManga />}
           {activeMode === 'car-predictions' && <CarPredictions />}
           {activeMode === 'bright-ai' && <BrightAi />}
         </div>
