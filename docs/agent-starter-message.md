@@ -11,7 +11,8 @@ Coffee Break（tarosiba/coffee-break）の続きをお願いします。
 
 まず以下を読んでから作業してください:
 - docs/agent-handoff.md（最新の引き継ぎドキュメント）
-- docs/conversation-session-2026-09-25.md（直近セッションの会話まとめ）
+- docs/conversation-session-2026-09-26.md（10月入り前・直近）
+- docs/conversation-session-2026-09-25.md（9/10〜9/25セッション）
 - docs/conversation-session-2026-09-10.md（9月上旬セッション）
 - docs/manga-colony-prep-unintended-orbit.md（入植前哨マンガの設定）
 - docs/conversation-summary.md（全体履歴）
@@ -35,6 +36,7 @@ Coffee Break（tarosiba/coffee-break）の続きをお願いします。
 - PR #118 クリエイティブ「入植前哨マンガ」第1話1〜2ページ
 - PR #119 会話まとめ conversation-session-2026-09-25・引き継ぎ更新
 - PR #120 会話まとめ追記（docs 保存依頼の記録）
+- PR #121 スターターメッセージ更新（9/25締め）
 
 ## 直近セッション（9/10〜9/25・締め済み）
 - AIニュース：Siri AI・GPT-6 Astra・コクソン／NHK
@@ -43,6 +45,10 @@ Coffee Break（tarosiba/coffee-break）の続きをお願いします。
 - おじさん：漫画の絵を高評価。**続きは「続き」と言われたとき**
 - 雑談：中古車（カローラクロス／コルドリーブス）、YouTube要約、秋の探検気分
 - 会話まとめ: docs/conversation-session-2026-09-25.md
+
+## 10月入り前（2026/9/26）
+- 引き継ぎドキュメント・スターターメッセージを更新
+- 会話まとめ: docs/conversation-session-2026-09-26.md
 
 ## Godot 島開発 anno_proto（同リポ内・PWAとは別）
 - 起動: Godot 4.3+ → Import `anno_proto/project.godot` → F5
